@@ -1,15 +1,10 @@
-import { BrowserRouter, Routes } from 'react-router-dom';
 import './App.css';
+import Registration from './Components/Registration/Registration';
 
 function App() {
   return (
     <div className="App">
-      <p>hello world</p>
-      {/* <BrowserRouter>
-        <Routes>
-
-        </Routes>
-      </BrowserRouter> */}
+      <Registration />
     </div>
   );
 }
