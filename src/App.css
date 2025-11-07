@@ -9,4 +9,31 @@ body {
   --MainBlue: #4848A0FF;
   --MainRed: #FF5A5FFF;
   --White: #FFFFFF;
+  --Gray: #ECECECFF;
+  --Black: #000000;
+}
+
+@font-face {
+  font-family: poppins-bold;
+  src: url('./Fonts/Poppins-Bold.ttf');
+}
+
+@font-face {
+  font-family: poppins-semibold;
+  src: url('./Fonts/Poppins-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: poppins-italic;
+  src: url('./Fonts/Poppins-Italic.ttf');
+}
+
+@font-face {
+  font-family: poppins-lightitalic;
+  src: url('./Fonts/Poppins-LightItalic.ttf');
+}
+
+@font-face {
+  font-family: poppins-light;
+  src: url('./Fonts/Poppins-Light.ttf');
 }
