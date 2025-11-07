@@ -1,0 +1,97 @@
+.registration {
+    width: 100%;
+    height: 100vh;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .registrationBody {
+        width: 30%;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        box-shadow: 0 10px 30px rgba(72, 72, 160, 0.20);
+        border: none;
+        border-radius: 20px;
+
+        .registrationTitle {
+            font-family: 'poppins-bold';
+            color: var(--MainBlue);
+            font-size: 30px;
+            display: flex;
+            margin-top: 80px;
+        }
+        form {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .inputDiv {
+                width: 350px;
+                height: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                .registrationFields {
+                    width: 250px;
+                    height: 25px;
+                    padding: 10px 20px 10px 20px;
+                    border: none;
+                    border-radius: 8px;
+                    background-color: var(--Gray);
+                    margin: 10px;
+                    font-family: 'poppins-light';
+                }
+            }
+
+            .registrationFirstBottom {
+                button {
+                    width: 290px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                    border-radius: 8px;
+                    color: var(--White);
+                    background-color: var(--MainRed);
+                    cursor: pointer;
+                    font-family: 'poppins-semiBold';
+                    font-size: 25px;
+                    gap: 5px;
+                    transition: transform 0.3s ease  
+                }
+                button:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .registrationGuide {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            p {
+                color: var(--Black);
+                font-family: 'poppins-lightItalic';
+                font-size: 15px;
+            }
+            .linkToLogin {
+                color: var(--MainBlue);
+                text-decoration: none;
+                font-family: 'poppins-semiBold';
+            }
+        }
+    }   
+}
