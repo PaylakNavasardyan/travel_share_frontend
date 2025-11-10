@@ -41,6 +41,16 @@ export default function Registration() {
     });
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const form = e.currentTarget.form;
+      const index = Array.prototype.indexOf.call(form, e.currentTarget);
+      const nextInput = form?.elements[index + 1] as HTMLElement;
+      nextInput?.focus();
+    };
+  };
+
   return (
     <div className={classes.registration}>
       <div className={classes.registrationBody}>
@@ -55,6 +65,7 @@ export default function Registration() {
               name='email'
               value={state.email}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               required
             />
           </div>
@@ -64,9 +75,10 @@ export default function Registration() {
               className={classes.registrationFields}
               type="text"
               placeholder="Username"
-              name='username'
+              name='userName'
               value={state.userName}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               required
             />
           </div>
@@ -79,6 +91,7 @@ export default function Registration() {
               name='password'
               value={state.password}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               required
             />
           </div>
@@ -88,7 +101,7 @@ export default function Registration() {
               className={classes.registrationFields}
               type="password"
               placeholder="Confirm Password"
-              name='confirm password'
+              name='confirmPass'
               value={state.confirmPass}
               onChange={handleChange}
               required
