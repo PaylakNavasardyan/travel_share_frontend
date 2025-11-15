@@ -1,16 +1,20 @@
-import { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import classes from './Registration.module.css';
 import { GoChevronRight as GoChevronRightIcon } from "react-icons/go";
-import { Link } from 'react-router-dom';
+import { GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Registration() {
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ size?: number; style?: React.CSSProperties }>;
+  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number; style?: React.CSSProperties }>;
 
   type State = {
     email: string,
     userName: string,
     password: string,
-    confirmPass: string
+    confirmPass: string,
+    name?: string,
+    surname?: string
   };
 
   type Action = {
@@ -22,7 +26,9 @@ export default function Registration() {
     email: '',
     userName: '',
     password: '',
-    confirmPass: ''
+    confirmPass: '',
+    name: '',
+    surname: ''
   };
 
   function reducer(state: State, action: Action) {
@@ -33,6 +39,15 @@ export default function Registration() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [step, setStep] = useState<number>(1);
+
+  const navigate: ReturnType<typeof useNavigate> = useNavigate();
+
+  const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate('/');
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -56,7 +71,7 @@ export default function Registration() {
       <div className={classes.registrationBody}>
         <p className={classes.registrationTitle}>CREATE ACCOUNT</p>
 
-        <form>
+        <form className={`${classes.form} ${step === 1 ? classes.active : ''}`}>
           <div className={classes.inputDiv}>
             <input
               className={classes.registrationFields}
@@ -108,12 +123,55 @@ export default function Registration() {
             />
           </div>
 
-          <div className={classes.registrationFirstBottom}>
-            <button type="submit">
+          <div className={classes.registrationFirstButton}>
+            <button type="submit" onClick={() => setStep(2)}>
               Next
               <GoChevronRight size={40}/>
             </button>
           </div>
+        </form>
+
+        <form className={`${classes.form} ${step === 2 ? classes.active : ''}`}>
+          <p>You may skip the following fields if you wish</p>
+
+          <div className={classes.inputDiv}>
+            <input 
+              className={classes.registrationFields}
+              type="name"
+              placeholder="Name"
+              name='name'
+              value={state.name}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+
+          <div className={classes.inputDiv}>
+            <input 
+              className={classes.registrationFields}
+              type="name"
+              placeholder="Surname"
+              name='surname'
+              value={state.surname}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className={classes.secondPageButtons}>
+            <button 
+              className={classes.backToStartButton}
+              type='submit'
+              onClick={() => setStep(1)}
+            >
+              <GoChevronLeft size={30} />
+            </button>
+
+            <button 
+              className={classes.registrationButton}
+              onClick={() => handleClick}
+            >Registration</button>
+          </div>
+
         </form>
 
         <div className={classes.registrationGuide}>
