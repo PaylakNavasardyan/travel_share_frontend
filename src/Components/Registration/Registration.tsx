@@ -5,8 +5,8 @@ import { GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Registration() {
-  const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ size?: number; style?: React.CSSProperties }>;
-  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number; style?: React.CSSProperties }>;
+  const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ size?: number }>;
+  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number }>;
 
   type State = {
     email: string,
@@ -32,28 +32,20 @@ export default function Registration() {
   };
 
   function reducer(state: State, action: Action) {
-    return {
-      ...state,
-      [action.name]: action.value
-    }
+    return { ...state, [action.name]: action.value };
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const [step, setStep] = useState<number>(1);
 
-  const navigate: ReturnType<typeof useNavigate> = useNavigate();
+  const navigate = useNavigate();
 
-  const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    navigate('/');
+  const handleClick = () => {
+    navigate('/TravelShare');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      name: e.target.name as keyof State,
-      value: e.target.value,
-    });
+    dispatch({ name: e.target.name as keyof State, value: e.target.value });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -63,7 +55,12 @@ export default function Registration() {
       const index = Array.prototype.indexOf.call(form, e.currentTarget);
       const nextInput = form?.elements[index + 1] as HTMLElement;
       nextInput?.focus();
-    };
+    }
+  };
+
+  const handleFirstSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStep(2);
   };
 
   return (
@@ -71,13 +68,16 @@ export default function Registration() {
       <div className={classes.registrationBody}>
         <p className={classes.registrationTitle}>CREATE ACCOUNT</p>
 
-        <form className={`${classes.form} ${step === 1 ? classes.active : ''}`}>
+        <form
+          className={`${classes.form} ${step === 1 ? classes.active : ''}`}
+          onSubmit={handleFirstSubmit}
+        >
           <div className={classes.inputDiv}>
             <input
               className={classes.registrationFields}
               type="email"
               placeholder="Email"
-              name='email'
+              name="email"
               value={state.email}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -90,7 +90,7 @@ export default function Registration() {
               className={classes.registrationFields}
               type="text"
               placeholder="Username"
-              name='userName'
+              name="userName"
               value={state.userName}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -103,7 +103,7 @@ export default function Registration() {
               className={classes.registrationFields}
               type="password"
               placeholder="Password"
-              name='password'
+              name="password"
               value={state.password}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -116,7 +116,7 @@ export default function Registration() {
               className={classes.registrationFields}
               type="password"
               placeholder="Confirm Password"
-              name='confirmPass'
+              name="confirmPass"
               value={state.confirmPass}
               onChange={handleChange}
               required
@@ -124,9 +124,11 @@ export default function Registration() {
           </div>
 
           <div className={classes.registrationFirstButton}>
-            <button type="submit" onClick={() => setStep(2)}>
+            <button 
+              type="submit"   
+            >
               Next
-              <GoChevronRight size={40}/>
+              <GoChevronRight size={40} />
             </button>
           </div>
         </form>
@@ -135,11 +137,11 @@ export default function Registration() {
           <p>You may skip the following fields if you wish</p>
 
           <div className={classes.inputDiv}>
-            <input 
+            <input
               className={classes.registrationFields}
-              type="name"
+              type="text"
               placeholder="Name"
-              name='name'
+              name="name"
               value={state.name}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -147,11 +149,11 @@ export default function Registration() {
           </div>
 
           <div className={classes.inputDiv}>
-            <input 
+            <input
               className={classes.registrationFields}
-              type="name"
+              type="text"
               placeholder="Surname"
-              name='surname'
+              name="surname"
               value={state.surname}
               onChange={handleChange}
             />
@@ -159,27 +161,26 @@ export default function Registration() {
 
           <div className={classes.secondPageButtons}>
             <button 
+              type="button"
               className={classes.backToStartButton}
-              type='submit'
               onClick={() => setStep(1)}
             >
               <GoChevronLeft size={30} />
             </button>
 
             <button 
+              type="button"
               className={classes.registrationButton}
-              onClick={() => handleClick}
-            >Registration</button>
+              onClick={handleClick}
+            >
+              Registration
+            </button>
           </div>
-
         </form>
 
         <div className={classes.registrationGuide}>
           <p>Already have an account?</p>
-          <Link 
-            className={classes.linkToLogin}
-            to={'/Login'}
-          >Login</Link>
+          <Link className={classes.linkToLogin} to="/Login">Login</Link>
         </div>
       </div>
     </div>
