@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from './Login.module.css'
 import { Link } from 'react-router-dom'
 
 export default function Login() {
+    const [nameORemail, setNameORemail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -28,7 +30,9 @@ export default function Login() {
                         type='text'
                         placeholder='Username or Email'
                         name='username or email'
+                        value={nameORemail}
                         onKeyDown={handleKeydown}
+                        onChange={(e) => setNameORemail(e.target.value)}
                     />
                 </div>
 
@@ -38,6 +42,8 @@ export default function Login() {
                         type='password'
                         placeholder='Password'
                         name='password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
 
