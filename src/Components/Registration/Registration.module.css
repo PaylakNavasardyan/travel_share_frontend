@@ -64,12 +64,6 @@
           margin: 10px;
           font-family: "poppins-light";
         }
-
-        label {
-            align-self: flex-start;
-            margin-left: 35px;
-            font-family: "poppins-semiBold";
-        }
       }
 
       .registrationFirstButton {
@@ -119,7 +113,7 @@
             cursor: pointer;
         }
         .backToStartButton:hover {
-            transform: scale(1.05);
+          transform: scale(1.05);
         }
         .registrationButton {
             width: 245px;
@@ -134,7 +128,7 @@
             cursor: pointer;
         }
         .registrationButton:hover {
-            transform: scale(1.05);
+          transform: scale(1.05);
         }
       }
     }
