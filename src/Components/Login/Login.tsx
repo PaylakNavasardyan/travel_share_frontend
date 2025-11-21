@@ -4,6 +4,17 @@ import { Link } from 'react-router-dom'
 
 export default function Login() {
 
+    const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+
+            const form = e.currentTarget.form;
+            const index = Array.prototype.indexOf.call(form, e.currentTarget);
+            const nextInput = form?.elements[index + 1] as HTMLElement;
+            nextInput?.focus();
+        }
+    }
+
   return (
     <div className={classes.login}>
         <div className={classes.loginBody}>
@@ -17,6 +28,7 @@ export default function Login() {
                         type='text'
                         placeholder='Username or Email'
                         name='username or email'
+                        onKeyDown={handleKeydown}
                     />
                 </div>
 
