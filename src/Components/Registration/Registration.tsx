@@ -180,7 +180,7 @@ export default function Registration() {
 
         <div className={classes.registrationGuide}>
           <p>Already have an account?</p>
-          <Link className={classes.linkToLogin} to="/Login">Login</Link>
+          <Link className={classes.linkToLogin} to="/user-login">Login</Link>
         </div>
       </div>
     </div>

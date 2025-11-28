@@ -40,7 +40,7 @@ export default function Forgot() {
             </div>
         </form>
 
-            <Link className={classes.linkToLogin} to={'/Login'}> 
+            <Link className={classes.linkToLogin} to={'/user-login'}> 
                 <div className={classes.forgotGuide}>
                     <GoChevronLeft size={20} />
                     <span>Back to Login</span>

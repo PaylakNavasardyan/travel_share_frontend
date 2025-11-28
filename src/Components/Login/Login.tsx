@@ -58,7 +58,7 @@ export default function Login() {
             </form>
 
             <div className={classes.loginGuide}>
-                <span>Maybe you <Link className={classes.linkToForgot} to={'/Forgot'}>Fsorgot</Link> your password?</span>
+                <span>Maybe you <Link className={classes.linkToForgot} to={'/forgot-password'}>Forgot</Link> your password?</span>
             </div>
         </div>
     </div>
