@@ -33,6 +33,7 @@ export default function Login() {
                         value={nameORemail}
                         onKeyDown={handleKeydown}
                         onChange={(e) => setNameORemail(e.target.value)}
+                        required
                     />
                 </div>
 
@@ -44,6 +45,7 @@ export default function Login() {
                         name='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                 </div>
 
@@ -56,7 +58,7 @@ export default function Login() {
             </form>
 
             <div className={classes.loginGuide}>
-                <span>Maybe you <Link className={classes.linkToForgot} to={'/Forgot'}>forgot</Link> your password?</span>
+                <span>Maybe you <Link className={classes.linkToForgot} to={'/Forgot'}>Fsorgot</Link> your password?</span>
             </div>
         </div>
     </div>
