@@ -1,0 +1,125 @@
+.forgot {
+    width: 100%;
+    height: 100vh;
+
+    background: linear-gradient(
+        to bottom,
+
+        var(--MainRed) 35%,
+        var(--White) 35%
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .forgotBody {
+        width: 50%;
+        height: 55vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        box-shadow: 0 10px 30px rgba(72, 72, 160, 0.2);
+        border: none;
+        border-radius: 20px;
+        padding-top: 40px;
+        background-color: var(--White);
+
+        .forgotTitle {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            p {
+                font-family: 'poppins-bold';
+                color: var(--MainBlue);
+                font-size: 25px;
+            }
+        }
+
+        form {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        top: 160px;
+            .inputDiv {
+            width: 350px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+                .forgotFields {
+                    width: 250px;
+                    height: 25px;
+                    padding: 10px 20px 10px 20px;
+                    border: none;
+                    border-radius: 8px;
+                    background-color: var(--Gray);
+                    margin: 10px;
+                    font-family: "poppins-light";
+                }   
+            }
+
+            .forgotFirstButton {
+                width: 100%;
+                height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                button {
+                    width: 290px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                    border-radius: 8px;
+                    color: var(--White);
+                    background-color: var(--MainRed);
+                    cursor: pointer;
+                    font-family: "poppins-semiBold";
+                    font-size: 25px;
+                    gap: 5px;
+                    transition: transform 0.3s ease;
+                }
+                button:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .linkToLogin {
+            text-decoration: none;
+            color: var(--Black);
+            margin-top: auto;
+            margin-bottom: 20px; 
+            .forgotGuide {
+                width: auto;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+               
+                cursor: pointer;
+                transition: transform 0.3s ease;
+                span {
+                    font-family: "poppins-lightItalic";
+                    font-size: 15px;
+                }
+            }
+            .forgotGuide:hover {
+                transform: scale(1.05);
+            }
+        }
+
+    }
+}
