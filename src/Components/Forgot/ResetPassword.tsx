@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
 import classes from './ResetPassword.module.css'
 import { TbLockPassword } from "react-icons/tb";
+import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 export default function ResetPassword() {
     const LockPassword = TbLockPassword as unknown as React.FC<{color?: string, size?: string}>;
 
     const [password, setPassword] = useState<string>('');
     const [confirmPass, setComfirmPass] = useState<string>('');
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if(e.key === 'Enter') {
+        e.preventDefault();
+        const form = e.currentTarget.form;
+        const index = Array.prototype.indexOf.call(form, e.currentTarget);
+        const nextInput = form?.[index + 1] as HTMLElement;
+        nextInput?.focus()
+      }
+    };
     
   return (
     <div className={classes.reset}>
@@ -25,6 +36,7 @@ export default function ResetPassword() {
                   value={password}
                   placeholder='Password'
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   required
                 />
               </div>
