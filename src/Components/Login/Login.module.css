@@ -36,25 +36,31 @@
       align-items: center;
       justify-content: flex-start;
       top: 160px;
-        .inputDiv {
+      .inputDiv {
         width: 350px;
         height: 80px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
-            .loginFields {
-                width: 250px;
-                height: 25px;
-                padding: 10px 20px 10px 20px;
-                border: none;
-                border-radius: 8px;
-                background-color: var(--Gray);
-                margin: 10px;
-                font-family: "poppins-light";
-            }   
+        justify-content: flex-end;
+        gap: 0;
+        .errorMessage {
+          color: red;
+          font-size: 12px;
+          margin: 0;
+          font-family: 'poppins-italic';
         }
-
+        .loginFields {
+          width: 250px;
+          height: 25px;
+          padding: 10px 20px 10px 20px;
+          border: none;
+          border-radius: 8px;
+          background-color: var(--Gray);
+          margin: 10px;
+          font-family: "poppins-light";
+        }
+      }
         .loginButton {
           width: 100vh;
           height: 100px;
