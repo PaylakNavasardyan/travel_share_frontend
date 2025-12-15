@@ -10,6 +10,29 @@ export default function Forgot() {
     const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number }>;
 
     const [email, setEmail] = useState<string>('');
+    const [emailError, setEmailError] = useState<string>('');
+
+    const validEmail = (email: string): string => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          return 'Please enter a valid email address';
+        }
+        return '';
+    };
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        const approvedEmailError = validEmail(email);
+        
+        if (approvedEmailError) {
+            setEmailError(validEmail);
+            return;
+        } else {
+            setEmailError('Please check your email');
+            setEmail('');
+        };
+    };
 
   return (
     <div className={classes.forgot}>
@@ -21,6 +44,7 @@ export default function Forgot() {
 
         <form>
             <div className={classes.inputDiv}>
+                {emailError &&<p className={classes.errorMessage}>{emailError}</p>}
                 <input 
                     className={classes.forgotFields}
                     type='email'
@@ -33,7 +57,7 @@ export default function Forgot() {
             </div>
 
             <div className={classes.forgotFirstButton}>
-                <button type="submit">
+                <button type="button" onClick={handleClick}>
                     Next
                     <GoChevronRight size={40} />
                 </button>
