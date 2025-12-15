@@ -1,0 +1,50 @@
+.navbar {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--White);
+    .navbarBody {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        gap: 200px;
+        .navbarLogo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        .navbarSearchBar {
+            width: 250px;
+            height: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            .inputPool {
+                width: 350px;
+                height: 8px;
+                padding: 10px 28px 10px 20px;
+                border: none;
+                border-radius: 8px;
+                background-color: var(--Gray);
+                font-family: "poppins-light";
+                position: relative;
+            }
+            .searchIcon {
+                transform: translateX(-25px);
+                margin-top: 5px;
+                position: absolute;
+            }
+        }
+        .navbarSettings {
+            .settingIcon {
+                cursor: pointer;
+            }
+    
+        }
+    }
+}
