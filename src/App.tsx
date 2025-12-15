@@ -4,6 +4,7 @@ import Registration from './Components/Registration/Registration';
 import Login from './Components/Login/Login';
 import Forgot from './Components/Forgot/Forgot';
 import ResetPassword from './Components/Forgot/ResetPassword';
+import Navbar from './Components/Main/Navbar/Navbar';
 
 function App() {
   return (
@@ -34,6 +35,13 @@ function App() {
           path={'/reset-password'}
           element = {
             <ResetPassword />
+          }
+        />
+
+        <Route 
+          path={'/travel-share'}
+          element = {
+            <Navbar />
           }
         />
       </Routes>
