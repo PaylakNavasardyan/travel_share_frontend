@@ -1,9 +1,9 @@
 .navbar {
     width: 100%;
-    height: 100px;
+    height: 50px;
     display: flex;
     flex-direction: column;
-    background-color: var(--White);
+    background-color: var(--DarkGray);
     .navbarBody {
         width: 100%;
         height: 50px;
@@ -11,26 +11,30 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
-        gap: 200px;
         .navbarLogo {
             width: 100px;
             height: 100px;
-            margin-bottom: 20px;
+            margin-top: 40px;
+            display: flex;
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
         }
         .navbarSearchBar {
-            width: 250px;
+            width: 330px;
             height: 30px;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
             .inputPool {
-                width: 350px;
+                width: 330px;
                 height: 8px;
                 padding: 10px 28px 10px 20px;
                 border: none;
                 border-radius: 8px;
-                background-color: var(--Gray);
+                background-color: var(--White);
                 font-family: "poppins-light";
                 position: relative;
             }
@@ -39,12 +43,6 @@
                 margin-top: 5px;
                 position: absolute;
             }
-        }
-        .navbarSettings {
-            .settingIcon {
-                cursor: pointer;
-            }
-    
         }
     }
 }
