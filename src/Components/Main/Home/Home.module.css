@@ -1,0 +1,47 @@
+.home {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    .homeTopPart {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: end;
+        justify-content: space-evenly;
+        .explore {
+            width: auto;
+            height: auto;
+            .navlink {
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                .linkToAllPosts {
+                    text-decoration: none;
+                    color: var(--MainBlue);
+                    font-family: 'poppins-semiBold';
+                }
+                .linkToAllPosts:hover {
+                    color: var(--MainRed);
+                }
+                
+                .line {
+                    width: 150px;
+                    height: 4px;
+                    background-color: var(--MainRed);
+                    border-radius: 8px;
+
+                    transform: scaleY(0);
+                    transform-origin: left;
+                    transition: transform 0.5s ease;
+                }
+                .activeLine {
+                    transform: scaleY(1);
+                }
+            }
+        }
+    }
+}
