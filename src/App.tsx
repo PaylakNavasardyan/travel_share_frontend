@@ -4,7 +4,10 @@ import Registration from './Components/Registration/Registration';
 import Login from './Components/Login/Login';
 import Forgot from './Components/Forgot/Forgot';
 import ResetPassword from './Components/Forgot/ResetPassword';
-import Navbar from './Components/Main/Navbar/Navbar';
+import TravelShareLayout from './Components/Main/Layout/TravelShareLayout';
+import AllPosts from './Components/Main/Posts/AllPosts';
+import FriendsPosts from './Components/Main/Posts/FriendsPosts';
+import MyPosts from './Components/Main/Posts/MyPosts';
 
 function App() {
   return (
@@ -38,12 +41,13 @@ function App() {
           }
         />
 
-        <Route 
-          path={'/travel-share'}
-          element = {
-            <Navbar />
-          }
-        />
+
+        <Route path="/travel-share" element={<TravelShareLayout />}>
+          <Route index element={<AllPosts />} />
+          <Route path="all-posts" element={<AllPosts />} />
+          <Route path="friends-posts" element={<FriendsPosts />} />
+          <Route path="my-posts" element={<MyPosts />} />
+        </Route>
       </Routes>
     </div>
   );
