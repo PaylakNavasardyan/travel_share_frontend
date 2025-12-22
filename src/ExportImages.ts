@@ -1,4 +1,4 @@
-import logo from './Assets/Travel-logo.svg';
+import logo from './Assets/logo.png';
 
 export default {
     logo
