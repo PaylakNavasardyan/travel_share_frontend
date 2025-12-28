@@ -36,20 +36,6 @@ export default function Home() {
                     )} 
                 </NavLink>
             </div>
-            <div className={classes.explore}>
-                <NavLink to='my-posts' className={classes.navlink}>
-                    {({isActive}) => (
-                        <>
-                            <span className={classes.linkToAllPosts}>
-                                My Posts
-                            </span>
-
-                            <div className={`${classes.line} ${isActive ? classes.activeLine : ''}`}></div>  
-                        </>
-                    )} 
-                </NavLink>
-
-            </div>
         </div>
     </div>
   )
