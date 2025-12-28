@@ -7,7 +7,7 @@
     justify-content: center;  
     border-right: 3.5px solid var(--Gray);
     margin-top: 110px;
-    .sideNav {
+    .sideBarLink {
         width: 80%;
         height: auto;
         display: flex;
@@ -16,17 +16,29 @@
         margin-top: 20px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        .icon { 
-            color: var(--MainRed);
-            margin-left: 30px;
-        }
-        span {
-            color: var(--MainRed);
-            font-family: 'poppins-light';
+        text-decoration: none;
+        .sideNav {
+            width: 100%;
+            height: auto; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .icon { 
+                color: var(--MainRed);
+                margin-left: 30px;
+            }
+            span {
+                color: var(--MainRed);
+                font-family: 'poppins-light';
+            }
         }
     }
-    .sideNav:hover {
-        background-color: var(--Gray);
+    .sideBarLink:hover {
+        background-color: var(--MainBlue);
         border-radius: 8px;
     }
+    /* .sideNav:hover {
+        background-color: var(--MainBlue);
+        border-radius: 8px;
+    } */
 }
