@@ -95,10 +95,14 @@
           font-size: 25px;
           gap: 5px;
           transition: transform 0.3s ease;
+          .goRight {
+            font-size: 40px;
+          }
         }
         button:hover {
           transform: scale(1.05);
         }
+
       }
 
       .secondPageButtons {
@@ -117,6 +121,9 @@
             border-radius: 10px 0 0 10px;
             transition: transform 0.3s ease;
             cursor: pointer;
+            .goLeft {
+              font-size: 30px;
+            }
         }
         .backToStartButton:hover {
           transform: scale(1.05);

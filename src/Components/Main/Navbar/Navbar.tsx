@@ -4,7 +4,7 @@ import image from '../../../ExportImages';
 import { GoSearch as GoSearchIcon } from "react-icons/go";
 
 export default function Navbar() {
-  const GoSearch = GoSearchIcon as unknown as React.FC<{ className: string, size: number, color: string }>
+  const GoSearch = GoSearchIcon as unknown as React.FC<{ className: string }>
 
   return (
     <div className={classes.navbar}>
@@ -22,7 +22,7 @@ export default function Navbar() {
               name='search'
             />
 
-            <GoSearch className={classes.searchIcon} size={18} color='#9ca3af'/>
+            <GoSearch className={classes.searchIcon} />
           </form>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { TbLockPassword } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 
 export default function ResetPassword() {
-  const LockPassword = TbLockPassword as unknown as React.FC<{color?: string, size?: string}>;
+  const LockPassword = TbLockPassword as unknown as React.FC<{ className: string }>;
 
   const [password, setPassword] = useState<string>('');
   const [confirmPass, setComfirmPass] = useState<string>('');
@@ -77,7 +77,7 @@ export default function ResetPassword() {
     <div className={classes.reset}>
         <div className={classes.resetBody}>
             <div className={classes.resetTitle}>
-              <LockPassword color='#FF5A5FFF' size='80'/>
+              <LockPassword className={classes.lockIcon}/>
               <p>FORGOT PASSWORD</p>
             </div>
 

@@ -32,7 +32,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-
+            .circleIcon {
+                color: var(--MainBlue);
+                font-size: 60px;
+            }
             p {
                 font-family: 'poppins-bold';
                 color: var(--MainBlue);
@@ -95,6 +98,10 @@
                     font-size: 25px;
                     gap: 5px;
                     transition: transform 0.3s ease;
+
+                    .goRight {
+                        font-size: 40px;
+                    }
                 }
                 button:hover {
                     transform: scale(1.05);
@@ -117,6 +124,10 @@
                
                 cursor: pointer;
                 transition: transform 0.3s ease;
+
+                .goLeft {
+                    font-size: 20px;
+                }
                 span {
                     font-family: "poppins-lightItalic";
                     font-size: 15px;

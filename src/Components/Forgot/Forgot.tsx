@@ -5,9 +5,9 @@ import { GoChevronRight as GoChevronRightIcon, GoChevronLeft as GoChevronLeftIco
 import { Link } from 'react-router-dom';
 
 export default function Forgot() {
-    const ExclamationCircle = BsExclamationCircle as unknown as React.FC<{color?: string, size?: number}>
-    const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ size?: number }>;
-    const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number }>;
+    const ExclamationCircle = BsExclamationCircle as unknown as React.FC<{ className: string }>
+    const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
+    const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string }>;
 
     const [email, setEmail] = useState<string>('');
     const [emailError, setEmailError] = useState<string>('');
@@ -38,7 +38,7 @@ export default function Forgot() {
     <div className={classes.forgot}>
       <div className={classes.forgotBody}>
         <div className={classes.forgotTitle}>
-            <ExclamationCircle color='#4848A0FF' size={60}/>
+            <ExclamationCircle className={classes.circleIcon}/>
             <p>FORGOT PASSWORD</p>
         </div>
 
@@ -59,14 +59,14 @@ export default function Forgot() {
             <div className={classes.forgotFirstButton}>
                 <button type="button" onClick={handleClick}>
                     Next
-                    <GoChevronRight size={40} />
+                    <GoChevronRight className={classes.goRight} />
                 </button>
             </div>
         </form>
 
             <Link className={classes.linkToLogin} to={'/user-login'}> 
                 <div className={classes.forgotGuide}>
-                    <GoChevronLeft size={20} />
+                    <GoChevronLeft className={classes.goLeft} />
                     <span>Back to Login</span>
                 </div>
             </Link>

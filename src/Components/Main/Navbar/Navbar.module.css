@@ -41,6 +41,8 @@
             .searchIcon {
                 transform: translateX(-25px);
                 margin-top: 5px;
+                font-size: 18px;
+                color: var(--DarkGray);
                 position: absolute;
             }
         }

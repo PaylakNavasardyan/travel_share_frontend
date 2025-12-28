@@ -3,12 +3,10 @@ import classes from './Registration.module.css';
 import { GoChevronRight as GoChevronRightIcon } from "react-icons/go";
 import { GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import AuthService  from '../../services/AuthService';
 
 export default function Registration() {
-  const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ size?: number }>;
-  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ size?: number }>;
+  const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
+  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
 
   type State = {
     email: string,
@@ -340,7 +338,7 @@ export default function Registration() {
               type="submit"   
             >
               Next
-              <GoChevronRight size={40} />
+              <GoChevronRight className={classes.goRight} />
             </button>
           </div>
         </form>
@@ -379,7 +377,7 @@ export default function Registration() {
               className={classes.backToStartButton}
               onClick={() => setStep(1)}
             >
-              <GoChevronLeft size={30} />
+              <GoChevronLeft className={classes.goLeft} />
             </button>
 
             <button 
