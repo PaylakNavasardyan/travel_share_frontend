@@ -7,46 +7,73 @@ import { FaPlus as FaPlusIcon } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
 export default function SideBar() {
-    const RiUserReceived2Fill = RiUserReceived2FillIcon as unknown as React.FC<{ className: string, size: number, color: string }>
-    const RiUserSharedFill = RiUserSharedFillIcon as unknown as React.FC<{ className: string, size: number, color: string}>
-    const ImProfile = ImProfileIcon as unknown as React.FC<{ className: string, size: number, color: string}>
-    const FaPlus = FaPlusIcon as unknown as React.FC<{ className: string, size: number, color: string }>
-    const IoMdSettings = IoMdSettingsIcon as unknown as React.FC<{ className: string, size: number, color: string }>
+    const RiUserReceived2Fill = RiUserReceived2FillIcon as unknown as React.FC<{ className: string }>
+    const RiUserSharedFill = RiUserSharedFillIcon as unknown as React.FC<{ className: string}>
+    const ImProfile = ImProfileIcon as unknown as React.FC<{ className: string}>
+    const FaPlus = FaPlusIcon as unknown as React.FC<{ className: string }>
+    const IoMdSettings = IoMdSettingsIcon as unknown as React.FC<{ className: string }>
     
     const location = useLocation();
     return (
       <div className={classes.sideBar}>   
       <Link
-        to='/follow'
+        to='/followers'
         state={{ backgroundLocation: location }}
         className={classes.sideBarLink}
         >
         
         <div className={`${classes.sideNav} ${classes.followersPart}`}>
-          <RiUserSharedFill  className={classes.icon} size={25} color='#FF5A5FFF'/>
+          <RiUserSharedFill  className={classes.icon} />
           <span>Followers</span>
         </div>
       </Link>
 
+      <Link
+        to='/following'
+        state={{ backgroundLocation: location }}
+        className={classes.sideBarLink}
+        >
         <div className={`${classes.sideNav} ${classes.followingPart}`}>
-          <RiUserReceived2Fill  className={classes.icon} size={25} color='#FF5A5FFF'/>
+          <RiUserReceived2Fill  className={classes.icon} />
           <span>Following</span>
         </div>
+      </Link>
+
+      <Link
+        to='/my-profile'
+        state={{ backgroundLocation: location }}
+        className={classes.sideBarLink}
+        >
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
-          <ImProfile  className={classes.icon} size={25} color='#FF5A5FFF'/>
+          <ImProfile  className={classes.icon} />
           <span>My Profile</span> 
         </div>
+      </Link>
+
+      <Link
+        to='/create-posts'
+        state={{ backgroundLocation: location }}
+        className={classes.sideBarLink}
+        >
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
-          <FaPlus  className={classes.icon} size={25} color='#FF5A5FFF'/>
+          <FaPlus  className={classes.icon} />
           <span>Create Posts</span>
         </div>
+      </Link>
+
+      <Link
+        to='/settings'
+        state={{ backgroundLocation: location }}
+        className={classes.sideBarLink}
+        >
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
-          <IoMdSettings  className={classes.icon} size={25} color='#FF5A5FFF'/>
+          <IoMdSettings  className={classes.icon} />
           <span>Settings</span>
         </div>
+      </Link>
     </div>
   )
 }

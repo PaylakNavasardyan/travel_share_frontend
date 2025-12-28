@@ -26,6 +26,7 @@
             .icon { 
                 color: var(--MainRed);
                 margin-left: 30px;
+                font-size: 25px;
             }
             span {
                 color: var(--MainRed);
@@ -37,8 +38,4 @@
         background-color: var(--MainBlue);
         border-radius: 8px;
     }
-    /* .sideNav:hover {
-        background-color: var(--MainBlue);
-        border-radius: 8px;
-    } */
 }
