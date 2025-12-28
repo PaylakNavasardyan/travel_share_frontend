@@ -7,7 +7,8 @@ import ResetPassword from './Components/Forgot/ResetPassword';
 import TravelShareLayout from './Components/Main/Layout/TravelShareLayout';
 import AllPosts from './Components/Main/Posts/AllPosts';
 import FriendsPosts from './Components/Main/Posts/FriendsPosts';
-import Follow from './Components/Main/UserControls/Follow/Follow';
+import Followers from './Components/Main/UserControls/Follow/Followers';
+import Following from './Components/Main/UserControls/Follow/Following';
 
 function App() {
   const location = useLocation();
@@ -30,7 +31,8 @@ function App() {
 
       {state?.backgroundLocation && (
         <Routes>
-          <Route path="/follow" element={<Follow />} />
+          <Route path="/followers" element={<Followers />} />
+          <Route path="/following" element={<Following />} />
         </Routes>
       )}
     </div>
