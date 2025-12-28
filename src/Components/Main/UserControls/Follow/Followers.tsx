@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import classes from './Follow.module.css';
+import classes from './Followers.module.css';
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import { GoSearch as GoSearchIcon } from "react-icons/go";
 
