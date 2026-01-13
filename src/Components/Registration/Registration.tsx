@@ -1,8 +1,10 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import classes from './Registration.module.css';
 import { GoChevronRight as GoChevronRightIcon } from "react-icons/go";
 import { GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import AuthService from '../../services/AuthService';
 
 export default function Registration() {
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
@@ -47,7 +49,8 @@ export default function Registration() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const [step, setStep] = useState<number>(1);
-  const [error, setError] = useState<ErrorState>({
+
+  const [error, setError] = useState<ErrorState>({  
     emailError: '',
     userNameError: '',
     passwordError: '',
@@ -55,6 +58,14 @@ export default function Registration() {
     nameError: '',
     surnameError: ''
   });
+
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (step === 2) {
+      setApiError('')
+    }
+  }, [step]) 
 
   const navigate = useNavigate();
 
@@ -248,32 +259,39 @@ export default function Registration() {
     setStep(2);
   };
   
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const approvedNameError = validName(state);
     const approvedSurnameError = validSurnaame(state);
-        
+    
     setError(prev => ({
       ...prev,
       nameError: approvedNameError,
       surnameError: approvedSurnameError
     }));
 
-    if (approvedNameError || approvedSurnameError) {
-      return;
-    };
+    try {
+     const response = await AuthService.registration(state);
+     console.log(response.data);
 
-    console.log(approvedNameError);
-    
-    navigate('/travel-share');
+     navigate('/travel-share')
+    }catch (error: unknown) {
+      if (approvedNameError || approvedSurnameError) {
+        return;
+      }else if (axios.isAxiosError(error)) {
+        setApiError(error.response?.data.data.reason || 'Something went wrong');
+      
+        setStep(1);
+      }
+    }
   };
 
   return (
     <div className={classes.registration}>
       <div className={classes.registrationBody}>
         <p className={classes.registrationTitle}>CREATE ACCOUNT</p>
-
+        {apiError && <p className={classes.apiErrorMessage}>{apiError}</p>}
         <form
           className={`${classes.form} ${step === 1 ? classes.active : ''}`}
           onSubmit={handleFirstSubmit}

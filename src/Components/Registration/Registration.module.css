@@ -29,6 +29,12 @@
       z-index: 10;
       position: relative;
     }
+    .apiErrorMessage {
+      color: red;
+      font-size: 14px;
+      margin: 0;
+      font-family: 'poppins-semiBold';
+    }
     form {
       width: 100%;
       height: auto;
