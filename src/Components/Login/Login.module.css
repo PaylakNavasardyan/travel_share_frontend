@@ -27,7 +27,13 @@
       margin-bottom: 30px;
       z-index: 10;
     }
-
+    .apiErrorMessage {
+      color: red;
+      font-size: 14px;
+      margin: 0;
+      font-family: 'poppins-semiBold';
+    }
+    
     .form {
       width: 100%;
       height: auto;
@@ -44,12 +50,6 @@
         align-items: center;
         justify-content: flex-end;
         gap: 0;
-        .errorMessage {
-          color: red;
-          font-size: 12px;
-          margin: 0;
-          font-family: 'poppins-italic';
-        }
         .loginFields {
           width: 250px;
           height: 25px;
