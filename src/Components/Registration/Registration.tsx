@@ -272,8 +272,7 @@ export default function Registration() {
     }));
 
     try {
-     const response = await AuthService.registration(state);
-     console.log(response.data);
+     await AuthService.registration(state);
 
      navigate('/travel-share')
     }catch (error: unknown) {
@@ -281,7 +280,7 @@ export default function Registration() {
         return;
       }else if (axios.isAxiosError(error)) {
         setApiError(error.response?.data.data.reason || 'Something went wrong');
-      
+        
         setStep(1);
       }
     }
