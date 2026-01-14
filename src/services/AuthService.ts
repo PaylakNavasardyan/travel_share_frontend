@@ -11,6 +11,11 @@ type RegistrationBody = {
     confirmPass: string;
 }
 
+type LoginBody = {
+    login: string;
+    password: string
+}
+
 export default class AuthService {
     static async registration(body: RegistrationBody):Promise<AxiosResponse<ApiResponse<Auth.Session>>> {
         return $api.post('/api/user/registration', {
@@ -23,8 +28,11 @@ export default class AuthService {
         });
     }
 
-    static async login(password: string, email?: string, username?: string): Promise<AxiosResponse<ApiResponse<Auth.Session>>> {
-        return $api.post('/api/user/login', {email, username, password}) 
+    static async login(body: LoginBody): Promise<AxiosResponse<ApiResponse<Auth.Session>>> {
+        return $api.post('/api/user/login', {
+            login: body.login,
+            password: body.password
+        });
     } 
 
     static async forgot(email: string): Promise<AxiosResponse<ApiResponse<Auth.ForgotPassword>>> {
