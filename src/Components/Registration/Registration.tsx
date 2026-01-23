@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import classes from './Registration.module.css';
-import { GoChevronRight as GoChevronRightIcon } from "react-icons/go";
-import { GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
+import { GoChevronRight as GoChevronRightIcon, GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthService from '../../services/AuthService';
+import { useUser } from '../../context/UserContext';
 
 export default function Registration() {
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
@@ -23,7 +23,7 @@ export default function Registration() {
     name: keyof State,
     value: string
   };
-
+  
   const initialState: State = {
     email: '',
     userName: '',
@@ -37,19 +37,19 @@ export default function Registration() {
     field: string,
     message: string
   };
-
+  
   type ErrorState = {
     [key: string]: string
   };
-
+  
   function reducer(state: State, action: Action) {
     return { ...state, [action.name]: action.value };
   };
-
+  
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  
   const [step, setStep] = useState<number>(1);
-
+  
   const [error, setError] = useState<ErrorState>({  
     emailError: '',
     userNameError: '',
@@ -58,16 +58,18 @@ export default function Registration() {
     nameError: '',
     surnameError: ''
   });
-
+  
   const [apiError, setApiError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     if (step === 2) {
       setApiError('')
     }
   }, [step]) 
-
+  
   const navigate = useNavigate();
+
+  const { setUser } = useUser();
 
   const updateError = ({ field, message }: ErrorMessage): void => {
     setError((prev: ErrorState) => ({
@@ -258,7 +260,7 @@ export default function Registration() {
 
     setStep(2);
   };
-  
+
   const handleClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -272,8 +274,17 @@ export default function Registration() {
     }));
 
     try {
-     await AuthService.registration(state);
+     let response = await AuthService.registration(state);
 
+     setUser({
+      userName: response.data.data.user.username, // or whatever the actual property name is
+      email: response.data.data.user.email,
+      name: response.data.data.user.name,
+      surname: response.data.data.user.surname
+     });
+
+     console.log('set user',setUser)
+     
      navigate('/travel-share')
     }catch (error: unknown) {
       if (approvedNameError || approvedSurnameError) {
@@ -284,7 +295,7 @@ export default function Registration() {
         setStep(1);
       }
     }
-  };
+};
 
   return (
     <div className={classes.registration}>

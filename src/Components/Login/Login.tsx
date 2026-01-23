@@ -3,6 +3,7 @@ import classes from './Login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthService from '../../services/AuthService';
 import axios from 'axios';
+import { useUser } from '../../context/UserContext';
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');
@@ -10,6 +11,8 @@ export default function Login() {
     const [apiError, setApiError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+
+    const { setUser } = useUser();
 
     const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -26,7 +29,15 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            await AuthService.login({login, password});
+            let response = await AuthService.login({login, password});
+
+            setUser({
+                userName: response.data.data.user.username,
+                email: response.data.data.user.email,
+                name: response.data.data.user.name,
+                surname: response.data.data.user.surname
+            });
+    
             navigate("/travel-share")
         }catch(error: unknown) {
             if (axios.isAxiosError(error)) { 
