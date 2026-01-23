@@ -41,7 +41,6 @@ export default function SideBar() {
 
       <Link
         to='/my-profile'
-        state={{ backgroundLocation: location }}
         className={classes.sideBarLink}
         >
 
