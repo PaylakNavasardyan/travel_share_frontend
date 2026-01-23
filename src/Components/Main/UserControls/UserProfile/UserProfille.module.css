@@ -1,0 +1,83 @@
+.profile {
+    width: 100%;
+    height: auto;
+    display: flex;
+    .profileBar {
+        width: 30%;
+        height: 100%;
+        overflow: hidden;
+        .icon {
+            width: 100%;
+            height: 80px;
+            .backgroundForIcon {
+                width: 60px;
+                height: 60px;
+                background-color: var(--Gray);
+                opacity: 0.5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 10px;
+                margin: 25px;
+                transition: transform 0.3s;
+                .goLeftIcon {
+                    color: var(--MainBlue);
+                    font-size: 40px;
+                }
+            }
+            .backgroundForIcon:hover {
+                transform: scale(1.1);
+            }
+        }
+        
+        .profileInfo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .profileImage {
+                width: 180px;
+                height: 180px;
+                background-color: var(--PlatiniumGreen);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .nameLetter {
+                    font-size: 60px;
+                    font-family: 'poppins-light';
+                    color: var(--MainRed);
+                }
+            }
+            .personalInfo {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                .userData {
+                    font-family: 'poppins-lightitalic';
+                    color: var(--Black);
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0;
+                }
+                .userName {
+                    font-family: 'poppins-italic';
+                    font-size: larger;
+                }
+            }
+        }
+    }
+
+    .profilePosts {
+        width: 70%;
+        height: 100%;
+        background-color: blue;
+    }
+}
