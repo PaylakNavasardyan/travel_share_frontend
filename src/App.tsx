@@ -9,6 +9,8 @@ import AllPosts from './Components/Main/Posts/AllPosts';
 import FriendsPosts from './Components/Main/Posts/FriendsPosts';
 import Followers from './Components/Main/UserControls/Follow/Followers';
 import Following from './Components/Main/UserControls/Follow/Following';
+import UserProfile from './Components/Main/UserControls/UserProfile/UserProfile';
+import Navbar from './Components/Main/Navbar/Navbar';
 
 function App() {
   const location = useLocation();
@@ -21,6 +23,13 @@ function App() {
         <Route path="/user-login" element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        
+        <Route path="/my-profile" element={
+          <>
+            <Navbar />
+            <UserProfile />
+          </>
+        } />
 
         <Route path="/travel-share" element={<TravelShareLayout />}>
           <Route index element={<AllPosts />} />
