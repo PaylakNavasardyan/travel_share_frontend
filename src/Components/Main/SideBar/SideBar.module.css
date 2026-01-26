@@ -15,7 +15,6 @@
         gap: 10px;
         margin-top: 20px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
         text-decoration: none;
         .sideNav {
             width: 100%;
@@ -23,6 +22,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: background-color 0.3s ease;
             .icon { 
                 color: var(--MainRed);
                 margin-left: 30px;
@@ -33,9 +33,91 @@
                 font-family: 'poppins-light';
             }
         }
+
     }
-    .sideBarLink:hover {
+   
+    .sideNav:hover {
         background-color: var(--MainBlue);
         border-radius: 8px;
+    }
+
+    .active {
+        width: 60%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 500px;
+        opacity: 1;
+        transform: translateY(15px);
+        
+        transition:
+        max-height 0.35s ease,
+        opacity 0.25s ease,
+        transform 0.35s ease;
+
+        .settingBarLink {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            color: var(--MainRed);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+
+            .icon {
+                margin-left: 35px;
+                font-size: 20px;
+            }
+
+            span {
+                font-family: 'poppins-light';
+                font-size: 15px;
+            }
+        }
+        .settingBarLink:hover {
+            background-color: var(--PlatiniumGreen);
+            border-radius: 8px;
+        }
+    }
+    .passive {
+        width: 60%;
+        display: flex; 
+        flex-direction: column;
+        gap: 10px;
+
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        overflow: hidden;
+        pointer-events: none;
+
+        transition:
+            max-height 0.35s ease,
+            opacity 0.25s ease,
+            transform 0.35s ease;
+
+        .settingBarLink {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: none;
+            gap: 15px;
+            color: var(--MainRed);
+            .icon {
+                margin-left: 35px;
+                font-size: 20px;
+            }
+
+            span {
+                font-family: 'poppins-light';
+                font-size: 15px;
+            }
+        }
     }
 }
