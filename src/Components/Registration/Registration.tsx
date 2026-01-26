@@ -277,10 +277,11 @@ export default function Registration() {
      let response = await AuthService.registration(state);
 
      setUser({
-      userName: response.data.data.user.username, // or whatever the actual property name is
+      userName: response.data.data.user.username, 
       email: response.data.data.user.email,
       name: response.data.data.user.name,
-      surname: response.data.data.user.surname
+      surname: response.data.data.user.surname,
+      profilePicture: response.data.data.user.profilePicture
      });
 
      console.log('set user',setUser)

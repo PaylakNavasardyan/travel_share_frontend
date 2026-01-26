@@ -30,12 +30,14 @@ export default function Login() {
 
         try {
             let response = await AuthService.login({login, password});
-
+            console.log(response.data)
+            console.log('hello')
             setUser({
                 userName: response.data.data.user.username,
                 email: response.data.data.user.email,
                 name: response.data.data.user.name,
-                surname: response.data.data.user.surname
+                surname: response.data.data.user.surname,
+                profilePicture: response.data.data.user.profilePicture
             });
     
             navigate("/travel-share")
