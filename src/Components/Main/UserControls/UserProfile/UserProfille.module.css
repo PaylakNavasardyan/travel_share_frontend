@@ -51,6 +51,12 @@
                     font-family: 'poppins-light';
                     color: var(--MainRed);
                 }
+                .profilePic {
+                    width: 180px;
+                    height: 180px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
             }
             .personalInfo {
                 width: 100%;
