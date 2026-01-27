@@ -1,0 +1,139 @@
+.editModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    overflow: hidden;
+    .editModalBody {
+        width: 1200px;
+        height: 650px;
+        display: flex;
+        background-color: var(--White);
+        border-radius: 12px;
+        .editProfilePic {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            gap: 40px;
+            .goBackShadow {
+                width: 50px;
+                height: 50px;
+                background-color: var(--Gray);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: flex-start;
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 8px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: transform 0.3s;
+                
+                .goBackButton {
+                    font-size: 25px;
+                    color: var(--MainBlue);
+                }
+            }
+            .goBackShadow:hover {
+                transform: scale(1.1);
+            }
+            .profilePic {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                border: 10px solid var(--PlatiniumGreen);
+                object-fit: cover;
+            }
+            .letterShadow {
+                width: 190px;
+                height: 190px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background-color:  var(--PlatiniumGreen);
+                border: 10px solid var(--DarkGray);
+                .nameLetter {
+                    font-size: 70px;
+                    font-family: 'poppins-light';
+                    color: var(--MainRed);
+                }
+            }
+            .photoButton {
+                width: 160px;
+                height: 35px;
+                border-radius: 8px;
+                border: none;
+                background-color: var(--PlatiniumGreen);
+                color: var(--MainRed);
+                font-family: 'poppins-semiBold';
+                font-size: 15px;
+                cursor: pointer;
+                transition: transform 0.3s;
+            }
+            .photoButton:hover {
+                transform: scale(1.02);
+            }
+        }
+        .editProfileData {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--MainRed); 
+            border-radius: 0 12px 12px 0;
+            .pools{
+                width: auto;
+                height: auto;
+                margin-bottom: 10px;
+                p {
+                    font-family: 'poppins-italic';
+                    font-size: 13px;
+                    color: var(--MainBlue);
+                    margin-bottom: 0;
+                }
+                .dataInput {
+                    width: 250px;
+                    height: 15px;
+                    border-radius: 8px;
+                    border: none;
+                    background-color: var(--Gray);
+                    padding: 10px 20px 10px 20px;
+                    font-family: "poppins-light";
+                }
+                .dataInput::placeholder {
+                    font-family: 'poppins-lightitalic';
+                    font-size: 12px;
+                }
+            }  
+            .dataButton {
+                width: 290px;
+                height: 35px;
+                border-radius: 8px;
+                border: none;
+                background-color: var(--MainBlue);
+                color: var(--White);
+                font-family: 'poppins-semiBold';
+                font-size: 15px;
+                cursor: pointer;
+                transition: transform 0.3s;
+                margin-top: 40px;
+            }
+            .dataButton:hover {
+                transform: scale(1.02);
+            } 
+            
+        }
+    }
+}
