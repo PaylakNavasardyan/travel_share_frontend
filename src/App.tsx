@@ -11,6 +11,7 @@ import Followers from './Components/Main/UserControls/Follow/Followers';
 import Following from './Components/Main/UserControls/Follow/Following';
 import UserProfile from './Components/Main/UserControls/UserProfile/UserProfile';
 import Navbar from './Components/Main/Navbar/Navbar';
+import EditProfile from './Components/Main/UserControls/EditProfile/EditProfile';
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
         <Routes>
           <Route path="/followers" element={<Followers />} />
           <Route path="/following" element={<Following />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
       )}
     </div>
