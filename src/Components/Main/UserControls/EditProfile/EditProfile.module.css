@@ -97,10 +97,16 @@
                 width: auto;
                 height: auto;
                 margin-bottom: 10px;
-                p {
+                .fieldName {
                     font-family: 'poppins-italic';
                     font-size: 13px;
                     color: var(--MainBlue);
+                    margin-bottom: 0;
+                }
+                .errorMessage {
+                    font-family: 'poppins-italic';
+                    font-size: 10px;
+                    color: var(--White);
                     margin-bottom: 0;
                 }
                 .dataInput {
@@ -117,6 +123,13 @@
                     font-size: 12px;
                 }
             }  
+            .passFielErrorMessage {
+                font-family: 'poppins-italic';
+                font-size: 13px;
+                color: var(--MainBlue);
+                margin: 0;
+
+            }
             .dataButton {
                 width: 290px;
                 height: 35px;
