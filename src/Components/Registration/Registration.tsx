@@ -96,8 +96,8 @@ export default function Registration() {
       return 'Your username must start with Latin letter';
     } else if (!lettersAndNumbersOnlyRegex.test(state.userName)) {
       return 'Your name must contain only Latin letters and numbers';
-    } else if (state.userName.length < 6) {
-      return 'Your username cannot contain fewer than 6 characters';
+    } else if (state.userName.length < 5) {
+      return 'Your username cannot contain fewer than 5 characters';
     } else if (state.userName.length > 15) {
       return 'Your username cannot contain more than 15 charactes';
     }
@@ -182,7 +182,7 @@ export default function Registration() {
     return '';
   };
 
-  const validSurnaame = (state: State): string => {
+  const validSurname = (state: State): string => {
     const surname = (state.surname ?? '').trim();
     
     const startsWithLetterRegex = /^[a-zA-Z]/;
@@ -265,7 +265,7 @@ export default function Registration() {
     e.preventDefault();
 
     const approvedNameError = validName(state);
-    const approvedSurnameError = validSurnaame(state);
+    const approvedSurnameError = validSurname(state);
     
     setError(prev => ({
       ...prev,
