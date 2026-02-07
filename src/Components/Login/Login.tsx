@@ -30,16 +30,14 @@ export default function Login() {
 
         try {
             let response = await AuthService.login({login, password});
-            console.log(response.data)
-            console.log('hello')
+
+            let user = response.data.data.user;
             setUser({
                 userName: response.data.data.user.username,
-                email: response.data.data.user.email,
-                name: response.data.data.user.name,
-                surname: response.data.data.user.surname,
-                profilePicture: response.data.data.user.profilePicture
+                ...user
             });
-    
+
+            localStorage.setItem('token', response.data.data.accessToken)
             navigate("/travel-share")
         }catch(error: unknown) {
             if (axios.isAxiosError(error)) { 
