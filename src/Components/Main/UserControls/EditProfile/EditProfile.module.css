@@ -126,9 +126,8 @@
             .passFielErrorMessage {
                 font-family: 'poppins-italic';
                 font-size: 13px;
-                color: var(--MainBlue);
+                color: var(--White);
                 margin: 0;
-
             }
             .dataButton {
                 width: 290px;

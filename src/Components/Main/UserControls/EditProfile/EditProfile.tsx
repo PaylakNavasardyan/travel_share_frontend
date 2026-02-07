@@ -1,27 +1,28 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useRef } from 'react';
 import classes from './EditProfile.module.css';
 import { useUser } from '../../../../context/UserContext';
-import { API_URL } from '../../../../http';
+import $api, { API_URL } from '../../../../http';
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import AuthService from '../../../../services/AuthService';
 
 export default function EditProfile() {
   const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string }>;
 
   type State = {
-    email: string,
-    userName: string,
-    name: string,
-    surname: string,
-    password: string,
-    newPass: string, 
-    confirmNewPass: string
+    email?: string,
+    userName?: string,
+    name?: string,
+    surname?: string,
+    password?: string,
+    newPass?: string, 
+    confirmNewPass?: string
   };
 
-  type Action = {
-    name: keyof State,
-    value: string
-  };
+  type Action = 
+  | { type: 'CHANGE_FIELD'; name: keyof State; value: string }
+  | { type: 'RESET_FORM' };
 
   type ErrorState = {
     emailError?: string;
@@ -43,11 +44,20 @@ export default function EditProfile() {
   }; 
 
   function reducer(state: State, action: Action) {
-    return {
-      ...state,
-      [action.name]: action.value
-    }
-  };
+    switch (action.type) {
+      case 'CHANGE_FIELD':
+        return {
+          ...state,
+          [action.name]: action.value
+        };
+
+      case 'RESET_FORM':
+        return initialState;
+      
+      default:
+        return state;
+    };
+  }
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -56,7 +66,33 @@ export default function EditProfile() {
   const [error, setError] = useState<ErrorState>({});
   const [passFieldError, setPassFieldError] = useState<string>('');
 
-  const { user } = useUser();
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [imgPreview, setImgPreview] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  const { user, setUser } = useUser();
+
+  const handleImageUpload = () => {
+    fileRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAvatarFile(file);
+    setImgPreview(URL.createObjectURL(file));
+  };
+
+
+  const uploadAvatar = async(file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    let response = await $api.post(`${API_URL}/api/user/upload/profile`, formData);
+
+    return response.data
+  }
 
   let nameFirtLetter = user?.userName[0].toUpperCase();
   let profilePic_URL = user?.profilePicture;
@@ -130,12 +166,13 @@ export default function EditProfile() {
   };
 
   const validConfirmNewPass = (state: State): string => {
-    if (!validConfirmNewPass) return '';
+    if (!state.confirmNewPass) return '';
     if (state.confirmNewPass !== state.newPass) {
       return 'Repeat Password does not match with Password';
     }
     return '';
   };
+
 
   const validName = (state: State): string => {
     if (!state.name) return '';
@@ -207,15 +244,15 @@ export default function EditProfile() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch({
+      type: 'CHANGE_FIELD',
       name: e.target.name as keyof State,
       value: e.target.value
     })
   };
-
     
-  const handleClick = async(e: React.MouseEvent<HTMLButtonElement>) => { 
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => { 
     e.preventDefault();
-         
+    
     const newErrors = {
       emailError: validEmail(state),
       userNameError: validUserName(state),
@@ -224,9 +261,9 @@ export default function EditProfile() {
       newPassError: validNewPass(state),
       confirmNewPassError: validConfirmNewPass(state),
     };
-
+  
     setError(newErrors);
-
+  
     const passFields = [state.password, state.newPass, state.confirmNewPass];
     const hasAll = passFields.every(Boolean);
     const hasAny = passFields.some(Boolean);
@@ -236,12 +273,43 @@ export default function EditProfile() {
         'All password fields are required if you start filling any of them'
       );
       return;
-    } else {
-      setPassFieldError('');
-    }
+      } else {
+        setPassFieldError('');
+      }
+    
+      const hasErrors = Object.values(newErrors).some(Boolean);
+      if (hasErrors) return;
 
-    const hasErrors = Object.values(newErrors).some(Boolean);
-    if (hasErrors) return;
+    try {
+      let newProfilePicture = user?.profilePicture;
+
+      if (avatarFile) {
+        const avatarResponse = await uploadAvatar(avatarFile);
+        newProfilePicture = avatarResponse.profilePicture;
+      }
+
+      let response = await AuthService.edit(state);
+      console.log(response.data)
+
+      const apiUser = response.data.data.user;
+
+      dispatch({ type: 'RESET_FORM' });
+      setAvatarFile(null);
+      setImgPreview(null);
+      
+      setUser({
+        userName: apiUser.username,
+        email: apiUser.email,
+        name: apiUser.name,
+        surname: apiUser.surname,
+        profilePicture: newProfilePicture ?? apiUser.profilePicture
+      });
+      
+      localStorage.setItem('token', response.data.data.accessToken);
+
+    }catch (error: unknown) {
+      if (axios.isAxiosError(error))  return;
+    }
   }
 
   return (
@@ -255,19 +323,34 @@ export default function EditProfile() {
           </div>
 
           {
-            profilePic_URL 
-              ? 
-              <img 
-                className={classes.profilePic}
-                src={profilePic}
-                alt="Profile-Picture" />
-              : 
-              <div className={classes.letterShadow}>
-                <p className={classes.nameLetter}>{nameFirtLetter}</p> 
-              </div>
+            (profilePic_URL || imgPreview)
+              ? (
+                  <img
+                    className={classes.profilePic}
+                    src={imgPreview ?? profilePic}
+                    alt="Profile-Picture"
+                  />
+                )
+              : (
+                  <div className={classes.letterShadow}>
+                    <p className={classes.nameLetter}>{nameFirtLetter}</p>
+                  </div>
+                )
           }
 
-          <button className={classes.photoButton}>Change Photo</button>
+          <button 
+            className={classes.photoButton}
+            onClick={handleImageUpload}
+            >Change Photo
+          </button>
+
+          <input 
+            ref={fileRef}
+            type='file'
+            accept='image/*'
+            hidden
+            onChange={handleFileChange}
+          />
         </div>
 
         <div className={classes.editProfileData}>
@@ -283,7 +366,7 @@ export default function EditProfile() {
               value={state.email}
               name='email'
               onChange={handleChange}
-              placeholder={user?.email}
+              placeholder={user?.email ?? 'Email'}
             />  
           </div>
 
@@ -299,7 +382,7 @@ export default function EditProfile() {
               value={state.userName}
               name='userName'
               onChange={handleChange}
-              placeholder={user?.userName}
+              placeholder={user?.userName ?? 'Username'}
             />
           </div>
 
@@ -315,7 +398,7 @@ export default function EditProfile() {
               value={state.name}
               name='name'
               onChange={handleChange}
-              placeholder={user?.name ? user.name : "Name"}
+              placeholder={user?.name ?? "Name"}
               />
           </div>
 
@@ -331,7 +414,7 @@ export default function EditProfile() {
               value={state.surname}
               name='surname'
               onChange={handleChange}
-              placeholder={user?.name ? user.name : "Surname"}
+              placeholder={user?.surname ?? "Surname"}
             />
           </div>
 
