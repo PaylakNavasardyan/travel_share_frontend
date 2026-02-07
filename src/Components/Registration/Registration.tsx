@@ -276,15 +276,13 @@ export default function Registration() {
     try {
      let response = await AuthService.registration(state);
 
+     let user = response.data.data.user;
      setUser({
-      userName: response.data.data.user.username, 
-      email: response.data.data.user.email,
-      name: response.data.data.user.name,
-      surname: response.data.data.user.surname,
-      profilePicture: response.data.data.user.profilePicture
+      userName: response.data.data.user.username,
+      ...user
      });
 
-     console.log('set user',setUser)
+     localStorage.setItem('token', response.data.data.accessToken);
      
      navigate('/travel-share')
     }catch (error: unknown) {
