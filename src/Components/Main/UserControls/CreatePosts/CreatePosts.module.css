@@ -1,0 +1,100 @@
+.postsModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    overflow: hidden;
+    .postsBody {
+        width: 700px;
+        height: 700px;
+        background-color: var(--White);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        gap: 20px;
+        .postDescription {
+            width: 350px;
+            height: 100px;
+            border-radius: 8px;
+            border: 2px solid var(--PlatiniumGreen);
+            padding: 10px 20px 10px 20px;
+            font-family: 'Popins-Light';
+            font-size: 18px;
+            resize: none; 
+            vertical-align: top;
+        }
+        .postPicture {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            background-color: var(--DarkGray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--White);
+            font-family: 'Poppins-Bold';
+            font-size: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            .picIcon {
+                font-size: 150px;
+            }
+            .tooltip {
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                transform: translateY(-50%);
+                background: #333;
+                color: #fff;
+                padding: 6px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.2s;
+            }
+        }
+        .postPicture:hover .tooltip {
+            opacity: 1;
+            visibility: visible;        
+        }
+        .postButtons {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+            .button {
+                width: 140px;
+                height: 35px;
+                border-radius: 8px;
+                border: none;
+                color: var(--White);
+                font-size: large;
+                font-family: 'Poppins-Light';
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: transform(0.3s);
+            }
+            .button:hover {
+                transform: scale(1.02);
+            }
+            .refuse {
+                background-color: var(--MainRed);
+            }
+            .confirm {
+                background-color: var(--MainBlue);
+            }
+        }
+    }
+}
