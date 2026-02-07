@@ -366,7 +366,7 @@ export default function EditProfile() {
               value={state.email}
               name='email'
               onChange={handleChange}
-              placeholder={user?.email ?? 'Email'}
+              placeholder={user?.email ? user.email : "Email"}
             />  
           </div>
 
@@ -382,7 +382,7 @@ export default function EditProfile() {
               value={state.userName}
               name='userName'
               onChange={handleChange}
-              placeholder={user?.userName ?? 'Username'}
+              placeholder={user?.userName ? user.userName : "Userame"}
             />
           </div>
 
@@ -398,7 +398,7 @@ export default function EditProfile() {
               value={state.name}
               name='name'
               onChange={handleChange}
-              placeholder={user?.name ?? "Name"}
+              placeholder={user?.name ? user.name : "Name"}
               />
           </div>
 
@@ -414,7 +414,7 @@ export default function EditProfile() {
               value={state.surname}
               name='surname'
               onChange={handleChange}
-              placeholder={user?.surname ?? "Surname"}
+              placeholder={user?.surname ? user.surname : "Surname"}
             />
           </div>
 
