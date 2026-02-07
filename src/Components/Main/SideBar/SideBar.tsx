@@ -8,7 +8,7 @@ import {
 } from "react-icons/ri";
 import { ImProfile as ImProfileIcon } from "react-icons/im";
 import { FaPlus as FaPlusIcon, FaRegEdit as FaRegEditIcon  } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function SideBar() {
   const RiUserReceived2Fill = RiUserReceived2FillIcon as unknown as React.FC<{ className: string }>
@@ -20,13 +20,11 @@ export default function SideBar() {
   const RiLogoutBoxRLine = RiLogoutBoxRLineIcon as unknown as React.FC<{ className: string }>
   
   const location = useLocation();
-  const navigate = useNavigate();
 
   const[isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleChange = (): void => {
     setIsOpen(prev => !prev);
-    console.log('true')
   };
 
   return (
