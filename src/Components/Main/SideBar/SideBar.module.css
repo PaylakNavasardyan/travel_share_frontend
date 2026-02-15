@@ -6,7 +6,8 @@
     align-items: center;
     justify-content: center;  
     border-right: 3.5px solid var(--Gray);
-    margin-top: 110px;
+    margin-top: 160px;
+    position: fixed;
     .sideBarLink {
         width: 80%;
         height: auto;
