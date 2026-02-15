@@ -41,6 +41,9 @@
             font-size: 40px;
             border-radius: 8px;
             cursor: pointer;
+            .picture {
+                object-fit: cover;  
+            }
             .picIcon {
                 font-size: 150px;
             }
