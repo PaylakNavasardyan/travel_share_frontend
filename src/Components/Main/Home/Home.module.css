@@ -5,10 +5,16 @@
     flex-direction: column;
     .homeTopPart {
         width: 100%;
-        height: 80px;
+        height: 140px;
         display: flex;
         align-items: end;
         justify-content: space-evenly;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        background-color: var(--White);
+        transition: transform 0.3s ease;
         .explore {
             width: auto;
             height: auto;
@@ -27,13 +33,11 @@
                 .linkToAllPosts:hover {
                     color: var(--MainRed);
                 }
-                
                 .line {
                     width: 150px;
                     height: 4px;
                     background-color: var(--MainRed);
                     border-radius: 8px;
-
                     transform: scaleY(0);
                     transform-origin: left;
                     transition: transform 0.5s ease;
@@ -44,4 +48,11 @@
             }
         }
     }
+    .navSpacer {
+        height: 120px;
+    }
+}
+
+.hiddenTop {
+    transform: translateY(-100%);
 }
