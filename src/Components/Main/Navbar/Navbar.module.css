@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
     background-color: var(--DarkGray);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     .navbarBody {
         width: 100%;
         height: 50px;
