@@ -3,15 +3,24 @@ import $api, { API_URL } from '../../../http'
 import { Post } from '../../../types/post';
 import classes from './Post.module.css'
 import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
-import { GoComment as GoCommentIcon } from "react-icons/go";
+import { 
+  GoComment as GoCommentIcon,
+  GoChevronRight as GoChevronRightIcon,
+  GoChevronLeft as GoChevronLeftIcon,
+  GoDotFill as GoDotFillIcon
+} from "react-icons/go";
 import { useUser } from '../../../context/UserContext';
 
 export default function AllPosts() {
   const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
-  const SIDislike = SlDislikeIcon as unknown as React.FC<{className: string}>
-  const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>
+  const SIDislike = SlDislikeIcon as unknown as React.FC<{className: string}>;
+  const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
+  const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
+  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
+  const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
 
   const [posts, setPosts] = useState<Post[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
   
   const { user } = useUser();
 
@@ -21,6 +30,8 @@ export default function AllPosts() {
         let response = await $api.get('/api/posts/?page=1&limit=50&sort=most_like');
         
         setPosts(response.data.data.posts);
+        console.log(response.data.data.posts)
+        
       } catch (error) {
         console.log(error)
       }
@@ -29,25 +40,82 @@ export default function AllPosts() {
     postGetter();
   }, []);
 
+  const nextSlide = (postId: string, mediaLenght: number) => {
+    setCurrentIndex(prev => (
+      {
+        ...prev,
+        [postId]: ((prev[postId] ?? 0) + 1) % mediaLenght
+      }
+    ));
+  };
+
+  const prevSlide = (postId: string, mediaLenght: number) => {
+    setCurrentIndex(prev => (
+      {
+        ...prev,
+        [postId]: (prev[postId] ?? 0) === 0 
+          ?
+        mediaLenght - 1
+          :
+        (prev[postId] ?? 0) - 1
+      }
+    ))
+  };
+  
   return (
     <div className={classes.post}>
-      {
-        posts.map((post) => (
+      {posts.map((post) => {
+        const index = currentIndex[post.id] ?? 0;
+
+        const safeIndex =
+        index >= post.media.length ? 0 : index;
+
+        return (
           <div key={post.id} className={classes.postBody}>
             <p className={classes.username}>@{user?.userName}</p>
             <p className={classes.postDescription}>{post.description}</p>
 
-            {post.media.map((item, index) => (
-              <img
-                className={classes.postMedia} 
-                key={index} 
-                src={`${API_URL}/api/posts/media/${item.url}`} 
-                alt="Post Media"
-              />
-            ))}
+            <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
+              {post.media.length > 1 && (
+                <div 
+                  className={classes.slideButtonBack}
+                  onClick={() => prevSlide(post.id, post.media.length)}
+                >
+                  <GoChevronLeft className={classes.slideButton} />
+                </div>
+              )}
+
+              {post.media.length > 0 && post.media[safeIndex] && (
+                <img
+                  className={classes.postMedia}
+                  src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
+                  alt="Post Media"
+                />
+              )}
+
+              {post.media.length > 1 && (
+                <div 
+                  className={classes.slideButtonBack}
+                  onClick={() => nextSlide(post.id, post.media.length)}  
+                >
+                  <GoChevronRight className={classes.slideButton} />
+                </div>
+              )}
+            </div>
+
+            {post.media.length > 1 && (
+              <div className={classes.dots}>
+                {post.media.map((_, i) => (
+                  <GoDotFill
+                    key={i}
+                    className={i === index ? classes.activeDot : classes.dot}
+                  />
+                ))}
+              </div>
+            )}
 
             <div className={classes.line}></div>
-
+            
             <div className={classes.postReaction}>
               <div className={`${classes.likeArea} ${classes.area}`}>
                 <SILike className={`${classes.like} ${classes.reaction}`} />
@@ -68,8 +136,8 @@ export default function AllPosts() {
               </div>
             </div>
           </div>
-        ))
-      }
+        );
+      })}
     </div>
-  )
+  );
 }

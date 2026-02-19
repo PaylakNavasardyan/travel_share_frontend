@@ -33,13 +33,63 @@
             font-family: 'poppins-light';
             font-size: 14px;
         }
-        .postMedia {
+        
+        .oneItem {
             width: 75%;
             height: 300px;
-            object-fit: cover;
-            border-radius: 30px;
-            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .postMedia {
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 30px;
+                border: none;
+            }
         }
+        .fewItems {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            .slideButtonBack {
+            width: 70px;
+            height: 80px;
+            background-color: var(--Gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            .slideButton {
+                font-size: 20px;
+                background: none;
+            }
+        }
+        .slideButtonBack:hover {
+            background-color: var(--DarkGray);
+        }
+            .postMedia {
+                width: 75%;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 30px;
+                border: none;
+            } 
+        }
+        .dot {
+            size: 12px;
+            color: var(--MainBlue);
+            fill:var(--MainBlue);
+        }
+
+        .activeDot {
+            size: 12px;
+            color: var(--MainRed);
+        }
+
 
         .line {
             width: 80%;
