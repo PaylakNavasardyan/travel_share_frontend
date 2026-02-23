@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useRef } from 'react';
+import React, { useState, useReducer, useRef, useEffect } from 'react';
 import classes from './EditProfile.module.css';
 import { useUser } from '../../../../context/UserContext';
 import $api, { API_URL } from '../../../../http';
@@ -12,7 +12,7 @@ export default function EditProfile() {
 
   type State = {
     email?: string,
-    userName?: string,
+    username?: string,
     name?: string,
     surname?: string,
     password?: string,
@@ -26,7 +26,7 @@ export default function EditProfile() {
 
   type ErrorState = {
     emailError?: string;
-    userNameError?: string;
+    usernameError?: string;
     nameError?: string;
     surnameError?: string;
     newPassError?: string;
@@ -35,7 +35,7 @@ export default function EditProfile() {
 
   const initialState = {
     email: '',
-    userName: '',
+    username: '',
     name: '',
     surname: '',
     password: '',
@@ -70,6 +70,14 @@ export default function EditProfile() {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   const { user, setUser } = useUser();
 
   const handleImageUpload = () => {
@@ -94,7 +102,7 @@ export default function EditProfile() {
     return response.data
   }
 
-  let nameFirtLetter = user?.userName[0].toUpperCase();
+  let nameFirtLetter = user?.username[0].toUpperCase();
   let profilePic_URL = user?.profilePicture;
   let profilePic = `${API_URL}/api/user/profile/${profilePic_URL}`;
 
@@ -107,29 +115,29 @@ export default function EditProfile() {
     return '';
   };
 
-  const validUserName = (state: State): string => {
-    if (!state.userName) return '';
+  const validUsername = (state: State): string => {
+    if (!state.username) return '';
     const startsWithLetterRegex = /^[a-zA-Z]/;
     const lettersAndNumbersOnlyRegex = /^[a-zA-Z0-9]+$/;
-    let nameFirstChar = state.userName?.charAt(0).toLowerCase();
+    let nameFirstChar = state.username?.charAt(0).toLowerCase();
     let nameChars = '';
 
-    if (!startsWithLetterRegex.test(state.userName)) {
+    if (!startsWithLetterRegex.test(state.username)) {
       return 'Your username must start with Latin letter';
-    } else if (!lettersAndNumbersOnlyRegex.test(state.userName)) {
+    } else if (!lettersAndNumbersOnlyRegex.test(state.username)) {
       return 'Your name must contain only Latin letters and numbers';
-    } else if (state.userName.length < 5) {
+    } else if (state.username.length < 5) {
       return 'Your username cannot contain fewer than 5 characters';
-    } else if (state.userName.length > 15) {
+    } else if (state.username.length > 15) {
       return 'Your username cannot contain more than 15 charactes';
     }
 
-    for (let i = 0; i < state.userName.length; i++) {
-      if (state.userName[i].toLowerCase() === nameFirstChar) {
-        nameChars += state.userName[i];
+    for (let i = 0; i < state.username.length; i++) {
+      if (state.username[i].toLowerCase() === nameFirstChar) {
+        nameChars += state.username[i];
       }
 
-      if (nameChars.length === state.userName.length) {
+      if (nameChars.length === state.username.length) {
         return 'Username cannot contain only identical characters';
       }
     }
@@ -255,7 +263,7 @@ export default function EditProfile() {
     
     const newErrors = {
       emailError: validEmail(state),
-      userNameError: validUserName(state),
+      usernameError: validUsername(state),
       nameError: validName(state),
       surnameError: validSurname(state),
       newPassError: validNewPass(state),
@@ -273,12 +281,12 @@ export default function EditProfile() {
         'All password fields are required if you start filling any of them'
       );
       return;
-      } else {
-        setPassFieldError('');
-      }
+    } else {
+      setPassFieldError('');
+    }
     
-      const hasErrors = Object.values(newErrors).some(Boolean);
-      if (hasErrors) return;
+    const hasErrors = Object.values(newErrors).some(Boolean);
+    if (hasErrors) return;
 
     try {
       let newProfilePicture = user?.profilePicture;
@@ -298,11 +306,15 @@ export default function EditProfile() {
       setImgPreview(null);
       
       setUser({
-        userName: apiUser.username,
+        username: apiUser.username,
         email: apiUser.email,
         name: apiUser.name,
         surname: apiUser.surname,
-        profilePicture: newProfilePicture ?? apiUser.profilePicture
+        profilePicture: newProfilePicture ?? apiUser.profilePicture,
+        isActive: apiUser.isActive,
+        followers: apiUser.followers,
+        following: apiUser.following,
+        userId: apiUser.userId
       });
       
       localStorage.setItem('token', response.data.data.accessToken);
@@ -371,18 +383,18 @@ export default function EditProfile() {
           </div>
 
           <div className={classes.pools}> 
-            {error.userNameError ? 
-              <p className={classes.errorMessage}>{error.userNameError}</p>
+            {error.usernameError ? 
+              <p className={classes.errorMessage}>{error.usernameError}</p>
               : 
               <p className={classes.fieldName}>Username</p>
             }  
             <input
               className={classes.dataInput} 
               type='name'
-              value={state.userName}
-              name='userName'
+              value={state.username}
+              name='username'
               onChange={handleChange}
-              placeholder={user?.userName ? user.userName : "Userame"}
+              placeholder={user?.username ? user.username : "Userame"}
             />
           </div>
 
