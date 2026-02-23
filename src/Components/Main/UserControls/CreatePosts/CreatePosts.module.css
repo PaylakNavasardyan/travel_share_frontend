@@ -67,6 +67,46 @@
             opacity: 1;
             visibility: visible;        
         }
+        .fewPicturesDiv {
+            width: 150%;
+            height: 400px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 10px;
+           .slideButtonBack {
+                width: 70px;
+                height: 80px;
+                background-color: var(--PlatiniumGreen);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px;
+                cursor: pointer;
+                .slideButton {
+                    font-size: 20px;
+                    background: none;
+                }
+            }
+            .slideButtonBack:hover {
+                background-color: var(--DarkGray);
+            }
+            .fewPostPictures {
+                width: 400px;
+                height: 400px;
+            }
+        }
+        .dot {
+            size: 12px;
+            color: var(--MainBlue);
+            fill:var(--MainBlue);
+        }
+
+        .activeDot {
+            size: 12px;
+            color: var(--MainRed);
+        }
+        
         .postButtons {
             width: 100%;
             height: auto;
