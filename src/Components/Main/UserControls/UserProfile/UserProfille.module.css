@@ -2,6 +2,7 @@
     width: 100%;
     height: auto;
     display: flex;
+    margin-top: 100px;
     .profileBar {
         width: 30%;
         height: 100%;
@@ -77,6 +78,14 @@
                     font-family: 'poppins-italic';
                     font-size: larger;
                 }
+            }
+            .isActiveMessage {
+                width: 80%;
+                color: var(--MainRed);
+                font-family: 'poppins-lightitalic';
+                font-size: 13px;
+                margin-top: 40px;
+                text-decoration: underline;
             }
         }
     }
