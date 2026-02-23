@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classes from './Followers.module.css';
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
@@ -7,6 +8,14 @@ export default function Follow() {
   const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string }>
   const GoSearch = GoSearchIcon as unknown as React.FC<{ className: string}>
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   const handleClick = ():void => {
     navigate(-1);
