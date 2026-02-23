@@ -9,7 +9,7 @@ import {
   GoChevronLeft as GoChevronLeftIcon,
   GoDotFill as GoDotFillIcon
 } from "react-icons/go";
-import { useUser } from '../../../context/UserContext';
+import { useLocation } from 'react-router-dom';
 
 export default function AllPosts() {
   const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
@@ -20,17 +20,28 @@ export default function AllPosts() {
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
 
   const [posts, setPosts] = useState<Post[]>([]);
+  const [postername, setPostername] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
-  
-  const { user } = useUser();
 
+  const location = useLocation();
+  
   useEffect(() => {
     async function postGetter() {
       try {
         let response = await $api.get('/api/posts/?page=1&limit=50&sort=most_like');
-        
-        setPosts(response.data.data.posts);
-        console.log(response.data.data.posts)
+        const posts = response.data.data.posts
+        setPosts(posts);
+
+        const userIds: string[] = posts.map((post: Post) => post.userId)
+
+        const usersResponse = await Promise.all(
+          userIds.map(id => $api.get(`api/user/${id}`))
+        );
+
+        const users: string[] = usersResponse.map(res => res.data.data.username);
+        setPostername(users);
+
+        fetch(posts);
         
       } catch (error) {
         console.log(error)
@@ -38,8 +49,8 @@ export default function AllPosts() {
     };
     
     postGetter();
-  }, []);
-
+  }, [location.state]);
+  
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
       {
@@ -64,7 +75,7 @@ export default function AllPosts() {
   
   return (
     <div className={classes.post}>
-      {posts.map((post) => {
+      {posts.map((post, postIndex) => {
         const index = currentIndex[post.id] ?? 0;
 
         const safeIndex =
@@ -72,7 +83,8 @@ export default function AllPosts() {
 
         return (
           <div key={post.id} className={classes.postBody}>
-            <p className={classes.username}>@{user?.userName}</p>
+            {postername[postIndex] && <p className={classes.username}>@{postername[postIndex]}</p>}
+            
             <p className={classes.postDescription}>{post.description}</p>
 
             <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
