@@ -12,7 +12,7 @@ export default function Registration() {
 
   type State = {
     email: string,
-    userName: string,
+    username: string,
     password: string,
     confirmPass: string,
     name?: string,
@@ -26,7 +26,7 @@ export default function Registration() {
   
   const initialState: State = {
     email: '',
-    userName: '',
+    username: '',
     password: '',
     confirmPass: '',
     name: '',
@@ -52,7 +52,7 @@ export default function Registration() {
   
   const [error, setError] = useState<ErrorState>({  
     emailError: '',
-    userNameError: '',
+    usernameError: '',
     passwordError: '',
     confirmPassError: '',
     nameError: '',
@@ -86,28 +86,28 @@ export default function Registration() {
     return '';
   };
 
-  const validUserName = (state: State): string => {
+  const validUsername = (state: State): string => {
     const startsWithLetterRegex = /^[a-zA-Z]/;
     const lettersAndNumbersOnlyRegex = /^[a-zA-Z0-9]+$/;
-    let nameFirstChar = state.userName.charAt(0).toLowerCase();
+    let nameFirstChar = state.username.charAt(0).toLowerCase();
     let nameChars = '';
 
-    if (!startsWithLetterRegex.test(state.userName)) {
+    if (!startsWithLetterRegex.test(state.username)) {
       return 'Your username must start with Latin letter';
-    } else if (!lettersAndNumbersOnlyRegex.test(state.userName)) {
+    } else if (!lettersAndNumbersOnlyRegex.test(state.username)) {
       return 'Your name must contain only Latin letters and numbers';
-    } else if (state.userName.length < 5) {
+    } else if (state.username.length < 5) {
       return 'Your username cannot contain fewer than 5 characters';
-    } else if (state.userName.length > 15) {
+    } else if (state.username.length > 15) {
       return 'Your username cannot contain more than 15 charactes';
     }
 
-    for (let i = 0; i < state.userName.length; i++) {
-      if (state.userName[i].toLowerCase() === nameFirstChar) {
-        nameChars += state.userName[i];
+    for (let i = 0; i < state.username.length; i++) {
+      if (state.username[i].toLowerCase() === nameFirstChar) {
+        nameChars += state.username[i];
       }
 
-      if (nameChars.length === state.userName.length) {
+      if (nameChars.length === state.username.length) {
         return 'Username cannot contain only identical characters';
       }
     }
@@ -233,7 +233,7 @@ export default function Registration() {
     e.preventDefault();
     
     const approvedEmailError = validEmail(state);
-    const approvedUserNameError = validUserName(state);
+    const approvedUsernameError = validUsername(state);
     const approvedPasswordError = validPassword(state);
     const approvedConfirmPassError = validConfirmPass(state);
 
@@ -242,8 +242,8 @@ export default function Registration() {
       message: approvedEmailError
     });
     updateError({
-      field: 'userNameError', 
-      message: approvedUserNameError
+      field: 'usernameError', 
+      message: approvedUsernameError
     });
     updateError({
       field: 'passwordError', 
@@ -254,7 +254,7 @@ export default function Registration() {
       message: approvedConfirmPassError
     });
 
-    if (approvedEmailError || approvedUserNameError || approvedPasswordError || approvedConfirmPassError) {
+    if (approvedEmailError || approvedUsernameError || approvedPasswordError || approvedConfirmPassError) {
       return;
     };
 
@@ -276,12 +276,7 @@ export default function Registration() {
     try {
      let response = await AuthService.registration(state);
 
-     let user = response.data.data.user;
-     setUser({
-      userName: response.data.data.user.username,
-      ...user
-     });
-
+      setUser(response.data.data.user)
      localStorage.setItem('token', response.data.data.accessToken);
      
      navigate('/travel-share')
@@ -320,13 +315,13 @@ export default function Registration() {
           </div>
 
           <div className={classes.inputDiv}>
-            {error.userNameError && <p className={classes.errorMessage}>{error.userNameError}</p>}
+            {error.usernameError && <p className={classes.errorMessage}>{error.usernameError}</p>}
             <input
               className={classes.registrationFields}
               type="text"
               placeholder="Username"
-              name="userName"
-              value={state.userName}
+              name="username"
+              value={state.username}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               required

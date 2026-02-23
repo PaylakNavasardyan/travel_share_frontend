@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 
 type RegistrationBody = {
     email: string;
-    userName: string;
+    username: string;
     name?: string;
     surname?: string;
     password: string;
@@ -18,7 +18,7 @@ type LoginBody = {
 
 type EditBody = {
     email?: string,
-    userName?: string,
+    username?: string,
     name?: string,
     surname?: string,
     password?: string,
@@ -30,7 +30,7 @@ export default class AuthService {
     static async registration(body: RegistrationBody):Promise<AxiosResponse<ApiResponse<Auth.Session>>> {
         return $api.post('/api/user/registration', {
             email: body.email,
-            username: body.userName,
+            username: body.username,
             name: body.name,
             surname: body.surname,
             password: body.password,
@@ -52,7 +52,7 @@ export default class AuthService {
     static async edit(body: EditBody): Promise<AxiosResponse<ApiResponse<Auth.Session>>> {
         return $api.patch('/api/user/update', {
             email: body.email,
-            username: body.userName,
+            username: body.username,
             name: body.name,
             surname: body.surname,
             currentPassword: body.password,

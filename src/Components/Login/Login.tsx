@@ -31,11 +31,7 @@ export default function Login() {
         try {
             let response = await AuthService.login({login, password});
 
-            let user = response.data.data.user;
-            setUser({
-                userName: response.data.data.user.username,
-                ...user
-            });
+            setUser(response.data.data.user);
 
             localStorage.setItem('token', response.data.data.accessToken)
             navigate("/travel-share")

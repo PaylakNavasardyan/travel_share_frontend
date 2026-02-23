@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { Auth } from '../types';
 
 type User = {
   userName: string;
@@ -9,14 +10,14 @@ type User = {
 };
 
 type UserContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: Auth.User | null;
+  setUser: (user: Auth.User | null) => void;
 };
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUserState] = useState<User | null>(null);
+  const [user, setUserState] = useState<Auth.User | null>(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -26,7 +27,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const setUser = (user: User | null) => {
+  const setUser = (user: Auth.User | null) => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     } else {
