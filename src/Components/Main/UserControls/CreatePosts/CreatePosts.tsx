@@ -64,20 +64,21 @@ export default function CreatePosts() {
     formData.append('description', desc);
 
     try {
-      const response = await $api.post('/api/posts/create', formData);
-      console.log(response.data);
+      await $api.post('/api/posts/create', formData);
 
       setDesc('');
       setFiles([]);
       setPreviews([]);
 
+      alert('Your post was created successfully.');
+
       navigate('/travel-share', { state: { refresh: true } });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data);
+        console.log(error.response?.data?.message);
+        alert("Sorry, we couldn't publish your post right now. Please try again in a moment.");
       }
     };
-
   };
 
   const nextSlide = () => {
