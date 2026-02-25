@@ -4,7 +4,8 @@ type Media = {
 };
 
 export type Post = {
-    id: string,
+    createdAt: string,
+    _id: string,
     userId: string,
     description: string,
     dislikeCount: number,
