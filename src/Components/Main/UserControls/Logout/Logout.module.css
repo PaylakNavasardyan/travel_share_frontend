@@ -1,0 +1,50 @@
+.logoutModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    .logoutBody {
+        width: 450px;
+        height: 180px;
+        background-color: var(--White);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        gap: 40px;
+        .logoutText {
+            font-family: 'poppins-lightitalic';
+        }
+        .buttons {
+            width: 80%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            .button {
+                width: 120px;
+                height: 30px;
+                border-radius: 8px;
+                border: none;
+                font-family: 'poppins-semiBold';
+                cursor: pointer;
+                font-size: 15px;
+                transition: transform 0.3s ease;
+                color: var(--White);
+            }
+            button:hover {
+                transform: scale(1.05);
+            }
+            .cancelButton {
+                background-color: var(--MainBlue);
+            }
+            .logoutButton {
+                background-color: var(--MainRed);
+            }
+        }
+    }
+}
