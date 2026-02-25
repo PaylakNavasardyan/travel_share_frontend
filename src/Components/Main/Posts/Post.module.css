@@ -18,14 +18,28 @@
         box-shadow: 0 5px 10px 5px var(--DarkGray);
         border-radius: 40px;
         gap: 20px;
-        .username {
-            width: auto;
+        .postInfo {
+            width: 100%;
             height: auto;
-            align-self: self-start;
-            margin-left: 30px;
-            font-family: 'poppins-semibold';
-            cursor: pointer;
-            color: var(--MainRed);
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            .username {
+                width: auto;
+                height: auto;
+                margin-left: 30px;
+                font-family: 'poppins-semibold';
+                cursor: pointer;
+                color: var(--MainRed);
+            }
+            .postCreateData {
+                width: auto;
+                height: auto;
+                margin-right: 30px;
+                font-family: 'poppins-italic';
+                font-size: small;
+                color: var(--PlatiniumGreen);
+            }
         }
         .postDescription {
             width: auto;
