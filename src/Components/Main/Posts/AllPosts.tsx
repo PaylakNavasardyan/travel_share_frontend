@@ -76,22 +76,25 @@ export default function AllPosts() {
   return (
     <div className={classes.post}>
       {posts.map((post, postIndex) => {
-        const index = currentIndex[post.id] ?? 0;
+        const index = currentIndex[post._id] ?? 0;
 
         const safeIndex =
         index >= post.media.length ? 0 : index;
 
         return (
-          <div key={post.id} className={classes.postBody}>
-            {postername[postIndex] && <p className={classes.username}>@{postername[postIndex]}</p>}
-            
+          <div key={post._id} className={classes.postBody}>
+            <div className={classes.postInfo}>
+              {postername[postIndex] && <span className={classes.username}>@{postername[postIndex]}</span>}
+              <span className={classes.postCreateData}>{post.createdAt.slice(0, 10)}</span>
+            </div>
+
             <p className={classes.postDescription}>{post.description}</p>
 
             <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
               {post.media.length > 1 && (
                 <div 
                   className={classes.slideButtonBack}
-                  onClick={() => prevSlide(post.id, post.media.length)}
+                  onClick={() => prevSlide(post._id, post.media.length)}
                 >
                   <GoChevronLeft className={classes.slideButton} />
                 </div>
@@ -108,7 +111,7 @@ export default function AllPosts() {
               {post.media.length > 1 && (
                 <div 
                   className={classes.slideButtonBack}
-                  onClick={() => nextSlide(post.id, post.media.length)}  
+                  onClick={() => nextSlide(post._id, post.media.length)}  
                 >
                   <GoChevronRight className={classes.slideButton} />
                 </div>
