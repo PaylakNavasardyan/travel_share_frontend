@@ -13,6 +13,8 @@ import UserProfile from './Components/Main/UserControls/UserProfile/UserProfile'
 import Navbar from './Components/Main/Navbar/Navbar';
 import EditProfile from './Components/Main/UserControls/EditProfile/EditProfile';
 import CreatePosts from './Components/Main/UserControls/CreatePosts/CreatePosts';
+import Logout from './Components/Main/UserControls/Logout/Logout';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
   const location = useLocation();
@@ -38,6 +40,8 @@ function App() {
           <Route path="all-posts" element={<AllPosts />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
         </Route>
+        
+        <Route path='*' element={<NotFound />} />
       </Routes>
 
       {state?.backgroundLocation && (
@@ -46,8 +50,10 @@ function App() {
           <Route path="/following" element={<Following />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/create-posts" element={<CreatePosts />} />
+          <Route path="/user-logout" element={<Logout />}/>
         </Routes>
       )}
+
     </div>
   );
 }
