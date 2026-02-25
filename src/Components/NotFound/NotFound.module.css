@@ -1,0 +1,19 @@
+.notFound {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--White);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .notFoundIcon {
+        font-size: 150px;
+        color: var(--DarkGray);
+    }
+    .notFoundText {
+        font-size: 60px;
+        font-family: 'poppins-light';
+        color: var(--PlatiniumGreen);
+    }
+}
