@@ -9,6 +9,10 @@ import {
   GoChevronLeft as GoChevronLeftIcon,
   GoDotFill as GoDotFillIcon
 } from "react-icons/go";
+import { 
+  TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
+  TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
+} from "react-icons/tb";
 import { useLocation } from 'react-router-dom';
 
 export default function AllPosts() {
@@ -18,38 +22,49 @@ export default function AllPosts() {
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
   const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
+  const TbPlayerTrackPrevFilled =TbPlayerTrackPrevFilledIcon as unknown as React.FC<{ className: string }>
+  const TbPlayerTrackNextFilled = TbPlayerTrackNextFilledIcon as unknown as React.FC<{ className: string }>
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [postername, setPostername] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const location = useLocation();
   
   useEffect(() => {
     async function postGetter() {
       try {
-        let response = await $api.get('/api/posts/?page=1&limit=50&sort=most_like');
-        const posts = response.data.data.posts
+        setLoading(true);
+
+        let response = await $api.get(`/api/posts/?page=${page}&limit=20&sort=most_like`);
+        const posts = response.data.data.posts;
+
         setPosts(posts);
+        setTotalPages(response.data.data.meta.totalPages);
+        console.log(response)
 
-        const userIds: string[] = posts.map((post: Post) => post.userId)
-
-        const usersResponse = await Promise.all(
-          userIds.map(id => $api.get(`api/user/${id}`))
-        );
-
-        const users: string[] = usersResponse.map(res => res.data.data.username);
+        const users: string[] = posts.map((post: Post) => post.user.username);
         setPostername(users);
+
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
 
         fetch(posts);
         
       } catch (error) {
         console.log(error)
+      } finally {
+        setLoading(false);
       }
     };
     
     postGetter();
-  }, [location.state]);
+  }, [page, location.state]);
   
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
@@ -72,7 +87,7 @@ export default function AllPosts() {
       }
     ))
   };
-  
+
   return (
     <div className={classes.post}>
       {posts.map((post, postIndex) => {
@@ -153,6 +168,24 @@ export default function AllPosts() {
           </div>
         );
       })}
+
+      <div className={classes.paginationGuide}>
+        <button
+          className={classes.paginationButton}
+          disabled={loading || page <= 1}
+          onClick={() => setPage(page - 1)}
+        >
+          <TbPlayerTrackPrevFilled className={classes.changingPageIcon} />
+        </button>
+
+        <button
+          className={classes.paginationButton}
+          disabled={loading || page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          <TbPlayerTrackNextFilled className={classes.changingPageIcon} />
+        </button>
+      </div>
     </div>
   );
 }

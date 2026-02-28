@@ -28,7 +28,7 @@
                 width: auto;
                 height: auto;
                 margin-left: 30px;
-                font-family: 'poppins-semibold';
+                font-family: 'poppins-italic';
                 cursor: pointer;
                 color: var(--MainRed);
             }
@@ -132,6 +132,37 @@
                     font-size: 15px;
                     font-family: 'poppins-light';
                 }
+            }
+        }
+    }
+    .paginationGuide {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        .paginationButton {
+            width: 60px;
+            height: 30px;
+            background-color: var(--DarkGray);
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            cursor: pointer;
+             .changingPageIcon {
+                color: var(--MainRed);
+                font-size: 15px;
+            } 
+        }
+        .paginationButton:disabled {
+            background-color: var(--PlatiniumGreen);
+            cursor: not-allowed;
+            .changingPageIcon {
+                color: var(--Gray);
             }
         }
     }
