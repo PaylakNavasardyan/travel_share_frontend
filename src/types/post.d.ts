@@ -3,10 +3,16 @@ type Media = {
     url: string
 };
 
+type User = {
+    _id: string,
+    username: string,
+    profilePicture: string
+};
+
 export type Post = {
     createdAt: string,
     _id: string,
-    userId: string,
+    user: User,
     description: string,
     dislikeCount: number,
     likeCount: number,
