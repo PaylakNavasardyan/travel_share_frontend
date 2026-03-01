@@ -27,6 +27,8 @@ export default function AllPosts() {
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [postername, setPostername] = useState<string[]>([]);
+  const [posterImage, setPosterImage] = useState<string[]>([]);
+  const [firstLetter, setFirstLetter] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -44,11 +46,18 @@ export default function AllPosts() {
 
         setPosts(posts);
         setTotalPages(response.data.data.meta.totalPages);
-        console.log(response)
 
-        const users: string[] = posts.map((post: Post) => post.user.username);
+        const users: string[] = posts.map((post: Post) => post.user.username); 
         setPostername(users);
 
+        const letter = users.map(user => user.slice(0, 1).toUpperCase());
+        setFirstLetter(letter);
+        
+        const images: string[] = posts.map(
+          (post: Post) => `${API_URL}/api/user/profile/${post.user.profilePicture}`
+        );
+        setPosterImage(images);
+        
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -99,7 +108,25 @@ export default function AllPosts() {
         return (
           <div key={post._id} className={classes.postBody}>
             <div className={classes.postInfo}>
-              {postername[postIndex] && <span className={classes.username}>@{postername[postIndex]}</span>}
+              <div className={classes.posterInfo}>
+                {post.user.profilePicture
+                  ?
+                    (posterImage[postIndex] &&                      
+                      <img 
+                        className={classes.profilePic}
+                        src={posterImage[postIndex]}
+                        alt='Profile-Picture'
+                      />
+                    )
+                  :
+                    <div className={classes.letter}>
+                      <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
+                    </div>
+                }
+
+                {postername[postIndex] && <span className={classes.username}>@{postername[postIndex]}</span>}
+              </div>
+
               <span className={classes.postCreateData}>{post.createdAt.slice(0, 10)}</span>
             </div>
 
