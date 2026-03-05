@@ -15,6 +15,7 @@ import EditProfile from './Components/Main/UserControls/EditProfile/EditProfile'
 import CreatePosts from './Components/Main/UserControls/CreatePosts/CreatePosts';
 import Logout from './Components/Main/UserControls/Logout/Logout';
 import NotFound from './Components/NotFound/NotFound';
+// import PostModal from './Components/Main/Posts/ModalPosts/PostModal';
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/travel-share" element={<TravelShareLayout />}>
           <Route index element={<AllPosts />} />
           <Route path="all-posts" element={<AllPosts />} />
+          <Route path="post/:id" element={<AllPosts />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
         </Route>
         
