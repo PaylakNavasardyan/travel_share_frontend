@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import $api, { API_URL } from '../../../http'
 import { Post } from '../../../types/post';
-import classes from './Post.module.css'
+import classes from './Post.module.css';
 import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
 import { 
   GoComment as GoCommentIcon,
@@ -13,7 +14,7 @@ import {
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
 } from "react-icons/tb";
-import { useLocation } from 'react-router-dom';
+import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 
 export default function AllPosts() {
   const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
@@ -24,6 +25,7 @@ export default function AllPosts() {
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
   const TbPlayerTrackPrevFilled =TbPlayerTrackPrevFilledIcon as unknown as React.FC<{ className: string }>
   const TbPlayerTrackNextFilled = TbPlayerTrackNextFilledIcon as unknown as React.FC<{ className: string }>
+  const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string}>;
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [postername, setPostername] = useState<string[]>([]);
@@ -33,8 +35,10 @@ export default function AllPosts() {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const location = useLocation();
+  
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const selectedPost = posts.find(post => post._id === id);
   
   useEffect(() => {
     async function postGetter() {
@@ -73,7 +77,15 @@ export default function AllPosts() {
     };
     
     postGetter();
-  }, [page, location.state]);
+  }, [page]);
+
+  useEffect(() => {
+    if (id) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto'
+    };
+  }, [id]);  
   
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
@@ -145,6 +157,7 @@ export default function AllPosts() {
               {post.media.length > 0 && post.media[safeIndex] && (
                 <img
                   className={classes.postMedia}
+                  onClick={() => navigate(`post/${post._id}`)}
                   src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
                   alt="Post Media"
                 />
@@ -188,13 +201,63 @@ export default function AllPosts() {
                 </span>
               </div>
 
-              <div className={`${classes.commentArea} ${classes.area}`}>
+              <div 
+                className={`${classes.commentArea} ${classes.area}`}
+                onClick={() => navigate(`post/${post._id}`)}
+              >
                 <GoComment className={`${classes.comment} ${classes.reaction}`} />
               </div>
             </div>
           </div>
         );
       })}
+
+      {selectedPost && (
+        <div className={classes.modalOverlay}>
+          <div
+            className={classes.modalCloseBorder}
+            onClick={() => navigate(-1)}
+          >
+            <IoMdClose className={classes.modalCloseIcon}/>
+          </div>
+
+          <div className={classes.modalContentBackground}>
+            <div
+              className={classes.modalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                className={classes.modalImage}
+                src={`${API_URL}/api/posts/media/${selectedPost.media[0].url}`}
+                alt="Post-Content"
+              />
+  
+              <div className={classes.modalPostInfo}>
+                <div className={classes.modalPostUserData}>
+                  {selectedPost.user.profilePicture ? (
+                    <img
+                      className={classes.profilePic}
+                      src={`${API_URL}/api/user/profile/${selectedPost.user.profilePicture}`}
+                      alt="Profile-Picture"
+                    />
+                  ) : (
+                    <>
+                      <div className={classes.letter}>
+                        <p className={classes.firstletter}>
+                          {selectedPost.user.username[0].toUpperCase()}
+                        </p>
+                      </div>
+                    </>
+                  )}
+
+                  <span className={classes.username}>@{selectedPost.user.username}</span>
+                </div>
+                  <span className={classes.description}>{selectedPost.description}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}    
 
       <div className={classes.paginationGuide}>
         <button
