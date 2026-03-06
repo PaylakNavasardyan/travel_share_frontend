@@ -8,7 +8,7 @@ export namespace Auth {
         profilePicture?: string;
         followers: number;
         following: number;
-        userId: string
+        _id: string;
     };
     
     type Session = {
