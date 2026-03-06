@@ -1,14 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Auth } from '../types';
 
-type User = {
-  userName: string;
-  email: string;
-  name?: string;
-  surname?: string;
-  profilePicture?: string;
-};
-
 type UserContextType = {
   user: Auth.User | null;
   setUser: (user: Auth.User | null) => void;
