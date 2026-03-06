@@ -314,7 +314,7 @@ export default function EditProfile() {
         isActive: apiUser.isActive,
         followers: apiUser.followers,
         following: apiUser.following,
-        userId: apiUser.userId
+        _id: apiUser._id
       });
       
       localStorage.setItem('token', response.data.data.accessToken);
