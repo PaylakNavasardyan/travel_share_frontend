@@ -32,13 +32,24 @@ export default function AllPosts() {
   const [posterImage, setPosterImage] = useState<string[]>([]);
   const [firstLetter, setFirstLetter] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
+  const [selectedIndex, setSelectedIndex] = useState<{ [key: string]: number }>({});
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   
   const { id } = useParams();
   const navigate = useNavigate();
+
   const selectedPost = posts.find(post => post._id === id);
+
+  const selIndex = selectedPost
+    ? selectedIndex[selectedPost._id] ?? 0
+    : 0;
+
+  const safeSelIndex =
+    selectedPost && selIndex >= selectedPost.media.length
+      ? 0
+      : selIndex;
   
   useEffect(() => {
     async function postGetter() {
@@ -107,6 +118,28 @@ export default function AllPosts() {
         (prev[postId] ?? 0) - 1
       }
     ))
+  };
+
+  const nextModalSlide = (postId: string, mediaLength: number) => {
+    setSelectedIndex(prev => {
+      const current = prev[postId] ?? 0;
+
+      return {
+        ...prev,
+        [postId]: (current + 1) % mediaLength
+      };
+    });
+  };
+
+  const prevModalSlide = (postId: string, mediaLength: number) => {
+    setSelectedIndex(prev => {
+      const current = prev[postId] ?? 0;
+
+      return {
+        ...prev,
+        [postId]: current === 0 ? mediaLength - 1 : current - 1
+      };
+    });
   };
 
   return (
@@ -226,11 +259,40 @@ export default function AllPosts() {
               className={classes.modalContent}
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                className={classes.modalImage}
-                src={`${API_URL}/api/posts/media/${selectedPost.media[0].url}`}
-                alt="Post-Content"
-              />
+              
+              <div className={selectedPost.media.length > 1 ? classes.fewItems : classes.oneItem}>
+
+                {selectedPost && selectedPost.media.length > 0 && (
+                  <img
+                    className={classes.postMedia}
+                    src={`${API_URL}/api/posts/media/${selectedPost.media[safeSelIndex].url}`}
+                    alt="Post Media"
+                  />
+                )}
+
+                {selectedPost.media.length > 1 && (
+                  <div
+                    className={`${classes.slideButtonBack} ${classes.left}`}
+                    onClick={() =>
+                      prevModalSlide(selectedPost._id, selectedPost.media.length)
+                    }
+                  >
+                    <GoChevronLeft className={classes.slideButton} />
+                  </div>
+                )}
+
+                {selectedPost.media.length > 1 && (
+                  <div
+                    className={`${classes.slideButtonBack} ${classes.right}`}
+                    onClick={() =>
+                      nextModalSlide(selectedPost._id, selectedPost.media.length)
+                    }
+                  >
+                    <GoChevronRight className={classes.slideButton} />
+                  </div>
+                )}
+
+              </div>
   
               <div className={classes.modalPostInfo}>
                 <div className={classes.modalPostUserData}>
