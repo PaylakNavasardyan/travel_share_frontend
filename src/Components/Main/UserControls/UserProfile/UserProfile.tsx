@@ -1,8 +1,8 @@
 import React, { useState, useEffect }  from 'react';
-import classes from './UserProfille.module.css';
+import classes from './UserProfile.module.css';
 import { useUser } from '../../../../context/UserContext';
 import $api, { API_URL } from '../../../../http/index';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Post } from '../../../../types/post';
 import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
 import { 
@@ -13,11 +13,10 @@ import {
 } from "react-icons/go";
 import { 
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
-  TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
+  TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon,
 } from "react-icons/tb";
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import { CiTrash as CiTrashIcon} from "react-icons/ci";  
-
 
 export default function UserProfile() {
   const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
@@ -40,6 +39,7 @@ export default function UserProfile() {
   
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user } = useUser();
 
@@ -85,7 +85,7 @@ export default function UserProfile() {
     };
     getUserPost();
   }, [page, user]);
-
+  
   useEffect(() => {
     if (id) {
       document.body.style.overflow = 'hidden';
@@ -116,7 +116,6 @@ export default function UserProfile() {
     ))
   };
 
-  
   const nextModalSlide = (postId: string, mediaLength: number) => {
     setSelectedIndex(prev => {
       const current = prev[postId] ?? 0;
@@ -131,7 +130,7 @@ export default function UserProfile() {
   const prevModalSlide = (postId: string, mediaLength: number) => {
     setSelectedIndex(prev => {
       const current = prev[postId] ?? 0;
-
+  
       return {
         ...prev,
         [postId]: current === 0 ? mediaLength - 1 : current - 1
@@ -182,66 +181,60 @@ export default function UserProfile() {
         </div>
       </div>
 
-      <div className={classes.profilePosts}>
+      <div className={classes.profilePosts}> 
         {posts.map((post) => {
           const index = currentIndex[post._id] ?? 0;
-
-          const safeIndex =
-          index >= post.media.length ? 0 : index;
+          const safeIndex = index >= post.media.length ? 0 : index;
 
           return (
             <div key={post._id} className={classes.post}>
               <div className={classes.postInfo}>
-                <span className={classes.postCreateData}>{post.createdAt.slice(0, 10)}</span>
+                <span className={classes.postCreateData}>
+                  {post.createdAt.slice(0, 10)}
+                </span>
+
                 <div className={classes.deletePost}>
-                  <CiTrash className={classes.deleteIcon}/>
-                  <span className={classes.deleteText}>Delete Post</span>
+                  <Link
+                    className={classes.deleteLink}
+                    to="/delete-post"
+                    state={{
+                      backgroundLocation: location,
+                      postId: post._id
+                    }}
+                  >
+                    <CiTrash className={classes.deleteIcon} />
+                    <span className={classes.deleteText}>Delete Post</span>
+                  </Link>
                 </div>
               </div>
-              <p className={classes.postDescription}>
-                {post.description}
-              </p>
 
-              <div
-                className={
-                  post.media.length > 1
-                    ? classes.fewItems
-                    : classes.oneItem
-                }
-              >
+              <p className={classes.postDescription}>{post.description}</p>
+
+              <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
                 {post.media.length > 1 && (
                   <div
                     className={classes.slideButtonBack}
-                    onClick={() =>
-                      prevSlide(post._id, post.media.length)
-                    }
+                    onClick={() => prevSlide(post._id, post.media.length)}
                   >
                     <GoChevronLeft className={classes.slideButton} />
                   </div>
                 )}
 
-                {post.media.length > 0 &&
-                  post.media[safeIndex] && (
-                    <img
-                      className={classes.postMedia}
-                      onClick={() =>
-                        navigate(`post/${post._id}`)
-                      }
-                      src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
-                      alt="Post Media"
-                    />
-                  )}
+                {post.media.length > 0 && post.media[safeIndex] && (
+                  <img
+                    className={classes.postMedia}
+                    onClick={() => navigate(`/travel-share/post/${post._id}`)}
+                    src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
+                    alt="Post Media"
+                  />
+                )}
 
                 {post.media.length > 1 && (
                   <div
                     className={classes.slideButtonBack}
-                    onClick={() =>
-                      nextSlide(post._id, post.media.length)
-                    }
+                    onClick={() => nextSlide(post._id, post.media.length)}
                   >
-                    <GoChevronRight
-                      className={classes.slideButton}
-                    />
+                    <GoChevronRight className={classes.slideButton} />
                   </div>
                 )}
               </div>
@@ -251,11 +244,7 @@ export default function UserProfile() {
                   {post.media.map((_, i) => (
                     <GoDotFill
                       key={i}
-                      className={
-                        i === index
-                          ? classes.activeDot
-                          : classes.dot
-                      }
+                      className={i === index ? classes.activeDot : classes.dot}
                     />
                   ))}
                 </div>
@@ -264,52 +253,40 @@ export default function UserProfile() {
               <div className={classes.line}></div>
 
               <div className={classes.postReaction}>
-                <div
-                  className={`${classes.likeArea} ${classes.area}`}
-                >
-                  <SILike
-                    className={`${classes.like} ${classes.reaction}`}
-                  />
-                  <span
-                    className={`${classes.likeCount} ${classes.count}`}
-                  >
+                <div className={`${classes.likeArea} ${classes.area}`}>
+                  <SILike className={`${classes.like} ${classes.reaction}`} />
+                  <span className={`${classes.likeCount} ${classes.count}`}>
                     {post.likeCount}
                   </span>
                 </div>
 
-                <div
-                  className={`${classes.dislikeArea} ${classes.area}`}
-                >
-                  <SIDislike
-                    className={`${classes.dislike} ${classes.reaction}`}
-                  />
-                  <span
-                    className={`${classes.dislikeCount} ${classes.count}`}
-                  >
+                <div className={`${classes.dislikeArea} ${classes.area}`}>
+                  <SIDislike className={`${classes.dislike} ${classes.reaction}`} />
+                  <span className={`${classes.dislikeCount} ${classes.count}`}>
                     {post.dislikeCount}
                   </span>
                 </div>
 
                 <div
                   className={`${classes.commentArea} ${classes.area}`}
-                  onClick={() =>
-                    navigate(`post/${post._id}`)
-                  }
+                  onClick={() => navigate(`post/${post._id}`)}
                 >
-                  <GoComment
-                    className={`${classes.comment} ${classes.reaction}`}
-                  />
+                  <GoComment className={`${classes.comment} ${classes.reaction}`} />
                 </div>
               </div>
             </div>
           );
-        })}
+        })   
+        
+      } 
+
+      {posts.length > 0 ? (
         <div className={classes.paginationGuide}>
           <button
             className={classes.paginationButton}
             disabled={loading || page <= 1}
             onClick={() => setPage(page - 1)}
-          >
+            >
             <TbPlayerTrackPrevFilled className={classes.changingPageIcon} />
           </button>
 
@@ -317,11 +294,98 @@ export default function UserProfile() {
             className={classes.paginationButton}
             disabled={loading || page === totalPages}
             onClick={() => setPage(page + 1)}
-          >
+            >
             <TbPlayerTrackNextFilled className={classes.changingPageIcon} />
           </button>
         </div>
-      </div>
+        ) : (
+          <p className={classes.nopostText}
+            style={{
+              fontSize: '20px', 
+              color: '#4848A0FF', 
+              fontFamily: 'poppins-semiBold',
+              marginTop: '100px'
+            }}
+          >No posts yet</p>
+        )}
     </div>
+
+    {selectedPost && (
+      <div className={classes.modalOverlay}>
+        <div
+          className={classes.modalCloseBorder}
+          onClick={() => navigate(-1)}
+        >
+          <IoMdClose className={classes.modalCloseIcon}/>
+        </div>
+
+        <div className={classes.modalContentBackground}>
+          <div
+            className={classes.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            
+            <div className={selectedPost.media.length > 1 ? classes.fewItems : classes.oneItem}>
+
+              {selectedPost && selectedPost.media.length > 0 && (
+                <img
+                  className={classes.postMedia}
+                  src={`${API_URL}/api/posts/media/${selectedPost.media[safeSelIndex].url}`}
+                  alt="Post Media"
+                />
+              )}
+
+              {selectedPost.media.length > 1 && (
+                <div
+                  className={`${classes.slideButtonBack} ${classes.left}`}
+                  onClick={() =>
+                    prevModalSlide(selectedPost._id, selectedPost.media.length)
+                  }
+                >
+                  <GoChevronLeft className={classes.slideButton} />
+                </div>
+              )}
+
+              {selectedPost.media.length > 1 && (
+                <div
+                  className={`${classes.slideButtonBack} ${classes.right}`}
+                  onClick={() =>
+                    nextModalSlide(selectedPost._id, selectedPost.media.length)
+                  }
+                >
+                  <GoChevronRight className={classes.slideButton} />
+                </div>
+              )}
+
+            </div>
+
+            <div className={classes.modalPostInfo}>
+              <div className={classes.modalPostUserData}>
+                {selectedPost.user.profilePicture ? (
+                  <img
+                    className={classes.profilePic}
+                    src={`${API_URL}/api/user/profile/${selectedPost.user.profilePicture}`}
+                    alt="Profile-Picture"
+                  />
+                ) : (
+                  <>
+                    <div className={classes.letter}>
+                      <p className={classes.firstletter}>
+                        {selectedPost.user.username[0].toUpperCase()}
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                <span className={classes.username}>@{selectedPost.user.username}</span>
+              
+              </div>
+                <span className={classes.description}>{selectedPost.description}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </div> 
   )
 }

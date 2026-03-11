@@ -1,0 +1,433 @@
+.profile {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 100px;
+    .profileBar {
+        width: 30%;
+        height: 100%;
+        position: fixed;
+        .icon {
+            width: 100%;
+            height: 80px;
+            .backgroundForIcon {
+                width: 60px;
+                height: 60px;
+                background-color: var(--Gray);
+                opacity: 0.5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 10px;
+                margin: 25px;
+                transition: transform 0.3s;
+                .goLeftIcon {
+                    color: var(--MainBlue);
+                    font-size: 40px;
+                }
+            }
+            .backgroundForIcon:hover {
+                transform: scale(1.1);
+            }
+        }
+        
+        .profileInfo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .profileImage {
+                width: 180px;
+                height: 180px;
+                background-color: var(--PlatiniumGreen);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .nameLetter {
+                    font-size: 60px;
+                    font-family: 'poppins-light';
+                    color: var(--MainRed);
+                }
+                .profilePic {
+                    width: 180px;
+                    height: 180px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            .personalInfo {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                .userData {
+                    font-family: 'poppins-lightitalic';
+                    color: var(--Black);
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0;
+                }
+                .userName {
+                    font-family: 'poppins-italic';
+                    font-size: larger;
+                }
+            }
+            .isActiveMessage {
+                width: 80%;
+                color: var(--MainRed);
+                font-family: 'poppins-lightitalic';
+                font-size: 13px;
+                margin-top: 40px;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .profilePosts {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        margin: 20px 0 0 150px;
+        .post {
+            width: 40%;
+            height: 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px var(--MainBlue) solid;
+            box-shadow: 0 5px 10px 5px var(--DarkGray);
+            border-radius: 40px;
+            gap: 20px;
+            .postInfo {
+                width: 100%;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-right: 20px;
+                .postCreateData {
+                    width: auto;
+                    height: auto;
+                    margin-right: 30px;
+                    font-family: 'poppins-italic';
+                    font-size: small;
+                    color: var(--PlatiniumGreen);
+                }
+                .deletePost {
+                    .deleteLink {
+                        width: auto;
+                        height: auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: var(--Black);
+                        text-decoration: none;
+                        cursor: pointer;
+                        .deleteIcon {
+                            font-size: 20px;
+                        }
+                        .deleteText {
+                            font-family: 'poppins-light';
+                            font-size: 12px;
+                        }
+                    }
+                    .deleteLink:hover {
+                        color: var(--PlatiniumGreen);
+                    
+                    }
+                }
+            }
+            .postDescription {
+                width: auto;
+                height: auto;
+                font-family: 'poppins-light';
+                font-size: 14px;
+            }
+            .oneItem {
+                width: 75%;
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .postMedia {
+                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
+                    border-radius: 30px;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+            
+            .fewItems {
+                width: 100%;
+                height: 280px;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                cursor: pointer;
+                .slideButtonBack {
+                    width: 70px;
+                    height: 80px;
+                    background-color: var(--Gray);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    .slideButton {
+                        font-size: 20px;
+                        background: none;
+                    }
+                }
+                .slideButtonBack:hover {
+                    background-color: var(--DarkGray);
+                }
+                .postMedia {
+                    width: 75%;
+                    height: 300px;
+                    object-fit: cover;
+                    border-radius: 30px;
+                    border: none;
+                } 
+            }
+            .dot {
+                size: 12px;
+                color: var(--MainBlue);
+                fill:var(--MainBlue);
+            }
+
+            .activeDot {
+                size: 12px;
+                color: var(--MainRed);
+            }
+
+            .line {
+                width: 80%;
+                height: 2px;
+                background-color: var(--DarkGray);
+            }
+            .postReaction {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: space-evenly;
+                .area {
+                    width: 40px;
+                    display: flex;
+                    justify-content: space-evenly;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                    .reaction {
+                        font-size: 20px;
+                    }
+                    .reaction:hover {
+                        color: var(--DarkGray);
+                    }
+                    .count {
+                        font-size: 15px;
+                        font-family: 'poppins-light';
+                    }
+                }
+            }
+            .modalOverlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                flex-direction: column;
+                align-items: self-end;
+                justify-content: center;
+                z-index: 9999;
+                .modalCloseBorder {
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    .modalCloseIcon {
+                        font-size: 30px;
+                        color: var(--White);
+                    }
+                }
+                .modalCloseBorder:hover {
+                    background-color: var(--DarkGray);
+                    border-radius: 50%;
+                }
+        
+                .modalContentBackground {
+                    width: 100%;
+                    height: 88vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .modalContent {
+                        width: 75%;
+                        height: 88vh;
+                        background-color: var(--White);
+                        display: flex;
+                    }
+                    .oneItem {
+                        width: 60% ;
+                        height: 88vh;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .postMedia {
+                            width: 100%;
+                            height: 88vh;
+                            object-fit: cover;
+                        }
+                    }
+                    .fewItems {
+                        width: 60% ;
+                        height: 88vh;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .slideButtonBack {
+                            width: 40px;
+                            height: 40px;
+                            background-color: rgba(50, 47, 47, 0.2);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            position: absolute;
+                            border-radius: 50%;
+                            margin: 0 8px 0 8px;
+                        }
+                        .slideButtonBack:hover {
+                            background-color: var(--DarkGray);
+                        }
+                        
+                        .left {
+                            left: 0;
+                        }
+                        .right {
+                            right: 0;
+                        }
+                        
+                        .postMedia {
+                            width: 100%;
+                            height: 88vh;
+                            object-fit: cover;
+                            position: absolute;
+                        }
+                    }
+                    .modalPostInfo {
+                        width: 40%;
+                        height: 86vh;
+                        margin: 8px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        .modalPostUserData {
+                            width: 100%;
+                            max-height: 86vh;
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;          
+                            .profilePic {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 50%;
+                                object-fit: cover;
+                                cursor: pointer;
+                            }
+                            .letter {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 50%;
+                                background-color: var(--PlatiniumGreen);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+                                .firstletter {
+                                    color: var(--MainRed);
+                                    font-family: 'poppins-light';
+                                    font-size: 22px;
+                                }
+                            }
+                            .username {
+                                width: auto;
+                                height: auto;
+                                font-size: 17px;
+                                font-family: 'poppins-lightitalic';
+                                color: var(--MainRed);
+                                cursor: pointer;
+                            }
+                        
+                            
+                        }
+                        .description {
+                            width: auto;
+                            height: auto;
+                            font-family: 'poppins-light';
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+        .paginationGuide {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            .paginationButton {
+                width: 60px;
+                height: 30px;
+                background-color: var(--DarkGray);
+                border: none;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center; 
+                cursor: pointer;
+                .changingPageIcon {
+                    color: var(--MainRed);
+                    font-size: 15px;
+                } 
+            }
+            .paginationButton:disabled {
+                background-color: var(--PlatiniumGreen);
+                cursor: not-allowed;
+                .changingPageIcon {
+                    color: var(--Gray);
+                }
+            }
+            .nopost {
+                width: 70%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .nopostText {
+                    font-family: 'poppins-semiBold';
+                    color: var(--PlatiniumGreen);
+                    font-size: 50px;
+                }
+            }
+        }
+    }
+}
