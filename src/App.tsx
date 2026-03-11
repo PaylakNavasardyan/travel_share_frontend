@@ -15,12 +15,12 @@ import EditProfile from './Components/Main/UserControls/EditProfile/EditProfile'
 import CreatePosts from './Components/Main/UserControls/CreatePosts/CreatePosts';
 import Logout from './Components/Main/UserControls/Logout/Logout';
 import NotFound from './Components/NotFound/NotFound';
-// import PostModal from './Components/Main/Posts/ModalPosts/PostModal';
+import DeletePost from './Components/Main/Posts/DeletePost/DeletePost';
 
 function App() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
-
+  
   return (
     <div className="App">
       <Routes location={state?.backgroundLocation || location}>
@@ -40,6 +40,7 @@ function App() {
           <Route index element={<AllPosts />} />
           <Route path="all-posts" element={<AllPosts />} />
           <Route path="post/:id" element={<AllPosts />} />
+          <Route path="post/:id" element={<UserProfile />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
         </Route>
         
@@ -52,7 +53,8 @@ function App() {
           <Route path="/following" element={<Following />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/create-posts" element={<CreatePosts />} />
-          <Route path="/user-logout" element={<Logout />}/>
+          <Route path="/user-logout" element={<Logout />} />
+          <Route path="/delete-post" element={<DeletePost />} />
         </Routes>
       )}
 
