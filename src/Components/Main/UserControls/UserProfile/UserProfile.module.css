@@ -74,6 +74,13 @@
                     margin-top: 10px;
                     margin-bottom: 0;
                 }
+                .userPostData {
+                    font-family: 'poppins-light';
+                    color: var(--MainBlue);
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0;
+                }
                 .userName {
                     font-family: 'poppins-italic';
                     font-size: larger;
@@ -220,26 +227,24 @@
                 background-color: var(--DarkGray);
             }
             .postReaction {
-                width: 100%;
+                width: 75%;
                 height: auto;
                 display: flex;
-                justify-content: space-evenly;
-                .area {
-                    width: 40px;
+                align-items: center;
+                justify-content: space-between;
+                .commentArea {
+                    width: auto;
+                    height: 40px;
                     display: flex;
+                    align-items: center;
                     justify-content: space-evenly;
+                    font-size: 20px;
                     cursor: pointer;
                     margin-bottom: 20px;
-                    .reaction {
-                        font-size: 20px;
-                    }
-                    .reaction:hover {
-                        color: var(--DarkGray);
-                    }
-                    .count {
-                        font-size: 15px;
-                        font-family: 'poppins-light';
-                    }
+                    gap: 5px;
+                }
+                .commentArea:hover {
+                    color: var(--DarkGray);
                 }
             }
             .modalOverlay {

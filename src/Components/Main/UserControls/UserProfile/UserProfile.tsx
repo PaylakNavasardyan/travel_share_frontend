@@ -4,7 +4,6 @@ import { useUser } from '../../../../context/UserContext';
 import $api, { API_URL } from '../../../../http/index';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Post } from '../../../../types/post';
-import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
 import { 
   GoComment as GoCommentIcon,
   GoChevronRight as GoChevronRightIcon,
@@ -17,10 +16,9 @@ import {
 } from "react-icons/tb";
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import { CiTrash as CiTrashIcon} from "react-icons/ci";  
+import PostActions from '../../Posts/PostReactions/PostActions';
 
 export default function UserProfile() {
-  const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
-  const SIDislike = SlDislikeIcon as unknown as React.FC<{className: string}>;
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
   const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
@@ -36,6 +34,7 @@ export default function UserProfile() {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
   
   const { id } = useParams();
   const navigate = useNavigate();
@@ -68,23 +67,23 @@ export default function UserProfile() {
 
         let response = await $api.get(`${API_URL}/api/posts/?page=${page}&sort=new&user_id=${user?._id}&limit=20`);
         setPosts(response.data.data.posts);
-
         setTotalPages(response.data.data.meta.totalPages);
-    
+        setTotalPosts(response.data.data.meta.totalPosts);
+        
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
         });
-
+    
       } catch(error) {
         console.log(error);
       } finally {
         setLoading(false)
       };
-
     };
+
     getUserPost();
-  }, [page, user]);
+  }, [page, user, location]);
   
   useEffect(() => {
     if (id) {
@@ -93,6 +92,10 @@ export default function UserProfile() {
       document.body.style.overflow = 'auto';
     };
   }, [id]);
+
+  useEffect(() => {
+    
+  }, [])
 
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
@@ -162,7 +165,6 @@ export default function UserProfile() {
               <p className={classes.nameLetter}>{nameFirtLetter}</p>
             )}
           </div>
-
           <div className={classes.personalInfo}>
             <p className={`${classes.userData} ${classes.userName}`}>
               {user?.username}
@@ -170,6 +172,7 @@ export default function UserProfile() {
             <p className={classes.userData}>{user?.email}</p>
             <p className={classes.userData}>{user?.name}</p>
             <p className={classes.userData}>{user?.surname}</p>
+            <p className={classes.userPostData}>You have {totalPosts} posts</p>
           </div>
 
           {!isActive && (
@@ -253,19 +256,12 @@ export default function UserProfile() {
               <div className={classes.line}></div>
 
               <div className={classes.postReaction}>
-                <div className={`${classes.likeArea} ${classes.area}`}>
-                  <SILike className={`${classes.like} ${classes.reaction}`} />
-                  <span className={`${classes.likeCount} ${classes.count}`}>
-                    {post.likeCount}
-                  </span>
-                </div>
-
-                <div className={`${classes.dislikeArea} ${classes.area}`}>
-                  <SIDislike className={`${classes.dislike} ${classes.reaction}`} />
-                  <span className={`${classes.dislikeCount} ${classes.count}`}>
-                    {post.dislikeCount}
-                  </span>
-                </div>
+                <PostActions 
+                  postId={post._id}
+                  likeCount={post.likeCount}
+                  dislikeCount={post.dislikeCount}
+                  reaction={post.userReaction}
+                />
 
                 <div
                   className={`${classes.commentArea} ${classes.area}`}
