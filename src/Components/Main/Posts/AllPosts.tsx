@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import $api, { API_URL } from '../../../http'
 import { Post } from '../../../types/post';
 import classes from './Post.module.css';
-import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
-import { 
+import {  
   GoComment as GoCommentIcon,
   GoChevronRight as GoChevronRightIcon,
   GoChevronLeft as GoChevronLeftIcon,
@@ -15,10 +14,9 @@ import {
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
 } from "react-icons/tb";
 import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
+import PostActions from './PostReactions/PostActions';
 
 export default function AllPosts() {
-  const SILike = SILikeIcon as unknown as React.FC<{className: string}>;
-  const SIDislike = SlDislikeIcon as unknown as React.FC<{className: string}>;
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
   const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
@@ -60,6 +58,7 @@ export default function AllPosts() {
         const posts = response.data.data.posts;
 
         setPosts(posts);
+        console.log(posts)
         setTotalPages(response.data.data.meta.totalPages);
 
         const users: string[] = posts.map((post: Post) => post.user.username); 
@@ -220,19 +219,12 @@ export default function AllPosts() {
             <div className={classes.line}></div>
             
             <div className={classes.postReaction}>
-              <div className={`${classes.likeArea} ${classes.area}`}>
-                <SILike className={`${classes.like} ${classes.reaction}`} />
-                <span className={`${classes.likeCount} ${classes.count}`}>
-                  {post.likeCount}
-                </span>
-              </div>
-      
-              <div className={`${classes.dislikeArea} ${classes.area}`}>
-                <SIDislike className={`${classes.dislike} ${classes.reaction}`} />
-                <span className={`${classes.dislikeCount} ${classes.count}`}>
-                  {post.dislikeCount}
-                </span>
-              </div>
+              <PostActions 
+                postId={post._id}
+                likeCount={post.likeCount}
+                dislikeCount={post.dislikeCount}
+                reaction={post.userReaction}
+              />
 
               <div 
                 className={`${classes.commentArea} ${classes.area}`}
