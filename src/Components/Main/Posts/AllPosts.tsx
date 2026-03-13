@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import $api, { API_URL } from '../../../http'
 import { Post } from '../../../types/post';
 import classes from './Post.module.css';
@@ -37,6 +37,7 @@ export default function AllPosts() {
   
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const selectedPost = posts.find(post => post._id === id);
 
@@ -58,7 +59,6 @@ export default function AllPosts() {
         const posts = response.data.data.posts;
 
         setPosts(posts);
-        console.log(posts)
         setTotalPages(response.data.data.meta.totalPages);
 
         const users: string[] = posts.map((post: Post) => post.user.username); 
@@ -77,7 +77,9 @@ export default function AllPosts() {
           behavior: 'smooth'
         });
 
-        fetch(posts);
+        if (location.state?.refresh) {
+          fetch(posts);
+        }
         
       } catch (error) {
         console.log(error)
@@ -87,7 +89,7 @@ export default function AllPosts() {
     };
     
     postGetter();
-  }, [page]);
+  }, [page, location]);
 
   useEffect(() => {
     if (id) {
@@ -227,7 +229,7 @@ export default function AllPosts() {
               />
 
               <div 
-                className={`${classes.commentArea} ${classes.area}`}
+                className={classes.commentArea}
                 onClick={() => navigate(`post/${post._id}`)}
               >
                 <GoComment className={`${classes.comment} ${classes.reaction}`} />
