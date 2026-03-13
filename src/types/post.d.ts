@@ -16,5 +16,6 @@ export type Post = {
     description: string,
     dislikeCount: number,
     likeCount: number,
-    media: Media[]
+    media: Media[],
+    userReaction: null | string
 };
