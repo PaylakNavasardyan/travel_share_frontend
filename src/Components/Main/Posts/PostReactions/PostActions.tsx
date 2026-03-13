@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactToPost from "./ReactToPost";
 import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
-import classes from '../Post.module.css';
+import classes from './PostActions.module.css';
 
 interface Props {
     postId: string;
