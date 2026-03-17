@@ -93,10 +93,6 @@ export default function UserProfile() {
     };
   }, [id]);
 
-  useEffect(() => {
-    
-  }, [])
-
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
       {
