@@ -50,46 +50,42 @@ export default function AllPosts() {
       ? 0
       : selIndex;
   
-  useEffect(() => {
-    async function postGetter() {
-      try {
-        setLoading(true);
+  const fetchPosts = async (shouldScroll = false) => {
+    try {
+      setLoading(true);
+      let response = await $api.get(`/api/posts/?page=${page}&limit=20&sort=most_like`);
+      const posts = response.data.data.posts;
 
-        let response = await $api.get(`/api/posts/?page=${page}&limit=20&sort=most_like`);
-        const posts = response.data.data.posts;
+      setPosts(posts);
+      setTotalPages(response.data.data.meta.totalPages);
 
-        setPosts(posts);
-        setTotalPages(response.data.data.meta.totalPages);
+      setPostername(posts.map((post: Post) => post.user.username));
+      setFirstLetter(posts.map((post: Post) => post.user.username.slice(0, 1).toUpperCase()));
+      setPosterImage(posts.map((post: Post) => `${API_URL}/api/user/profile/${post.user.profilePicture}`));
 
-        const users: string[] = posts.map((post: Post) => post.user.username); 
-        setPostername(users);
-
-        const letter = users.map(user => user.slice(0, 1).toUpperCase());
-        setFirstLetter(letter);
-        
-        const images: string[] = posts.map(
-          (post: Post) => `${API_URL}/api/user/profile/${post.user.profilePicture}`
-        );
-        setPosterImage(images);
-        
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
+      if (shouldScroll) {
+        window.scrollTo({ 
+          top: 0, 
+          behavior: 'smooth' 
         });
-
-        if (location.state?.refresh) {
-          fetch(posts);
-        }
-        
-      } catch (error) {
-        console.log(error)
-      } finally {
-        setLoading(false);
       }
-    };
-    
-    postGetter();
-  }, [page, location]);
+      
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts(true); 
+  }, [page]);
+
+  useEffect(() => {
+    if (location.state?.refresh) {
+      fetchPosts(false);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (id) {
