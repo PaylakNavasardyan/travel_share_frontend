@@ -1,0 +1,296 @@
+/* 
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalCloseBorder {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalCloseBorder:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modalCloseIcon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.modalContentBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modalContent {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  max-height: 80vh;
+}
+
+.fewItems {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.oneItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postMedia {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+.slideButtonBack {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.slideButtonBack:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.slideButtonBack.left {
+  left: 10px;
+}
+
+.slideButtonBack.right {
+  right: 10px;
+}
+
+.slideButton {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.modalPostInfo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modalPostUserData {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.letter {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.firstletter {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+} */
+
+  .modalOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: self-end;
+        justify-content: center;
+        z-index: 9999;
+        .modalCloseBorder {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            cursor: pointer;
+            .modalCloseIcon {
+                font-size: 30px;
+                color: var(--White);
+            }
+        }
+        .modalCloseBorder:hover {
+            background-color: var(--DarkGray);
+            border-radius: 50%;
+        }
+
+        .modalContentBackground {
+            width: 100%;
+            height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .modalContent {
+                width: 75%;
+                height: 88vh;
+                background-color: var(--White);
+                display: flex;
+            }
+            .oneItem {
+                width: 60% ;
+                height: 88vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .postMedia {
+                    width: 100%;
+                    height: 88vh;
+                    object-fit: cover;
+                }
+            }
+            .fewItems {
+                width: 60% ;
+                height: 88vh;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .slideButtonBack {
+                    width: 40px;
+                    height: 40px;
+                    background-color: rgba(50, 47, 47, 0.2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    position: absolute;
+                    border-radius: 50%;
+                    margin: 0 8px 0 8px;
+                }
+                .slideButtonBack:hover {
+                    background-color: var(--DarkGray);
+                }
+
+                .left {
+                    left: 0;
+                }
+                .right {
+                    right: 0;
+                }
+                
+                .postMedia {
+                    width: 100%;
+                    height: 88vh;
+                    object-fit: cover;
+                    position: absolute;
+                }
+            }
+            .modalPostInfo {
+                width: 40%;
+                height: 86vh;
+                margin: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                .modalPostUserData {
+                    width: 100%;
+                    max-height: 86vh;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    .profilePic {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                    }
+                    .letter {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        background-color: var(--PlatiniumGreen);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        .firstletter {
+                            color: var(--MainRed);
+                            font-family: 'poppins-light';
+                            font-size: 22px;
+                        }
+                    }
+                    .username {
+                        width: auto;
+                        height: auto;
+                        font-size: 17px;
+                        font-family: 'poppins-lightitalic';
+                        color: var(--MainRed);
+                        cursor: pointer;
+                    }
+                }
+                .description {
+                    width: auto;
+                    height: auto;
+                    font-family: 'poppins-light';
+                    font-size: 16px;
+                }
+            }
+        }
+    }
