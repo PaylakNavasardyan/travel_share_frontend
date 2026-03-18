@@ -1,7 +1,11 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { Auth, ApiResponse } from '../types'
 
-export const API_URL = process.env.REACT_APP_API_URL
+if (!process.env.REACT_APP_API_URL) {
+  throw new Error('REACT_APP_API_URL is not defined');
+}
+
+export const API_URL = process.env.REACT_APP_API_URL;
 
 const $api = axios.create({
 	withCredentials: true,
