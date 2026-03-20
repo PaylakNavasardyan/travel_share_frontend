@@ -1,0 +1,87 @@
+.commentArea {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    .comment {
+        width: 90%;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid var(--PlatiniumGreen);
+        padding: 10px 20px 10px 20px;
+        font-family: 'poppins-light';
+        font-size: 15px;
+        resize: none; 
+        vertical-align: top;
+    }
+    .comment:focus {
+        border: 2px solid var(--PlatiniumGreen);
+        outline: none;
+    }
+    .existedComment {
+        width: 90%;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid var(--PlatiniumGreen);
+        padding: 10px 20px 10px 20px;
+        font-family: 'poppins-light';
+        font-size: 15px;
+        resize: none; 
+        vertical-align: top;
+    }
+    .existedComment:focus {
+        border: 2px solid var(--MainBlue);
+        outline: none;
+    }
+    .iconArea {
+        width: 99%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 2px solid var(--DarkGray);
+        background-color: var(--DarkGray);
+        position: relative;
+        cursor: not-allowed;
+        .postComment {
+            text-align: center;
+            font-family: 'poppins-light';
+            font-size: 16px;
+        }
+        .sendIcon {
+            position: absolute;
+            right: 0;
+            margin-right: 20px;
+            font-size: 20px;
+        }
+    }
+    .existedIconArea {
+        width: 99%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 2px solid var(--MainBlue);
+        background-color: var(--MainBlue);
+        position: relative;
+        cursor: pointer;
+        .postComment {
+            text-align: center;
+            font-family: 'poppins-light';
+            font-size: 16px;
+            color: var(--White)
+        }
+        .sendIcon {
+            position: absolute;
+            right: 0;
+            margin-right: 20px;
+            font-size: 20px;
+            color: var(--White)
+        }
+    }
+}
