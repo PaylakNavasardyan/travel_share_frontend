@@ -7,6 +7,7 @@ import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import classes from './PostModal.module.css';
 import { useNavigate } from 'react-router-dom';
 import PostActions from '../PostReactions/PostActions';
+import PostComment from '../PostComments/PostComment';
 
 interface PostMedia {
   url: string;
@@ -112,6 +113,8 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
             </div>
 
             <span className={classes.description}>{post.description}</span>
+            
+            <PostComment />
 
             <PostActions 
               postId={post._id}
