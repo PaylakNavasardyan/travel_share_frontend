@@ -8,33 +8,18 @@ import classes from './PostModal.module.css';
 import { useNavigate } from 'react-router-dom';
 import PostActions from '../PostReactions/PostActions';
 import PostComment from '../PostComments/PostComment';
-
-interface PostMedia {
-  url: string;
-}
-
-interface PostUser {
-  username: string;
-  profilePicture?: string;
-}
-
-interface Post {
-  _id: string;
-  description: string;
-  media: PostMedia[];
-  likeCount: number;
-  dislikeCount: number;
-  userReaction: string | null;
-  user: PostUser;
-}
+import PostContent from '../PostContent/PostContent';
+import { CommentType } from '../../../../types/comment';
+import { Post } from '../../../../types/post';
 
 interface PostModalProps {
   post: Post;
   apiUrl?: string;
-}
+};
 
 export default function PostModal({post, apiUrl = ''}: PostModalProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [comments, setComments] = useState<CommentType[]>([]);
   const navigate = useNavigate();
   
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
@@ -111,10 +96,18 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
 
               <span className={classes.username}>@{post.user.username}</span>
             </div>
-
-            <span className={classes.description}>{post.description}</span>
             
-            <PostComment />
+             <PostContent
+                postId={post._id}
+                description={post.description}
+              />
+
+              <PostComment
+                postId={post._id}
+                onAddComment={(newComment) => {
+                  setComments(prev => [...prev, newComment]);
+                }}
+              />
 
             <PostActions 
               postId={post._id}
