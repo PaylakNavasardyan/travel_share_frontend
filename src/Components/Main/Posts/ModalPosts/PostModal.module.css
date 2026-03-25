@@ -130,12 +130,6 @@
           cursor: pointer;
         }
       }
-      .description {
-        width: auto;
-        height: auto;
-        font-family: 'poppins-light';
-        font-size: 16px;
-      }
     }
   }
 }
