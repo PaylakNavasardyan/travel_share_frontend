@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import $api, { API_URL } from '../../../http'
-import { Post } from '../../../types/post';
+import $api, { API_URL } from '../../../../http'
+import { Post } from '../../../../types/post';
 import classes from './Post.module.css';
 import {  
   GoComment as GoCommentIcon,
@@ -13,8 +13,8 @@ import {
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
 } from "react-icons/tb";
-import PostActions from './PostReactions/PostActions';
-import PostModal from './ModalPosts/PostModal';
+import PostActions from '../PostReactions/PostActions';
+import PostModal from '../ModalPosts/PostModal';
 
 export default function AllPosts() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
