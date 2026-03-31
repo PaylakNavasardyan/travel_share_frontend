@@ -97,17 +97,20 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
               <span className={classes.username}>@{post.user.username}</span>
             </div>
             
-             <PostContent
-                postId={post._id}
-                description={post.description}
-              />
-
-              <PostComment
-                postId={post._id}
-                onAddComment={(newComment) => {
-                  setComments(prev => [...prev, newComment]);
-                }}
-              />
+            <PostContent
+              postId={post._id}
+              description={post.description}
+              likeCount={post.likeCount}
+              dislikeCount={post.dislikeCount}
+              reaction={post.userReaction}
+            />
+              
+            <PostComment
+              postId={post._id}
+              onAddComment={(newComment) => {
+                setComments(prev => [...prev, newComment]);
+              }}
+            />
 
             <PostActions 
               postId={post._id}
