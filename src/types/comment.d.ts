@@ -12,5 +12,6 @@ export type CommentType = {
     likeCount: number;
     dislikeCount: number;
     replies: number;
-    createdAt: string
+    createdAt: string;
+    userReaction: null | string;
 }
