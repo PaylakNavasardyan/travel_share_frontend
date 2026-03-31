@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react';
 import classes from './PostContent.module.css';
 import { getComment } from '../PostComments/GetComment';
 import { CommentType } from '../../../../types/comment';
-import { API_URL } from '../../../../http';
+import useSWR from 'swr';
+import CommentItem from './CommentItem';
 
 interface Props {
   postId: string;
   description: string;
-}
+  likeCount: number;
+  dislikeCount: number;
+  reaction: null | string;
+};
 
 export default function PostContent({ postId, description }: Props) {
-  const [comments, setComments] = useState<CommentType[]>([]);
-
-  useEffect(() => {
-    async function fetchComments() {
-      const data = await getComment(postId);
-      setComments(data);
-    }
-
-    fetchComments();
-  }, [postId]);
+  const { data: comments = [] } = useSWR<CommentType[]>(
+    postId ? ['comments', postId] : null,
+    () => getComment(postId)
+  );
 
   return (
     <div className={classes.section}>
@@ -28,16 +25,8 @@ export default function PostContent({ postId, description }: Props) {
       </div>
 
       <div className={classes.comment}>
-        {comments.map((c) => (
-          <p key={c._id}>
-            <img 
-              className={classes.profilePic}
-              src={`${API_URL}/api/user/profile/${c.user.profilePicture}`}
-              alt="Profile"
-            />
-            <span>{c.user.username}</span>
-            <span>{c.content}</span>
-          </p>
+        {comments.map((comment) => (
+          <CommentItem key={comment._id} comment={comment} />
         ))}
       </div>
     </div>

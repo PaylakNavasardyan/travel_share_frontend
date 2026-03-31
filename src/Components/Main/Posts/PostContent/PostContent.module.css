@@ -2,6 +2,7 @@
     width: 100%;
     height: 56vh;
     overflow: auto;
+    overflow-x: hidden;
     .description {
         width: auto;
         height: auto;
@@ -9,9 +10,95 @@
         font-size: 16px;
     }
     .comment {
-        .profilePic {
-            width: 50px;
-            height: 50px;
+        width: 95%;
+        height: auto;
+        .commentBody {
+            width: 100%;
+            height: auto;
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            .profilePic {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+            .commentData {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                .username {
+                    font-family: 'poppins-semibold';
+                    color: var(--MainBlue);
+                    font-size: 14px;
+                    cursor: pointer;
+                }
+                .comment {
+                    width: 100%;
+                    height: auto;
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                    font-family: 'poppins-light';
+                    font-size: 15px;
+                }
+            }
+            .reactionArea {
+                width: 20%;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                .commentReaction {
+                    width: 80%;
+                    height: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 5px;
+                    cursor: pointer;
+                    font-family: 'poppins-light';
+                    font-size: 13px;
+                    color: var(--Black);
+                }
+                .commentReaction:hover {
+                    color: var(--DarkGray);
+                }
+                .likeReaction {
+                    width: 80%;
+                    height: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 5px;
+                    cursor: pointer;
+                    font-family: 'poppins-light';
+                    font-size: 13px;
+                    color: var(--MainBlue);
+                }
+                .likeReaction:hover {
+                    color: var(--MainRed);
+                }
+                .dislikeReaction {
+                    width: 80%;
+                    height: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 5px;
+                    cursor: pointer;
+                    font-family: 'poppins-light';
+                    font-size: 13px;
+                    color: var(--MainRed);
+                }
+                .dislikeReaction:hover {
+                    color: var(--MainBlue);
+                }
+            }
         }
     }
 }
