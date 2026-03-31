@@ -3,6 +3,8 @@ import classes from './PostComment.module.css';
 import { IoIosSend as IoIosSendIcon } from "react-icons/io";
 import $api from '../../../../http';
 import { CommentType } from '../../../../types/comment';
+import { useSWRConfig } from 'swr';
+import { getComment } from './GetComment';
 
 interface Props {
   postId: string;
@@ -11,6 +13,7 @@ interface Props {
 
 export default function PostComment({ postId, onAddComment }: Props) {
   const IoIosSend = IoIosSendIcon as unknown as React.FC<{ className: string }>;
+  const { mutate } = useSWRConfig();
 
   const [comment, setComment] = useState<string>('');
 
@@ -18,15 +21,17 @@ export default function PostComment({ postId, onAddComment }: Props) {
     if (!comment.trim()) return;
 
     try {
-        const response = await $api.post('/api/comment/create', {
-            postId,
-            content: comment
-        });
+      const response = await $api.post('/api/comment/create', {
+        postId,
+        content: comment
+      });
 
-        const newComment = response.data.data; 
+      onAddComment(response.data.data);
 
-        onAddComment(newComment);
-        setComment('');
+      const updatedComments = await getComment(postId);
+      mutate(['comments', postId], updatedComments, false);
+
+      setComment('');
     } catch (error) {
       console.log(error);
     }
