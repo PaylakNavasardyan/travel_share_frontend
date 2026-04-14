@@ -31,11 +31,24 @@
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
-                .username {
-                    font-family: 'poppins-semibold';
-                    color: var(--MainBlue);
-                    font-size: 14px;
-                    cursor: pointer;
+                .data {
+                    width: 100%;
+                    height: auto;
+                    display: flex;
+                    justify-content: space-between;
+                    .username {
+                        font-family: 'poppins-semibold';
+                        color: var(--MainBlue);
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+                    .createdAt {
+                        width: auto;
+                        height: auto;
+                        font-family: 'poppins-italic';
+                        font-size: 10px;
+                        color: var(--PlatiniumGreen);
+                    }
                 }
                 .comment {
                     width: 100%;
@@ -44,6 +57,84 @@
                     overflow-wrap: break-word;
                     font-family: 'poppins-light';
                     font-size: 15px;
+                }
+                .replyComment {
+                    width: 85%;
+                    height: 40px;
+                    border-radius: 8px;
+                    border: 2px solid var(--PlatiniumGreen);
+                    padding: 10px 20px 10px 20px;
+                    font-family: 'poppins-light';
+                    font-size: 13px;
+                    resize: none; 
+                    vertical-align: top;
+                }
+                .replyComment:focus {
+                    border: 2px solid var(--PlatiniumGreen);
+                    outline: none;
+                }
+                .existedComment {
+                    width: 85%;
+                    height: 40px;
+                    border-radius: 8px;
+                    border: 2px solid var(--PlatiniumGreen);
+                    padding: 10px 20px 10px 20px;
+                    font-family: 'poppins-light';
+                    font-size: 13px;
+                    resize: none; 
+                    vertical-align: top;
+                }
+                .existedComment:focus {
+                    border: 2px solid var(--MainBlue);
+                    outline: none;
+                }
+                .iconArea {
+                    width: 96%;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 8px;
+                    border: 2px solid var(--DarkGray);
+                    background-color: var(--DarkGray);
+                    position: relative;
+                    cursor: not-allowed;
+                    .postComment {
+                        text-align: center;
+                        font-family: 'poppins-light';
+                        font-size: 14px;
+                    }
+                    .sendIcon {
+                        position: absolute;
+                        right: 0;
+                        margin-right: 20px;
+                        font-size: 20px;
+                    }
+                }
+                .existedIconArea {
+                    width: 96%;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 8px;
+                    border: 2px solid var(--MainBlue);
+                    background-color: var(--MainBlue);
+                    position: relative;
+                    cursor: pointer;
+                    .postComment {
+                        text-align: center;
+                        font-family: 'poppins-light';
+                        font-size: 14px;
+                        color: var(--White)
+                    }
+                    .sendIcon {
+                        position: absolute;
+                        right: 0;
+                        margin-right: 20px;
+                        font-size: 18px;
+                        color: var(--White)
+                    }
                 }
             }
             .reactionArea {
@@ -99,6 +190,109 @@
                     color: var(--MainBlue);
                 }
             }
+        }
+    }
+}
+
+.replyItem {
+    width: 85%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    .replyData {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        .replyUserData {
+            width: auto;
+            height: auto;
+            display: flex;
+            .replyProfilePicture {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: none;
+                object-fit: cover;
+                cursor: pointer;
+            }
+            .replyName {
+                font-family: 'poppins-semibold';
+                color: var(--MainBlue);
+                font-size: 12px;
+                cursor: pointer;
+            }
+        }
+        .replyCreatedAt {
+            width: auto;
+            height: auto;
+            font-family: 'poppins-italic';
+            font-size: 8px;
+            color: var(--PlatiniumGreen);
+        }
+    }
+    .replyContent {
+        width: 100%;
+        height: auto;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        font-family: 'poppins-light';
+        font-size: 13px;
+        margin-left: 30px;
+    }
+    .replyReactionArea {
+        width: 18%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        .replyCommentReaction {
+            width: 75%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            font-family: 'poppins-light';
+            font-size: 12px;
+            color: var(--Black);
+        }
+        .replyCommentReaction:hover {
+            color: var(--DarkGray);
+        }
+        .replyLikeReaction {
+            width: 75%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            font-family: 'poppins-light';
+            font-size: 12px;
+            color: var(--MainBlue);
+        }
+        .replyLikeReaction:hover {
+            color: var(--MainRed);
+        }
+        .replyDislikeReaction {
+            width: 75%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            font-family: 'poppins-light';
+            font-size: 12px;
+            color: var(--MainRed);
+        }
+        .replyDislikeReaction:hover {
+            color: var(--MainBlue);
         }
     }
 }
