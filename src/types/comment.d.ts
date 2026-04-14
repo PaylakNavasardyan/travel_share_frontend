@@ -14,4 +14,5 @@ export type CommentType = {
     replies: number;
     createdAt: string;
     userReaction: null | string;
+    parentId: string
 }
