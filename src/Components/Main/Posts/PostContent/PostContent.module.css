@@ -25,6 +25,22 @@
                 object-fit: cover;
                 cursor: pointer;
             }
+            .letter {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--PlatiniumGreen);
+                cursor: pointer;
+                .nameLetter {
+                    color: var(--MainRed);
+                    font-family: 'poppins-light';
+                    font-size: 20px;
+                }
+            }
             .commentData {
                 width: 100%;
                 height: auto;
@@ -210,6 +226,7 @@
             width: auto;
             height: auto;
             display: flex;
+            gap: 5px;
             .replyProfilePicture {
                 width: 30px;
                 height: 30px;
@@ -217,6 +234,22 @@
                 border: none;
                 object-fit: cover;
                 cursor: pointer;
+            }
+            .replyLetter {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--PlatiniumGreen);
+                cursor: pointer;
+                .replyNameLetter {
+                    color: var(--MainRed);
+                    font-family: 'poppins-light';
+                    font-size: 18px;
+                }
             }
             .replyName {
                 font-family: 'poppins-semibold';
@@ -249,6 +282,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        margin-left: 25px;
         .replyCommentReaction {
             width: 75%;
             height: auto;

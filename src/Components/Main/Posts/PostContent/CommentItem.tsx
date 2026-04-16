@@ -24,6 +24,8 @@ export default function CommentItem({ comment }: CommentItemProps) {
   const [replyText, setReplyText] = useState('');
   const [showReplies, setShowReplies] = useState(false);
 
+  const nameFirstLetter = comment.user.username[0].toUpperCase();
+
   const { data: replies = [], mutate } = useSWR<CommentType[]>(
     showReplies ? ['replies', comment._id] : null,
     () => getReplyComment(comment.postId, comment._id)
@@ -85,11 +87,18 @@ export default function CommentItem({ comment }: CommentItemProps) {
 
   return (
     <div className={classes.commentBody}>
-      <img
-        className={classes.profilePic}
-        src={`${API_URL}/api/user/profile/${comment.user.profilePicture}`}
-        alt={`${comment.user.username}`}
-      />
+      {comment.user.profilePicture 
+        ?
+          <img
+            className={classes.profilePic}
+            src={`${API_URL}/api/user/profile/${comment.user.profilePicture}`}
+            alt={`${comment.user.username}`}
+          />
+        :
+          <div className={classes.letter}>
+            <p className={classes.nameLetter}>{nameFirstLetter}</p>  
+          </div>
+      }
 
       <div className={classes.commentData}>
         <div className={classes.data}>

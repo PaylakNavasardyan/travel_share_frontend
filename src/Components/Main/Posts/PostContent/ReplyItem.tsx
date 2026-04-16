@@ -3,10 +3,13 @@ import { CommentType } from '../../../../types/comment';
 import { useReaction } from '../UseReaction/useReaction';
 import classes from './PostContent.module.css';
 import { SlLike as SILikeIcon, SlDislike as SlDislikeIcon } from "react-icons/sl";
+import { API_URL } from '../../../../http';
 
 export default function ReplyItem({ reply }: { reply: CommentType }) {
     const SILike = SILikeIcon as unknown as React.FC<{ className: string }>;
     const SIDislike = SlDislikeIcon as unknown as React.FC<{ className: string }>;
+
+    const nameFirstLetter = reply.user.username[0].toUpperCase();
 
     const { likes, dislikes, reaction, handleReaction } = useReaction(
         'comment',
@@ -23,11 +26,18 @@ export default function ReplyItem({ reply }: { reply: CommentType }) {
        <div key={reply._id} className={classes.replyItem}>
             <div className={classes.replyData}>
                 <div className={classes.replyUserData}>
-                    <img 
-                        className={classes.replyProfilePicture}
-                        src={reply.user.profilePicture}
-                        alt='profile-pic'
-                    />
+                    {reply.user.profilePicture
+                        ?
+                            <img 
+                                className={classes.replyProfilePicture}
+                                src={`${API_URL}/api/user/profile/${reply.user.profilePicture}`}
+                                alt='profile-pic'
+                            />
+                        :
+                            <div className={classes.replyLetter}>
+                                <p className={classes.replyNameLetter}>{nameFirstLetter}</p>  
+                            </div>   
+                    }
                     <span className={classes.replyName}>{reply.user.username}</span>
                 </div>
 
