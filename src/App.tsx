@@ -16,11 +16,13 @@ import CreatePosts from './Components/Main/UserControls/CreatePosts/CreatePosts'
 import Logout from './Components/Main/UserControls/Logout/Logout';
 import NotFound from './Components/NotFound/NotFound';
 import DeletePost from './Components/Main/Posts/DeletePost/DeletePost';
+import AnotherUser from './Components/Main/AnotherUser/AnotherUser';
+import { useState } from 'react';
 
 function App() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
-  
+
   return (
     <div className="App">
       <Routes location={state?.backgroundLocation || location}>
@@ -28,6 +30,7 @@ function App() {
         <Route path="/user-login" element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/user/:id" element={<AnotherUser />} />
         
         <Route path="/my-profile" element={
           <>
