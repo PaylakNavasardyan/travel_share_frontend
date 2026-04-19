@@ -15,6 +15,9 @@ import {
 } from "react-icons/tb";
 import PostActions from '../PostReactions/PostActions';
 import PostModal from '../ModalPosts/PostModal';
+import { useUser } from '../../../../context/UserContext';
+import { Auth } from '../../../../types';
+import AnotherUser from '../../AnotherUser/AnotherUser';
 
 export default function AllPosts() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
@@ -32,12 +35,15 @@ export default function AllPosts() {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [users, setUsers] = useState<Auth.User[]>([]);
   
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { user } = useUser();
+  
   const selectedPost = posts.find(post => post._id === id);
+  const selectedUser = users.find(user => user._id === id);
 
   const fetchPosts = async (shouldScroll = false) => {
     try {
@@ -120,20 +126,57 @@ export default function AllPosts() {
               <div className={classes.posterInfo}>
                 {post.user.profilePicture
                   ?
-                    (posterImage[postIndex] &&                      
-                      <img 
-                        className={classes.profilePic}
-                        src={posterImage[postIndex]}
-                        alt='Profile-Picture'
-                      />
+                    (postername[postIndex] && user?._id === post.user._id 
+                      ?
+                        <img 
+                          className={classes.profilePic}
+                          src={posterImage[postIndex]}
+                          alt='Profile-Picture'
+                          onClick={() => navigate('/my-profile')}
+                        />
+                      :                      
+                        <img 
+                          className={classes.profilePic}
+                          src={posterImage[postIndex]}
+                          alt='Profile-Picture'
+                          onClick={() => navigate(`/user/${post.user._id}`)}
+                        />
                     )
-                  :
-                    <div className={classes.letter}>
-                      <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
-                    </div>
+                  : 
+                    (postername[postIndex] && user?._id === post.user._id
+                      ?
+                        <div 
+                          className={classes.letter} 
+                          onClick={() => navigate('/my-profile')}
+                        >
+                          <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
+                        </div>
+                      :
+                      <div 
+                        className={classes.letter} 
+                        onClick={() => navigate(`/user/${post.user._id}`)}
+                      >
+                        <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
+                      </div>
+                    )
                 }
 
-                {postername[postIndex] && <span className={classes.username}>@{postername[postIndex]}</span>}
+                {postername[postIndex] && user?._id === post.user._id 
+                  ?
+                    <span 
+                      className={classes.username}
+                      onClick={() => navigate('/my-profile')}
+                    >
+                      @{postername[postIndex]}
+                    </span>
+                  :
+                    <span 
+                      className={classes.username}
+                      onClick={() => navigate(`/user/${post.user._id}`)}
+                    >
+                      @{postername[postIndex]}
+                    </span>
+                }
               </div>
 
               <span className={classes.postCreateData}>{post.createdAt.slice(0, 10)}</span>
@@ -207,6 +250,10 @@ export default function AllPosts() {
           post={selectedPost}
           apiUrl={API_URL}
         />
+      )}
+
+      {selectedUser && (
+        <AnotherUser />
       )}
 
       <div className={classes.paginationGuide}>
