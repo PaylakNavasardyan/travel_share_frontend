@@ -9,6 +9,7 @@ import {
 import { ImProfile as ImProfileIcon } from "react-icons/im";
 import { FaPlus as FaPlusIcon, FaRegEdit as FaRegEditIcon  } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useUser } from '../../../context/UserContext';
 
 export default function SideBar() {
   const RiUserReceived2Fill = RiUserReceived2FillIcon as unknown as React.FC<{ className: string }>
@@ -22,6 +23,8 @@ export default function SideBar() {
   const location = useLocation();
 
   const[isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { user } = useUser();
 
   const handleChange = (): void => {
     setIsOpen(prev => !prev);
@@ -37,7 +40,7 @@ export default function SideBar() {
         
         <div className={`${classes.sideNav} ${classes.followersPart}`}>
           <RiUserSharedFill  className={classes.icon} />
-          <span>Followers</span>
+          <span>Followers {user?.followers}</span>
         </div>
       </Link>
 
@@ -48,7 +51,7 @@ export default function SideBar() {
         >
         <div className={`${classes.sideNav} ${classes.followingPart}`}>
           <RiUserReceived2Fill  className={classes.icon} />
-          <span>Following</span>
+          <span>Following {user?.following}</span>
         </div>
       </Link>
 
