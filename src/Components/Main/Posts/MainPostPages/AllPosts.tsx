@@ -13,6 +13,7 @@ import {
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon
 } from "react-icons/tb";
+import { FaVideo as FaVideoIcon } from "react-icons/fa";
 import PostActions from '../PostReactions/PostActions';
 import PostModal from '../ModalPosts/PostModal';
 import { useUser } from '../../../../context/UserContext';
@@ -26,6 +27,7 @@ export default function AllPosts() {
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
   const TbPlayerTrackPrevFilled =TbPlayerTrackPrevFilledIcon as unknown as React.FC<{ className: string }>
   const TbPlayerTrackNextFilled = TbPlayerTrackNextFilledIcon as unknown as React.FC<{ className: string }>
+  const FaVideo = FaVideoIcon as unknown as React.FC<{ className: string }>;
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [postername, setPostername] = useState<string[]>([]);
@@ -118,95 +120,133 @@ export default function AllPosts() {
         const index = currentIndex[post._id] ?? 0;
 
         const safeIndex =
-        index >= post.media.length ? 0 : index;
+          index >= post.media.length ? 0 : index;
+
+        const currentMedia = post.media[safeIndex];
+        const mediaUrl = currentMedia
+          ? `${API_URL}/api/posts/media/${currentMedia.url}`
+          : '';
+
+        const isVideo =
+          currentMedia?.type?.startsWith('video/') ||
+          currentMedia?.url.match(/\.(mp4|webm|ogg)$/i);
 
         return (
           <div key={post._id} className={classes.postBody}>
             <div className={classes.postInfo}>
               <div className={classes.posterInfo}>
-                {post.user.profilePicture
-                  ?
-                    (postername[postIndex] && user?._id === post.user._id 
-                      ?
-                        <img 
-                          className={classes.profilePic}
-                          src={posterImage[postIndex]}
-                          alt='Profile-Picture'
-                          onClick={() => navigate('/my-profile')}
-                        />
-                      :                      
-                        <img 
-                          className={classes.profilePic}
-                          src={posterImage[postIndex]}
-                          alt='Profile-Picture'
-                          onClick={() => navigate(`/user/${post.user._id}`)}
-                        />
-                    )
-                  : 
-                    (postername[postIndex] && user?._id === post.user._id
-                      ?
-                        <div 
-                          className={classes.letter} 
-                          onClick={() => navigate('/my-profile')}
-                        >
-                          <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
-                        </div>
-                      :
-                      <div 
-                        className={classes.letter} 
-                        onClick={() => navigate(`/user/${post.user._id}`)}
-                      >
-                        <p className={classes.firstletter}>{firstLetter[postIndex]}</p>
-                      </div>
-                    )
-                }
-
-                {postername[postIndex] && user?._id === post.user._id 
-                  ?
-                    <span 
-                      className={classes.username}
+                {post.user.profilePicture ? (
+                  postername[postIndex] && user?._id === post.user._id ? (
+                    <img
+                      className={classes.profilePic}
+                      src={posterImage[postIndex]}
+                      alt="Profile-Picture"
                       onClick={() => navigate('/my-profile')}
-                    >
-                      @{postername[postIndex]}
-                    </span>
-                  :
-                    <span 
-                      className={classes.username}
+                    />
+                  ) : (
+                    <img
+                      className={classes.profilePic}
+                      src={posterImage[postIndex]}
+                      alt="Profile-Picture"
                       onClick={() => navigate(`/user/${post.user._id}`)}
-                    >
-                      @{postername[postIndex]}
-                    </span>
-                }
+                    />
+                  )
+                ) : postername[postIndex] && user?._id === post.user._id ? (
+                  <div
+                    className={classes.letter}
+                    onClick={() => navigate('/my-profile')}
+                  >
+                    <p className={classes.firstletter}>
+                      {firstLetter[postIndex]}
+                    </p>
+                  </div>
+                ) : (
+                  <div
+                    className={classes.letter}
+                    onClick={() => navigate(`/user/${post.user._id}`)}
+                  >
+                    <p className={classes.firstletter}>
+                      {firstLetter[postIndex]}
+                    </p>
+                  </div>
+                )}
+
+                {postername[postIndex] && user?._id === post.user._id ? (
+                  <span
+                    className={classes.username}
+                    onClick={() => navigate('/my-profile')}
+                  >
+                    @{postername[postIndex]}
+                  </span>
+                ) : (
+                  <span
+                    className={classes.username}
+                    onClick={() => navigate(`/user/${post.user._id}`)}
+                  >
+                    @{postername[postIndex]}
+                  </span>
+                )}
               </div>
 
-              <span className={classes.postCreateData}>{post.createdAt.slice(0, 10)}</span>
+              <span className={classes.postCreateData}>
+                {post.createdAt.slice(0, 10)}
+              </span>
             </div>
 
-            <p className={classes.postDescription}>{post.description}</p>
+            <p className={classes.postDescription}>
+              {post.description}
+            </p>
 
-            <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
+            <div
+              className={
+                post.media.length > 1
+                  ? classes.fewItems
+                  : classes.oneItem
+              }
+            >
               {post.media.length > 1 && (
-                <div 
+                <div
                   className={classes.slideButtonBack}
-                  onClick={() => prevSlide(post._id, post.media.length)}
+                  onClick={() =>
+                    prevSlide(post._id, post.media.length)
+                  }
                 >
                   <GoChevronLeft className={classes.slideButton} />
                 </div>
               )}
 
-              {post.media.length > 0 && post.media[safeIndex] && (
-                <img
-                  className={classes.postMedia}
-                  onClick={() => navigate(`post/${post._id}`)}
-                  src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
-                  alt="Post Media"
-                />
+              {post.media.length > 0 && currentMedia && (
+                isVideo ? (
+                  <div className={classes.videoWrapper}>
+                    <FaVideo className={classes.videoIcon} />
+
+                    <video
+                      className={`${classes.postMedia} ${classes.videoPost}`}
+                      src={mediaUrl}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`post/${post._id}`);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    className={classes.postMedia}
+                    src={mediaUrl}
+                    alt="Post Media"
+                    onClick={() =>
+                      navigate(`post/${post._id}`)
+                    }
+                  />
+                )
               )}
 
               {post.media.length > 1 && (
-                <div 
+                <div
                   className={classes.slideButtonBack}
-                  onClick={() => nextSlide(post._id, post.media.length)}  
+                  onClick={() =>
+                    nextSlide(post._id, post.media.length)
+                  }
                 >
                   <GoChevronRight className={classes.slideButton} />
                 </div>
@@ -218,27 +258,35 @@ export default function AllPosts() {
                 {post.media.map((_, i) => (
                   <GoDotFill
                     key={i}
-                    className={i === index ? classes.activeDot : classes.dot}
+                    className={
+                      i === index
+                        ? classes.activeDot
+                        : classes.dot
+                    }
                   />
                 ))}
               </div>
             )}
 
             <div className={classes.line}></div>
-            
+
             <div className={classes.postReaction}>
-              <PostActions 
+              <PostActions
                 postId={post._id}
                 likeCount={post.likeCount}
                 dislikeCount={post.dislikeCount}
                 reaction={post.userReaction}
               />
 
-              <div 
+              <div
                 className={classes.commentArea}
-                onClick={() => navigate(`post/${post._id}`)}
+                onClick={() =>
+                  navigate(`post/${post._id}`)
+                }
               >
-                <GoComment className={`${classes.comment} ${classes.reaction}`} />
+                <GoComment
+                  className={`${classes.comment} ${classes.reaction}`}
+                />
               </div>
             </div>
           </div>
@@ -246,15 +294,10 @@ export default function AllPosts() {
       })}
 
       {selectedPost && (
-        <PostModal
-          post={selectedPost}
-          apiUrl={API_URL}
-        />
+        <PostModal post={selectedPost} apiUrl={API_URL} />
       )}
 
-      {selectedUser && (
-        <AnotherUser />
-      )}
+      {selectedUser && <AnotherUser />}
 
       <div className={classes.paginationGuide}>
         <button
@@ -262,7 +305,9 @@ export default function AllPosts() {
           disabled={loading || page <= 1}
           onClick={() => setPage(page - 1)}
         >
-          <TbPlayerTrackPrevFilled className={classes.changingPageIcon} />
+          <TbPlayerTrackPrevFilled
+            className={classes.changingPageIcon}
+          />
         </button>
 
         <button
@@ -270,9 +315,11 @@ export default function AllPosts() {
           disabled={loading || page === totalPages}
           onClick={() => setPage(page + 1)}
         >
-          <TbPlayerTrackNextFilled className={classes.changingPageIcon} />
+          <TbPlayerTrackNextFilled
+            className={classes.changingPageIcon}
+          />
         </button>
       </div>
     </div>
-  );
+);
 }

@@ -36,91 +36,124 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
 
   const safeIndex = currentIndex >= post.media.length ? 0 : currentIndex;
 
-  return (
-    <div className={classes.modalOverlay}>
+ return (
+  <div className={classes.modalOverlay}>
+    <div
+      className={classes.modalCloseBorder}
+      onClick={() => navigate(-1)}
+    >
+      <IoMdClose className={classes.modalCloseIcon} />
+    </div>
+
+    <div className={classes.modalContentBackground}>
       <div
-        className={classes.modalCloseBorder}
-        onClick={() => navigate(-1)}
+        className={classes.modalContent}
+        onClick={(e) => e.stopPropagation()}
       >
-        <IoMdClose className={classes.modalCloseIcon} />
-      </div>
+        {(() => {
+          const currentMedia = post.media[safeIndex];
 
-      <div className={classes.modalContentBackground}>
-        <div
-          className={classes.modalContent}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
-            {post.media.length > 0 && (
-              <img
-                className={classes.postMedia}
-                src={`${apiUrl}/api/posts/media/${post.media[safeIndex].url}`}
-                alt="Post Media"
-              />
-            )}
+          const mediaUrl = currentMedia
+            ? `${apiUrl}/api/posts/media/${currentMedia.url}`
+            : '';
 
-            {post.media.length > 1 && (
-              <div
-                className={`${classes.slideButtonBack} ${classes.left}`}
-                onClick={prevSlide}
-              >
-                <GoChevronLeft className={classes.slideButton} />
-              </div>
-            )}
+          const isVideo =
+            currentMedia?.type?.startsWith('video/') ||
+            currentMedia?.url.match(/\.(mp4|webm|ogg)$/i);
 
-            {post.media.length > 1 && (
-              <div
-                className={`${classes.slideButtonBack} ${classes.right}`}
-                onClick={nextSlide}
-              >
-                <GoChevronRight className={classes.slideButton} />
-              </div>
-            )}
-          </div>
+          return (
+            <div
+              className={
+                post.media.length > 1
+                  ? classes.fewItems
+                  : classes.oneItem
+              }
+            >
+              {post.media.length > 0 && currentMedia && (
+                isVideo ? (
+                  <video
+                    className={classes.postMedia}
+                    src={mediaUrl}
+                    controls
+                    autoPlay
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <img
+                    className={classes.postMedia}
+                    src={mediaUrl}
+                    alt="Post Media"
+                  />
+                )
+              )}
 
-          <div className={classes.modalPostInfo}>
-            <div className={classes.modalPostUserData}>
-              {post.user.profilePicture ? (
-                <img
-                  className={classes.profilePic}
-                  src={`${apiUrl}/api/user/profile/${post.user.profilePicture}`}
-                  alt="Profile-Picture"
-                />
-              ) : (
-                <div className={classes.letter}>
-                  <p className={classes.firstletter}>
-                    {post.user.username[0].toUpperCase()}
-                  </p>
+              {post.media.length > 1 && (
+                <div
+                  className={`${classes.slideButtonBack} ${classes.left}`}
+                  onClick={prevSlide}
+                >
+                  <GoChevronLeft className={classes.slideButton} />
                 </div>
               )}
 
-              <span className={classes.username}>@{post.user.username}</span>
+              {post.media.length > 1 && (
+                <div
+                  className={`${classes.slideButtonBack} ${classes.right}`}
+                  onClick={nextSlide}
+                >
+                  <GoChevronRight className={classes.slideButton} />
+                </div>
+              )}
             </div>
-            
-            <PostContent
-              postId={post._id}
-              description={post.description}
-              likeCount={post.likeCount}
-              dislikeCount={post.dislikeCount}
-              reaction={post.userReaction}
-            />
-              
-            <PostComment
-              postId={post._id}
-              onAddComment={(newComment) => {
-                setComments(prev => [...prev, newComment]);
-              }}
-            />
+          );
+        })()}
 
-            <PostActions 
-              postId={post._id}
-              likeCount={post.likeCount}
-              dislikeCount={post.dislikeCount}
-              reaction={post.userReaction}
-            />
+        <div className={classes.modalPostInfo}>
+          <div className={classes.modalPostUserData}>
+            {post.user.profilePicture ? (
+              <img
+                className={classes.profilePic}
+                src={`${apiUrl}/api/user/profile/${post.user.profilePicture}`}
+                alt="Profile-Picture"
+              />
+            ) : (
+              <div className={classes.letter}>
+                <p className={classes.firstletter}>
+                  {post.user.username[0].toUpperCase()}
+                </p>
+              </div>
+            )}
+
+            <span className={classes.username}>
+              @{post.user.username}
+            </span>
           </div>
+
+          <PostContent
+            postId={post._id}
+            description={post.description}
+            likeCount={post.likeCount}
+            dislikeCount={post.dislikeCount}
+            reaction={post.userReaction}
+          />
+
+          <PostComment
+            postId={post._id}
+            onAddComment={(newComment) => {
+              setComments(prev => [...prev, newComment]);
+            }}
+          />
+
+          <PostActions
+            postId={post._id}
+            likeCount={post.likeCount}
+            dislikeCount={post.dislikeCount}
+            reaction={post.userReaction}
+          />
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

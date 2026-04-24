@@ -13,6 +13,7 @@ import {
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon,
 } from "react-icons/tb";
+import { FaVideo as FaVideoIcon } from "react-icons/fa";
 import { Post } from '../../../types/post';
 import PostActions from '../Posts/PostReactions/PostActions';
 import PostModal from '../Posts/ModalPosts/PostModal';
@@ -24,6 +25,7 @@ export default function AnotherUser() {
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
   const TbPlayerTrackPrevFilled =TbPlayerTrackPrevFilledIcon as unknown as React.FC<{ className: string }>
   const TbPlayerTrackNextFilled = TbPlayerTrackNextFilledIcon as unknown as React.FC<{ className: string }>
+  const FaVideo = FaVideoIcon as unknown as React.FC<{ className: string }>;
 
   const [posts, setPosts] = useState<Post[]>([])
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
@@ -157,8 +159,18 @@ export default function AnotherUser() {
           <div className={classes.profilePosts}> 
           {posts.map((post) => {
             const index = currentIndex[post._id] ?? 0;
-            const safeIndex = index >= post.media.length ? 0 : index;
+            const safeIndex =
+              index >= post.media.length ? 0 : index;
 
+            const currentMedia = post.media[safeIndex];
+
+            const mediaUrl = currentMedia
+              ? `${API_URL}/api/posts/media/${currentMedia.url}`
+              : '';
+
+            const isVideo =
+              currentMedia?.type?.startsWith('video/') ||
+              currentMedia?.url.match(/\.(mp4|webm|ogg)$/i);
             return (
               <div key={post._id} className={classes.post}>
                 <div className={classes.postInfo}>
@@ -179,13 +191,30 @@ export default function AnotherUser() {
                     </div>
                   )}
 
-                  {post.media.length > 0 && post.media[safeIndex] && (
-                    <img
-                      className={classes.postMedia}
-                      onClick={() => navigate(`/travel-share/post/${post._id}`)}
-                      src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
-                      alt="Post Media"
-                    />
+                  {post.media.length > 0 && currentMedia && (
+                    isVideo ? (
+                      <div className={classes.videoWrapper}>
+                        <FaVideo className={classes.videoIcon} />
+
+                      <video
+                        className={`${classes.postMedia} ${classes.videoPost}`}
+                        src={mediaUrl}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/travel-share/post/${post._id}`)
+                        }}
+                      />
+                    </div>
+                    ) : (
+                      <img
+                        className={classes.postMedia}
+                        src={mediaUrl}
+                        alt="Post Media"
+                        onClick={() =>
+                          navigate(`/travel-share/post/${post._id}`)
+                        }
+                      />
+                    )
                   )}
 
                   {post.media.length > 1 && (

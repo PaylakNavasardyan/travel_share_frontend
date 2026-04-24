@@ -13,16 +13,16 @@ import axios from 'axios';
 export default function CreatePosts() {
   const LiaPhotoVideoSolid = LiaPhotoVideoSolidIcon as unknown as React.FC<{className: string}>;
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
-  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string}>;
+  const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string }>;
   const GoDotFill = GoDotFillIcon as unknown as React.FC<{ className: string }>;
 
   const navigate = useNavigate();
 
-  const[desc, setDesc] = useState<string>('');
-
+  const [desc, setDesc] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const [files, setFiles] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
+  const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
@@ -30,10 +30,12 @@ export default function CreatePosts() {
 
     return () => {
       document.body.style.overflow = 'auto';
-    };
-  }, []);
 
-  const handlePoolClick = (): void => {
+      previews.forEach(p => URL.revokeObjectURL(p.url));
+    };
+  }, [previews]);
+
+  const handlePoolClick = () => {
     fileInputRef.current?.click();
   };
 
@@ -45,11 +47,13 @@ export default function CreatePosts() {
 
     setFiles(filesArray);
 
-    const previewUrls = filesArray.map(file =>
-      URL.createObjectURL(file)
-    );
+    const previewData = filesArray.map(file => ({
+      url: URL.createObjectURL(file),
+      type: file.type
+    }));
 
-    setPreviews(previewUrls);
+    setPreviews(previewData);
+    setCurrentIndex(0);
   };
 
   const handleClick = async () => {
@@ -69,6 +73,7 @@ export default function CreatePosts() {
       setDesc('');
       setFiles([]);
       setPreviews([]);
+      setCurrentIndex(0);
 
       alert('Your post was created successfully.');
 
@@ -76,9 +81,9 @@ export default function CreatePosts() {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error.response?.data?.message);
-        alert("Sorry, we couldn't publish your post right now. Please try again in a moment.");
+        alert("Sorry, we couldn't publish your post right now.");
       }
-    };
+    }
   };
 
   const nextSlide = () => {
@@ -95,64 +100,78 @@ export default function CreatePosts() {
     );
   };
 
+  const current = previews[currentIndex];
+
   return (
     <div className={classes.postsModal}>
       <div className={classes.postsBody}> 
+
         <textarea 
           className={classes.postDescription} 
           placeholder='Description'
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
-          >
-        </textarea>
-    
+        />
+
         <div className={classes.postPicture} onClick={handlePoolClick}>
-          {
-            previews.length > 0
-              ? 
-                (                
-                  previews.length > 1
-                    ? (
-                      <div className={classes.fewPicturesDiv}>
-                        <div 
-                          className={classes.slideButtonBack}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            prevSlide()
-                          }}
-                        >
-                          <GoChevronLeft className={classes.slideButton} />
-                        </div>
+          {previews.length > 0 ? (
+            previews.length > 1 ? (
+              <div className={classes.fewPicturesDiv}>
 
-                        <img 
-                          className={`${classes.fewPostPictures} ${classes.picture}`}
-                          src={previews[currentIndex]}
-                          alt='Post Preview'
-                        />
+                <div 
+                  className={classes.slideButtonBack}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                  }}
+                >
+                  <GoChevronLeft className={classes.slideButton} />
+                </div>
 
-                        <div 
-                          className={classes.slideButtonBack}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            nextSlide()
-                          }}  
-                        >
-                          <GoChevronRight className={classes.slideButton} />
-                        </div>
-                      </div>
-                    ) : (
-                      <img 
-                        className={`${classes.postPicture} ${classes.picture}`}
-                        src={previews[0]}
-                        alt='Post Preview'
-                      />
-                    )
-                
+                {current.type.startsWith('video/') ? (
+                  <video
+                    className={`${classes.fewPostPictures} ${classes.picture}`}
+                    src={current.url}
+                    controls
+                  />
+                ) : (
+                  <img
+                    className={`${classes.fewPostPictures} ${classes.picture}`}
+                    src={current.url}
+                    alt="preview"
+                  />
+                )}
+
+                <div 
+                  className={classes.slideButtonBack}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                >
+                  <GoChevronRight className={classes.slideButton} />
+                </div>
+
+              </div>
+            ) : (
+              current.type.startsWith('video/') ? (
+                <video
+                  className={`${classes.postPicture} ${classes.picture}`}
+                  src={current.url}
+                  controls
+                />
+              ) : (
+                <img
+                  className={`${classes.postPicture} ${classes.picture}`}
+                  src={current.url}
+                  alt="preview"
+                />
               )
-              : (
-                <LiaPhotoVideoSolid className={classes.picIcon}/>
             )
-          }
+          ) : (
+            <LiaPhotoVideoSolid className={classes.picIcon}/>
+          )}
+
           <span className={classes.tooltip}>Upload Photo or Video</span>
 
           <input 
@@ -178,20 +197,21 @@ export default function CreatePosts() {
 
         <div className={classes.postButtons}>
           <button 
-            className={`${classes.refuse}
-            ${classes.button}`}
-            onClick={() => navigate(-1)}>
-              Cancel
+            className={`${classes.refuse} ${classes.button}`}
+            onClick={() => navigate(-1)}
+          >
+            Cancel
           </button>
 
           <button
             onClick={handleClick}
-            className={`${classes.confirm}
-            ${classes.button}`}>
-              Confirm
+            className={`${classes.confirm} ${classes.button}`}
+          >
+            Confirm
           </button>
         </div>
+
       </div>
     </div>
-  )
+  );
 }

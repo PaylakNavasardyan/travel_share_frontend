@@ -14,6 +14,7 @@ import {
   TbPlayerTrackPrevFilled as TbPlayerTrackPrevFilledIcon, 
   TbPlayerTrackNextFilled as TbPlayerTrackNextFilledIcon,
 } from "react-icons/tb";
+import { FaVideo as FaVideoIcon } from "react-icons/fa";
 import { CiTrash as CiTrashIcon} from "react-icons/ci";  
 import PostActions from '../../Posts/PostReactions/PostActions';
 import PostModal from '../../Posts/ModalPosts/PostModal';
@@ -26,6 +27,7 @@ export default function UserProfile() {
   const TbPlayerTrackPrevFilled =TbPlayerTrackPrevFilledIcon as unknown as React.FC<{ className: string }>
   const TbPlayerTrackNextFilled = TbPlayerTrackNextFilledIcon as unknown as React.FC<{ className: string }>
   const CiTrash = CiTrashIcon as unknown as React.FC<{ className: string }>;
+  const FaVideo = FaVideoIcon as unknown as React.FC<{ className: string }>;
 
   const [posts, setPosts] = useState<Post[]>([])
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
@@ -128,6 +130,7 @@ export default function UserProfile() {
               <p className={classes.nameLetter}>{nameFirtLetter}</p>
             )}
           </div>
+
           <div className={classes.personalInfo}>
             <p className={`${classes.userData} ${classes.userName}`}>
               {user?.username}
@@ -135,7 +138,9 @@ export default function UserProfile() {
             <p className={classes.userData}>{user?.email}</p>
             <p className={classes.userData}>{user?.name}</p>
             <p className={classes.userData}>{user?.surname}</p>
-            <p className={classes.userPostData}>You have {totalPosts} posts</p>
+            <p className={classes.userPostData}>
+              You have {totalPosts} posts
+            </p>
           </div>
 
           {!isActive && (
@@ -147,10 +152,21 @@ export default function UserProfile() {
         </div>
       </div>
 
-      <div className={classes.profilePosts}> 
+      <div className={classes.profilePosts}>
         {posts.map((post) => {
           const index = currentIndex[post._id] ?? 0;
-          const safeIndex = index >= post.media.length ? 0 : index;
+          const safeIndex =
+            index >= post.media.length ? 0 : index;
+
+          const currentMedia = post.media[safeIndex];
+
+          const mediaUrl = currentMedia
+            ? `${API_URL}/api/posts/media/${currentMedia.url}`
+            : '';
+
+          const isVideo =
+            currentMedia?.type?.startsWith('video/') ||
+            currentMedia?.url.match(/\.(mp4|webm|ogg)$/i);
 
           return (
             <div key={post._id} className={classes.post}>
@@ -169,36 +185,67 @@ export default function UserProfile() {
                     }}
                   >
                     <CiTrash className={classes.deleteIcon} />
-                    <span className={classes.deleteText}>Delete Post</span>
+                    <span className={classes.deleteText}>
+                      Delete Post
+                    </span>
                   </Link>
                 </div>
               </div>
 
-              <p className={classes.postDescription}>{post.description}</p>
+              <p className={classes.postDescription}>
+                {post.description}
+              </p>
 
-              <div className={post.media.length > 1 ? classes.fewItems : classes.oneItem}>
+              <div
+                className={
+                  post.media.length > 1
+                    ? classes.fewItems
+                    : classes.oneItem
+                }
+              >
                 {post.media.length > 1 && (
                   <div
                     className={classes.slideButtonBack}
-                    onClick={() => prevSlide(post._id, post.media.length)}
+                    onClick={() =>
+                      prevSlide(post._id, post.media.length)
+                    }
                   >
                     <GoChevronLeft className={classes.slideButton} />
                   </div>
                 )}
 
-                {post.media.length > 0 && post.media[safeIndex] && (
-                  <img
-                    className={classes.postMedia}
-                    onClick={() => navigate(`/travel-share/post/${post._id}`)}
-                    src={`${API_URL}/api/posts/media/${post.media[safeIndex].url}`}
-                    alt="Post Media"
-                  />
+                {post.media.length > 0 && currentMedia && (
+                  isVideo ? (
+                    <div className={classes.videoWrapper}>
+                      <FaVideo className={classes.videoIcon} />
+
+                      <video
+                        className={`${classes.postMedia} ${classes.videoPost}`}
+                        src={mediaUrl}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/travel-share/post/${post._id}`);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      className={classes.postMedia}
+                      src={mediaUrl}
+                      alt="Post Media"
+                      onClick={() =>
+                        navigate(`/travel-share/post/${post._id}`)
+                      }
+                    />
+                  )
                 )}
 
                 {post.media.length > 1 && (
                   <div
                     className={classes.slideButtonBack}
-                    onClick={() => nextSlide(post._id, post.media.length)}
+                    onClick={() =>
+                      nextSlide(post._id, post.media.length)
+                    }
                   >
                     <GoChevronRight className={classes.slideButton} />
                   </div>
@@ -210,7 +257,11 @@ export default function UserProfile() {
                   {post.media.map((_, i) => (
                     <GoDotFill
                       key={i}
-                      className={i === index ? classes.activeDot : classes.dot}
+                      className={
+                        i === index
+                          ? classes.activeDot
+                          : classes.dot
+                      }
                     />
                   ))}
                 </div>
@@ -219,7 +270,7 @@ export default function UserProfile() {
               <div className={classes.line}></div>
 
               <div className={classes.postReaction}>
-                <PostActions 
+                <PostActions
                   postId={post._id}
                   likeCount={post.likeCount}
                   dislikeCount={post.dislikeCount}
@@ -228,53 +279,59 @@ export default function UserProfile() {
 
                 <div
                   className={`${classes.commentArea} ${classes.area}`}
-                  onClick={() => navigate(`post/${post._id}`)}
+                  onClick={() =>
+                    navigate(`post/${post._id}`)
+                  }
                 >
-                  <GoComment className={`${classes.comment} ${classes.reaction}`} />
+                  <GoComment
+                    className={`${classes.comment} ${classes.reaction}`}
+                  />
                 </div>
               </div>
             </div>
           );
-        })   
-        
-      } 
+        })}
 
-      {posts.length > 0 ? (
-        <div className={classes.paginationGuide}>
-          <button
-            className={classes.paginationButton}
-            disabled={loading || page <= 1}
-            onClick={() => setPage(page - 1)}
+        {posts.length > 0 ? (
+          <div className={classes.paginationGuide}>
+            <button
+              className={classes.paginationButton}
+              disabled={loading || page <= 1}
+              onClick={() => setPage(page - 1)}
             >
-            <TbPlayerTrackPrevFilled className={classes.changingPageIcon} />
-          </button>
+              <TbPlayerTrackPrevFilled
+                className={classes.changingPageIcon}
+              />
+            </button>
 
-          <button
-            className={classes.paginationButton}
-            disabled={loading || page === totalPages}
-            onClick={() => setPage(page + 1)}
+            <button
+              className={classes.paginationButton}
+              disabled={loading || page === totalPages}
+              onClick={() => setPage(page + 1)}
             >
-            <TbPlayerTrackNextFilled className={classes.changingPageIcon} />
-          </button>
-        </div>
+              <TbPlayerTrackNextFilled
+                className={classes.changingPageIcon}
+              />
+            </button>
+          </div>
         ) : (
-          <p className={classes.nopostText}
+          <p
+            className={classes.nopostText}
             style={{
-              fontSize: '20px', 
-              color: '#4848A0FF', 
+              fontSize: '20px',
+              color: '#4848A0FF',
               fontFamily: 'poppins-semiBold',
               marginTop: '100px'
             }}
-          >No posts yet</p>
+          >
+            No posts yet
+          </p>
         )}
-    </div>
+      </div>
 
-    {selectedPost && (
-      <PostModal
-        post={selectedPost}
-        apiUrl={API_URL}
-      />
-    )}
-    </div> 
-  )
+      {selectedPost && (
+        <PostModal post={selectedPost} apiUrl={API_URL} />
+      )}
+    </div>
+  );
 }
