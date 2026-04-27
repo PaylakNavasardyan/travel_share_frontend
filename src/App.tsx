@@ -7,8 +7,8 @@ import ResetPassword from './Components/Forgot/ResetPassword';
 import TravelShareLayout from './Components/Main/Layout/TravelShareLayout';
 import AllPosts from './Components/Main/Posts/MainPostPages/AllPosts';
 import FriendsPosts from './Components/Main/Posts/MainPostPages/FriendsPosts';
-import Followers from './Components/Main/UserControls/Follow/Followers';
-import Following from './Components/Main/UserControls/Follow/Following';
+import Followers from './Components/Main/UserControls/Follow/MyFollows/Followers';
+import Following from './Components/Main/UserControls/Follow/MyFollows/Following';
 import UserProfile from './Components/Main/UserControls/UserProfile/UserProfile';
 import Navbar from './Components/Main/Navbar/Navbar';
 import EditProfile from './Components/Main/UserControls/EditProfile/EditProfile';
@@ -17,7 +17,6 @@ import Logout from './Components/Main/UserControls/Logout/Logout';
 import NotFound from './Components/NotFound/NotFound';
 import DeletePost from './Components/Main/Posts/DeletePost/DeletePost';
 import AnotherUser from './Components/Main/AnotherUser/AnotherUser';
-import { useState } from 'react';
 
 function App() {
   const location = useLocation();
@@ -45,6 +44,7 @@ function App() {
           <Route path="post/:id" element={<AllPosts />} />
           <Route path="post/:id" element={<UserProfile />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
+          <Route path="frineds-posts/post/:id" element={<FriendsPosts />} />
         </Route>
         
         <Route path='*' element={<NotFound />} />
@@ -52,8 +52,8 @@ function App() {
 
       {state?.backgroundLocation && (
         <Routes>
-          <Route path="/followers" element={<Followers />} />
-          <Route path="/following" element={<Following />} />
+          <Route path="/followers/:id" element={<Followers />} />
+          <Route path="/following/:id" element={<Following />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/create-posts" element={<CreatePosts />} />
           <Route path="/user-logout" element={<Logout />} />
