@@ -22,7 +22,7 @@ export default function SideBar() {
   
   const location = useLocation();
 
-  const[isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { user } = useUser();
 
@@ -33,7 +33,7 @@ export default function SideBar() {
   return (
     <div className={classes.sideBar}>   
       <Link
-        to='/followers'
+        to={`/followers/${user?._id}`}
         state={{ backgroundLocation: location }}
         className={classes.sideBarLink}
         >
@@ -45,7 +45,7 @@ export default function SideBar() {
       </Link>
 
       <Link
-        to='/following'
+        to={`/following/${user?._id}`}
         state={{ backgroundLocation: location }}
         className={classes.sideBarLink}
         >
