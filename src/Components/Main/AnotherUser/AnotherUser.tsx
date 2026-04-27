@@ -17,6 +17,11 @@ import { FaVideo as FaVideoIcon } from "react-icons/fa";
 import { Post } from '../../../types/post';
 import PostActions from '../Posts/PostReactions/PostActions';
 import PostModal from '../Posts/ModalPosts/PostModal';
+import { CreateFollow } from '../UserControls/Follow/CreateFollow/CreateFollowers';
+import { GetFollow } from '../UserControls/Follow/CreateFollow/GetFollow';
+import { DeleteFollow } from '../UserControls/Follow/CreateFollow/DeleteFollow';
+import { useUser } from '../../../context/UserContext';
+import Follow from '../../../types/follow';
 
 export default function AnotherUser() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
@@ -33,18 +38,21 @@ export default function AnotherUser() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [totalPosts, setTotalPosts] = useState<number>(0); 
-  const [user, setUser] = useState<Auth.User | null>(null);
+  const [users, setUsers] = useState<Auth.User | null>(null);
+  const [followers, setFollowers] = useState<Follow[]>([]);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   
-
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await $api.get(`${API_URL}/api/user/${id}`);
-        setUser(res.data.data);
+        setUsers(res.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -53,20 +61,33 @@ export default function AnotherUser() {
     if (id) fetchUser();
   }, [id]);
 
-  let profilePic_URL = user?.profilePicture;
+    useEffect(() => {
+    const fetchData = async () => {
+      const data: Follow[] = await GetFollow();
+      setFollowers(data);
+      
+      if (user?.username && data) {
+        const isUserFollowing = data.some(follower => follower.username === user.username);
+        setIsFollowing(isUserFollowing);
+      }
+    };
+    fetchData();
+  }, [user]);
+
+  let profilePic_URL = users?.profilePicture;
   const userProfilePic = `${API_URL}/api/user/profile/${profilePic_URL}`;
-  let nameFirtLetter = user?.username[0].toUpperCase();
+  let nameFirtLetter = users?.username[0].toUpperCase();
   
   const selectedPost = posts.find(post => post._id === id);
   
   useEffect(() => {
-    if (!user?._id) return;
+    if (!users?._id) return;
     
     async function getUserPost() {
       try {
         setLoading(true)
         
-        let response = await $api.get(`${API_URL}/api/posts/?page=${page}&sort=new&user_id=${user?._id}&limit=40`);
+        let response = await $api.get(`${API_URL}/api/posts/?page=${page}&sort=new&user_id=${users?._id}&limit=40`);
         setPosts(response.data.data.posts);
         setTotalPages(response.data.data.meta.totalPages);
         setTotalPosts(response.data.data.meta.totalPosts);
@@ -84,7 +105,7 @@ export default function AnotherUser() {
     };
     
     getUserPost();
-  }, [page, user]);
+  }, [page, users]);
 
   useEffect(() => {
     document.body.style.overflow = 'auto';
@@ -94,7 +115,23 @@ export default function AnotherUser() {
     };
   }, [location]);
 
-  if (!user) return <div>Loading...</div>;
+  if (!users) return <div>Loading...</div>;
+
+  const handleFollow = async () => {
+    if (!users?._id) return;
+    const success = await CreateFollow();
+    if (success) {
+      setIsFollowing(true);
+    }
+  };
+
+  const handleUnfollow = async () => {
+    if (!users?._id) return;
+    const success = await DeleteFollow();
+    if (success) {
+      setIsFollowing(false);
+    }
+  };
 
   const nextSlide = (postId: string, mediaLenght: number) => {
     setCurrentIndex(prev => (
@@ -142,21 +179,38 @@ export default function AnotherUser() {
             )}
           </div>
 
-          <p className={`${classes.userData} ${classes.userName}`}>{user?.username}</p>
+          <p className={`${classes.userData} ${classes.userName}`}>{users?.username}</p>
           
           <div className={classes.fullname}>
-            <span className={classes.name}>{user?.name}</span>
-            <span className={classes.name}>{user?.surname}</span>
+            <span className={classes.name}>{users?.name}</span>
+            <span className={classes.name}>{users?.surname}</span>
           </div>  
 
           <div className={classes.follows}>
-            <span className={classes.followData}>Followers {user?.followers}</span>
-            <span className={classes.followData}>Following {user?.following}</span>
+            <span className={classes.followData}>Followers {users?.followers}</span>
+            <span className={classes.followData}>Following {users?.following}</span>
             <span className={classes.postData}>Posts {totalPosts}</span>
           </div>
+          
+          {user && user._id !== users?._id && (
+            isFollowing
+              ? (
+                <button 
+                  className={classes.unfollowButton}
+                  onClick={handleUnfollow}>
+                  Unfollow
+                </button>
+              ) : (
+                <button 
+                  className={classes.followButton}
+                  onClick={handleFollow}>
+                  Follow
+                </button>
+              )
+          )}
         </div>  
 
-          <div className={classes.profilePosts}> 
+        <div className={classes.profilePosts}> 
           {posts.map((post) => {
             const index = currentIndex[post._id] ?? 0;
             const safeIndex =

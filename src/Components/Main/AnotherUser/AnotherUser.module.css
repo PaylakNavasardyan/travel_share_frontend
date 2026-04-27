@@ -39,7 +39,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;;
+            align-items: center;
+            gap: 8px;
             .profileImage {
                 width: 180px;
                 height: 180px;
@@ -87,6 +88,31 @@
                 .followData:hover {
                     color: var(--PlatiniumGreen);
                 }
+            }
+            
+            .unfollowButton {
+                width: 180px;
+                height: 35px;
+                background-color: var(--MainRed);
+                color: var(--White);
+                font-family: 'poppins-semibold';
+                font-size: 18px;
+                border-radius: 10px;
+                border: none;
+                margin-top: 12px;
+                cursor: pointer;
+            }
+            .followButton {
+                width: 180px;
+                height: 35px;
+                background-color: var(--MainBlue);
+                color: var(--White);
+                font-family: 'poppins-semibold';
+                font-size: 18px;
+                border-radius: 10px;
+                border: none;
+                margin-top: 12px;
+                cursor: pointer;
             }
         }
 
