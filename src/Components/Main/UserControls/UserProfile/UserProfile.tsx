@@ -18,6 +18,12 @@ import { FaVideo as FaVideoIcon } from "react-icons/fa";
 import { CiTrash as CiTrashIcon} from "react-icons/ci";  
 import PostActions from '../../Posts/PostReactions/PostActions';
 import PostModal from '../../Posts/ModalPosts/PostModal';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>User Profile | Travel Share</title>
+  <meta name="description" content="View your profile, manage your posts, and track your followers and following." />
+</Helmet>
 
 export default function UserProfile() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
@@ -125,6 +131,7 @@ export default function UserProfile() {
                 className={classes.profilePic}
                 src={profilePic}
                 alt="Profile-Picture"
+                loading='lazy'
               />
             ) : (
               <p className={classes.nameLetter}>{nameFirtLetter}</p>

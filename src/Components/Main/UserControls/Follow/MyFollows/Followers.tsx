@@ -6,6 +6,12 @@ import { GoSearch as GoSearchIcon } from "react-icons/go";
 import { GetFollow } from '../CreateFollow/GetFollow';
 import  FollowType  from '../../../../../types/follow';
 import { API_URL } from '../../../../../http';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Followers | Travel Share</title>
+  <meta name="description" content="View your followers and the users you are following. Stay connected with your network." />
+</Helmet>
 
 export default function Follow() {
   const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string }>;

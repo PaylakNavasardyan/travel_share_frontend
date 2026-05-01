@@ -22,6 +22,12 @@ import { GetFollow } from '../UserControls/Follow/CreateFollow/GetFollow';
 import { DeleteFollow } from '../UserControls/Follow/CreateFollow/DeleteFollow';
 import { useUser } from '../../../context/UserContext';
 import Follow from '../../../types/follow';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Profile | Travel Share</title>
+  <meta name="description" content="Explore user profiles, follow users, and view their shared travel posts." />
+</Helmet>
 
 export default function AnotherUser() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;

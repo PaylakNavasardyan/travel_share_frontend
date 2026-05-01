@@ -3,6 +3,12 @@ import classes from './Forgot.module.css'
 import { BsExclamationCircle } from "react-icons/bs";
 import { GoChevronRight as GoChevronRightIcon, GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Register | Travel Share</title>
+  <meta name="description" content="Create a new Travel Share account to start sharing your travel stories and connect with other users." />
+</Helmet>
 
 export default function Forgot() {
     const ExclamationCircle = BsExclamationCircle as unknown as React.FC<{ className: string }>

@@ -4,6 +4,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import AuthService from '../../services/AuthService';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Login | Travel Share</title>
+  <meta name="description" content="Login to your Travel Share account to explore posts, connect with users, and share your travel experiences." />
+</Helmet>
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');

@@ -9,6 +9,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import $api from '../../../../http';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Create Post | Travel Share</title>
+  <meta name="description" content="Share your travel experience by creating a new post with images or videos." />
+</Helmet>
 
 export default function CreatePosts() {
   const LiaPhotoVideoSolid = LiaPhotoVideoSolidIcon as unknown as React.FC<{className: string}>;

@@ -5,6 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthService from '../../services/AuthService';
 import { useUser } from '../../context/UserContext';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Register | Travel Share</title>
+  <meta name="description" content="Create a new Travel Share account to start sharing your travel stories and connect with other users." />
+</Helmet>
 
 export default function Registration() {
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;

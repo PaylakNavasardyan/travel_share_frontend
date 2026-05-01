@@ -19,6 +19,12 @@ import PostModal from '../ModalPosts/PostModal';
 import { useUser } from '../../../../context/UserContext';
 import { Auth } from '../../../../types';
 import AnotherUser from '../../AnotherUser/AnotherUser';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Friends Posts | Travel Share</title>
+  <meta name="description" content="See posts only from users you follow and stay updated with your friends' activities." />
+</Helmet>
 
 export default function AllPosts() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;

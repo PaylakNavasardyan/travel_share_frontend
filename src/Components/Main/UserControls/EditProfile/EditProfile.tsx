@@ -6,6 +6,12 @@ import { IoMdClose as IoMdCloseIcon } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthService from '../../../../services/AuthService';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Edit Profile | Travel Share</title>
+  <meta name="description" content="Update your personal information, username, and account details." />
+</Helmet>
 
 export default function EditProfile() {
   const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string }>;

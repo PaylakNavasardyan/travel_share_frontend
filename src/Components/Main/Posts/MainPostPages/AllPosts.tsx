@@ -19,6 +19,12 @@ import PostModal from '../ModalPosts/PostModal';
 import { useUser } from '../../../../context/UserContext';
 import { Auth } from '../../../../types';
 import AnotherUser from '../../AnotherUser/AnotherUser';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Home | Travel Share</title>
+  <meta name="description" content="Discover and explore travel posts from users around the world. Stay connected and share your experiences." />
+</Helmet>
 
 export default function AllPosts() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
