@@ -19,6 +19,27 @@
     border-radius: 20px;
     padding-top: 40px;
 
+    @media screen and (max-width: 1060px) {
+      width: 35%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 900px) {
+      width: 40%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 780px) {
+      width: 50%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 630px) {
+      width: 70%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 450px) {
+      width: 80%;
+      height: 70vh;
+    }
+    
     .loginTitle {
       font-family: "poppins-bold";
       color: var(--MainBlue);
@@ -26,12 +47,27 @@
       display: flex;
       margin-bottom: 30px;
       z-index: 10;
+
+      @media screen and (max-width: 1250px) {
+        font-size: 28px;
+        margin-bottom: 28px;
+      }
+      @media screen and (max-width: 450px) {
+        font-size: 26px;
+        margin-bottom: 26px;
+      }
     }
     .apiErrorMessage {
       color: red;
       font-size: 14px;
       margin: 0;
       font-family: 'poppins-semiBold';
+      @media screen and (max-width: 1250px) {
+        font-size: 10px;
+      }
+      @media screen and (max-width: 450px) {
+        font-size: 8px;
+      }
     }
     
     .form {
@@ -50,6 +86,15 @@
         align-items: center;
         justify-content: flex-end;
         gap: 0;
+
+        @media screen and (max-width: 1250px) {
+          width: 330px;
+          height: 70px; 
+        }
+        @media screen and (max-width: 450px) {
+          width: 300px;
+          height: 60px; 
+        }
         .loginFields {
           width: 250px;
           height: 25px;
@@ -59,6 +104,15 @@
           background-color: var(--Gray);
           margin: 10px;
           font-family: "poppins-light";
+
+          @media screen and (max-width: 1250px) {
+            width: 230px;
+            height: 23px; 
+          }
+          @media screen and (max-width: 450px) {
+            width: 200px;
+            height: 20px; 
+          }
         }
       }
         .loginButton {
@@ -82,6 +136,17 @@
             font-family: "poppins-semiBold";
             font-size: 25px;
             transition: transform 0.3s ease;
+
+            @media screen and (max-width: 1250px) {
+              width: 270px;
+              height: 45px; 
+              font-size: 23px;
+            }
+            @media screen and (max-width: 450px) {
+              width: 240px;
+              height: 40px; 
+              font-size: 20px;
+            }
           }
           button:hover {
             transform: scale(1.05);
@@ -104,12 +169,23 @@
         color: var(--Black);
         font-family: "poppins-lightItalic";
         font-size: 15px;
+        
+        @media screen and (max-width: 1250px) {
+          font-size: 13px;
+        }
+        @media screen and (max-width: 450px) {
+          font-size: 11px;
+        }
       }
       .linkToForgot,
       .linkToRegistration {
         color: var(--MainBlue);
         text-decoration: none;
         font-family: "poppins-semiBold";
+
+        @media screen and (max-width: 450px) {
+          font-size: 11px;
+        }
       }
       .registrationGuide {
         display: flex;

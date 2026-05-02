@@ -20,6 +20,27 @@
     padding-top: 40px;
     position: relative;
 
+    @media screen and (max-width: 1060px) {
+      width: 35%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 900px) {
+      width: 40%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 780px) {
+      width: 50%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 630px) {
+      width: 70%;
+      height: 80vh;
+    }
+    @media screen and (max-width: 450px) {
+      width: 80%;
+      height: 70vh;
+    }
+
     .registrationTitle {
       font-family: "poppins-bold";
       color: var(--MainBlue);
@@ -28,12 +49,28 @@
       margin-bottom: 30px;
       z-index: 10;
       position: relative;
+
+      @media screen and (max-width: 1250px) {
+        font-size: 28px;
+        margin-bottom: 28px;
+      }
+      @media screen and (max-width: 450px) {
+        font-size: 26px;
+        margin-bottom: 26px;
+      }
     }
     .apiErrorMessage {
       color: red;
       font-size: 14px;
       margin: 0;
       font-family: 'poppins-semiBold';
+
+      @media screen and (max-width: 1250px) {
+        font-size: 10px;
+      }
+      @media screen and (max-width: 450px) {
+        font-size: 8px;
+      }
     }
     form {
       width: 100%;
@@ -53,31 +90,54 @@
           font-family: 'poppins-italic';
         }
   
-      .inputDiv {
-        width: 350px;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 0;
-        .errorMessage {
-          color: red;
-          font-size: 12px;
-          margin: 0;
-          font-family: 'poppins-italic';
+        .inputDiv {
+          width: 350px;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 0;
+
+          @media screen and (max-width: 1250px) {
+            width: 330px;
+            height: 70px; 
+          }
+          @media screen and (max-width: 450px) {
+            width: 300px;
+            height: 60px; 
+          }
+          .errorMessage {
+            color: red;
+            font-size: 12px;
+            margin: 0;
+            font-family: 'poppins-italic';
+            @media screen and (max-width: 1250px) {
+              font-size: 10px;
+            }
+            @media screen and (max-width: 450px) {
+              font-size: 8px;
+            }
+          }
+          .registrationFields {
+            width: 250px;
+            height: 25px;
+            padding: 10px 20px 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--Gray);
+            margin: 10px;
+            font-family: "poppins-light";
+            @media screen and (max-width: 1250px) {
+              width: 230px;
+              height: 23px; 
+            }
+            @media screen and (max-width: 450px) {
+              width: 200px;
+              height: 20px; 
+            }
+          }
         }
-        .registrationFields {
-          width: 250px;
-          height: 25px;
-          padding: 10px 20px 10px 20px;
-          border: none;
-          border-radius: 8px;
-          background-color: var(--Gray);
-          margin: 10px;
-          font-family: "poppins-light";
-        }
-      }
 
       .registrationFirstButton {
         width: 100%;
@@ -101,14 +161,31 @@
           font-size: 25px;
           gap: 5px;
           transition: transform 0.3s ease;
+
+          @media screen and (max-width: 1250px) {
+            width: 270px;
+            height: 45px; 
+            font-size: 23px;
+          }
+          @media screen and (max-width: 450px) {
+            width: 240px;
+            height: 40px; 
+            font-size: 20px;
+          }
           .goRight {
             font-size: 40px;
+
+            @media screen and (max-width: 1250px) {
+              font-size: 30px;
+            }
+            @media screen and (max-width: 450px) {
+              font-size: 23px;
+            }
           }
         }
         button:hover {
           transform: scale(1.05);
         }
-
       }
 
       .secondPageButtons {
@@ -119,32 +196,59 @@
         justify-content: center;
         gap: 5px;
         .backToStartButton {
-            width: 50px;
-            height: 50px;
-            background-color: var(--MainBlue);
-            border: none;
-            color: var(--White);
-            border-radius: 10px 0 0 10px;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            .goLeft {
-              font-size: 30px;
+          width: 50px;
+          height: 50px;
+          background-color: var(--MainBlue);
+          border: none;
+          color: var(--White);
+          border-radius: 10px 0 0 10px;
+          transition: transform 0.3s ease;
+          cursor: pointer;
+           @media screen and (max-width: 1250px) {
+            width: 45px;
+            height: 45px; 
+            font-size: 23px;
+          }
+          @media screen and (max-width: 450px) {
+            width: 40px;
+            height: 40px; 
+            font-size: 20px;
+          }
+          .goLeft {
+            font-size: 30px;
+
+            @media screen and (max-width: 1250px) {
+              font-size: 28px;
             }
+            @media screen and (max-width: 450px) {
+              font-size: 26px;
+            }
+          }
         }
         .backToStartButton:hover {
           transform: scale(1.05);
         }
         .registrationButton {
-            width: 245px;
-            height: 50px;
-            background-color: var(--MainRed);
-            border: none;
-            font-family: 'poppins-semiBold';
-            color: var(--White);
-            font-size: 18px;
-            border-radius: 0 10px 10px 0;
-            transition: transform 0.3s ease;
-            cursor: pointer;
+          width: 245px;
+          height: 50px;
+          background-color: var(--MainRed);
+          border: none;
+          font-family: 'poppins-semiBold';
+          color: var(--White);
+          font-size: 18px;
+          border-radius: 0 10px 10px 0;
+          transition: transform 0.3s ease;
+          cursor: pointer;
+          @media screen and (max-width: 1250px) {
+            width: 230px;
+            height: 45px; 
+            font-size: 23px;
+          }
+          @media screen and (max-width: 450px) {
+            width: 240px;
+            height: 40px; 
+            font-size: 20px;
+          }
         }
         .registrationButton:hover {
           transform: scale(1.05);
@@ -155,6 +259,10 @@
       opacity: 1;
       pointer-events: auto;
       transform: translateX(0);
+      
+      @media screen and (max-width: 1250px) {
+        font-size: 13px;
+      }
     }
     .registrationGuide {
       width: 100%;
@@ -171,11 +279,24 @@
         color: var(--Black);
         font-family: "poppins-lightItalic";
         font-size: 15px;
+
+        @media screen and (max-width: 1250px) {
+          font-size: 13px;
+        }
+        @media screen and (max-width: 450px) {
+          font-size: 11px;
+        }
       }
       .linkToLogin {
         color: var(--MainBlue);
         text-decoration: none;
         font-family: "poppins-semiBold";
+        @media screen and (max-width: 1250px) {
+          font-size: 15px;
+        }
+        @media screen and (max-width: 450px) {
+          font-size: 13px;
+        }
       }
     }
   }

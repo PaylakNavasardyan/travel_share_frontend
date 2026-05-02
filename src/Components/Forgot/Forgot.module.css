@@ -26,6 +26,18 @@
         padding-top: 40px;
         background-color: var(--White);
 
+        @media screen and (max-width: 1050px) {
+            width: 60%;
+            height: 60vh;
+        }
+        @media screen and (max-width: 700px) {
+            width: 70%;
+            height: 65vh;
+        }
+        @media screen and (max-width: 440px) {
+            width: 80%;
+        }
+
         .forgotTitle {
             width: 100%;
             height: auto;
@@ -35,11 +47,18 @@
             .circleIcon {
                 color: var(--MainBlue);
                 font-size: 60px;
+                @media screen and (max-width: 500px) {
+                    font-size: 50px;
+                }
             }
             p {
                 font-family: 'poppins-bold';
                 color: var(--MainBlue);
                 font-size: 25px;
+
+                @media screen and (max-width: 500px) {
+                    font-size: 20px;
+                }
             }
         }
 
@@ -63,6 +82,9 @@
                     font-size: 12px;
                     margin: 0;
                     font-family: 'poppins-italic';
+                    @media screen and (max-width: 500px) {
+                        font-size: 10px;
+                    }
                 }
                 .forgotFields {
                     width: 250px;
@@ -73,6 +95,11 @@
                     background-color: var(--Gray);
                     margin: 10px;
                     font-family: "poppins-light";
+                    
+                    @media screen and (max-width: 500px) {
+                        width: 230px;
+                        height: 20px;
+                    }
                 }
             }
 
@@ -99,8 +126,16 @@
                     gap: 5px;
                     transition: transform 0.3s ease;
 
+                    @media screen and (max-width: 500px) {
+                        width: 270px;
+                        height: 40px;
+                    }
                     .goRight {
                         font-size: 40px;
+
+                        @media screen and (max-width: 500px) {
+                            font-size: 35px;
+                        }
                     }
                 }
                 button:hover {
