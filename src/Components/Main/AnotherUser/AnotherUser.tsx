@@ -22,6 +22,7 @@ import { GetFollow } from '../UserControls/Follow/CreateFollow/GetFollow';
 import { DeleteFollow } from '../UserControls/Follow/CreateFollow/DeleteFollow';
 import { useUser } from '../../../context/UserContext';
 import Follow from '../../../types/follow';
+import Navbar from '../Navbar/Navbar';
 
 export default function AnotherUser() {
   const GoComment = GoCommentIcon as unknown as React.FC<{className: string}>;
@@ -157,11 +158,12 @@ export default function AnotherUser() {
 
   return (
     <div className={classes.profile}>
+      <Navbar />
       <div className={classes.profileBar}>
         <div className={classes.icon}>
           <div
             className={classes.backgroundForIcon}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/travel-share')}
           >
             <GoChevronLeft className={classes.goLeftIcon} />
           </div>
@@ -255,7 +257,7 @@ export default function AnotherUser() {
                         src={mediaUrl}
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/travel-share/post/${post._id}`)
+                          navigate(`post/${post._id}`)
                         }}
                       />
                     </div>
@@ -265,7 +267,7 @@ export default function AnotherUser() {
                         src={mediaUrl}
                         alt="Post Media"
                         onClick={() =>
-                          navigate(`/travel-share/post/${post._id}`)
+                          navigate(`post/${post._id}`)
                         }
                       />
                     )

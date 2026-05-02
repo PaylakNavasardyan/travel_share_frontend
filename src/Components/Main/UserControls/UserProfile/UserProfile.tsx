@@ -112,7 +112,7 @@ export default function UserProfile() {
         <div className={classes.icon}>
           <div
             className={classes.backgroundForIcon}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/travel-share')}
           >
             <GoChevronLeft className={classes.goLeftIcon} />
           </div>
@@ -224,7 +224,7 @@ export default function UserProfile() {
                         src={mediaUrl}
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/travel-share/post/${post._id}`);
+                          navigate(`post/${post._id}`);
                         }}
                       />
                     </div>
@@ -234,7 +234,7 @@ export default function UserProfile() {
                       src={mediaUrl}
                       alt="Post Media"
                       onClick={() =>
-                        navigate(`/travel-share/post/${post._id}`)
+                        navigate(`post/${post._id}`)
                       }
                     />
                   )

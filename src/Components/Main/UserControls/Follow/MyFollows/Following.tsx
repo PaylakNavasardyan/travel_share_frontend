@@ -9,7 +9,7 @@ import { API_URL } from '../../../../../http';
 
 export default function Follow() {
   const IoMdClose = IoMdCloseIcon as unknown as React.FC<{ className: string }>;
-  const GoSearch = GoSearchIcon as unknown as React.FC<{ className: string}>;
+  const GoSearch = GoSearchIcon as unknown as React.FC<{ className: string }>;
 
   const [followers, setFollowers] = useState<FollowType[]>([]);
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Follow() {
     };
   }, []);
 
-  const handleClick = ():void => {
+  const handleClick = (): void => {
     navigate(-1);
   };
 
@@ -38,13 +38,13 @@ export default function Follow() {
     <div className={classes.modal}>
       <div className={classes.modalBody}>
         <div className={classes.goBack} onClick={handleClick}>
-          <IoMdClose className={classes.XIcon}/>
+          <IoMdClose className={classes.XIcon} />
         </div>
 
         <div className={classes.modalGuide}>
           <span>Following</span>
 
-          <input 
+          <input
             className={classes.inputPool}
             type='text'
             placeholder='Search'
@@ -59,12 +59,23 @@ export default function Follow() {
           {followers.length > 0 ? (
             followers.map((follower) => (
               <div key={follower.followId} className={classes.followerItem}>
-                <img 
-                  src={`${API_URL}/api/user/profile/${follower.profilePicture}`}
-                  alt='profile-pic'
-                  className={classes.profilePic}
-                />
-                <span className={classes.username}>@{follower.username}</span>
+                {follower.profilePicture
+                  ?
+                  <img
+                    src={`${API_URL}/api/user/profile/${follower.profilePicture}`}
+                    alt='profile-pic'
+                    className={classes.profilePic}
+                    onClick={() => navigate(`/user/${follower.id}`)}
+                  />
+                  :
+                  <div className={classes.firstLetter}>
+                    <p className={classes.letter}>{follower.username[0].toUpperCase()}</p>
+                  </div>
+                }
+                <span
+                  className={classes.username}
+                  onClick={() => navigate(`/user/${follower.id}`)}
+                >@{follower.username}</span>
               </div>
             ))
           ) : (
@@ -72,8 +83,10 @@ export default function Follow() {
               fontSize: '20px',
               color: '#4848A0FF',
               fontFamily: 'poppins-semiBold',
+              width: '100%',
+              textAlign: 'center',
               marginTop: '100px'
-            }}>No followers yet</p>
+            }}>No following yet</p>
           )}
         </div>
       </div>

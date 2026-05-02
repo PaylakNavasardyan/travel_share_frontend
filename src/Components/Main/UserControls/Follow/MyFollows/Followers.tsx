@@ -58,13 +58,17 @@ export default function Follow() {
                     src={`${API_URL}/api/user/profile/${follower.profilePicture}`}
                     alt='profile-pic'
                     className={classes.profilePic}
+                    onClick={() => navigate(`/user/${follower.id}`)}
                   />
                  :
                   <div className={classes.firstLetter}>
                     <p className={classes.letter}>{follower.username[0].toUpperCase()}</p>
                   </div>
                 }
-                <span className={classes.username}>@{follower.username}</span>
+                <span 
+                  className={classes.username}
+                  onClick={() => navigate(`/user/${follower.id}`)}
+                >@{follower.username}</span>
               </div>
             ))
           ) : (
@@ -72,6 +76,8 @@ export default function Follow() {
               fontSize: '20px',
               color: '#4848A0FF',
               fontFamily: 'poppins-semiBold',
+              width: '100%',
+              textAlign: 'center',
               marginTop: '100px'
             }}>No followers yet</p>
           )}

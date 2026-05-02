@@ -21,7 +21,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--PlatiniumGreen);
+      background-color: var(--Navbar);
       cursor: pointer;
       border-radius: 12px 12px 0 0;
       .XIcon {
@@ -30,7 +30,7 @@
       }
     }
     .goBack:hover {
-      background-color: var(--DarkGray); 
+      background-color: var(--NavbarDark); 
     }
 
     .modalGuide {

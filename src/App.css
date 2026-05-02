@@ -7,6 +7,8 @@ body {
 
 :root {
   --MainBlue: #4848A0FF;
+  --Navbar: #0070b19d;
+  --NavbarDark: #0070b1;
   --MainRed: #FF5A5FFF;
   --White: #FFFFFF;
   --Gray: #ECECECFF;

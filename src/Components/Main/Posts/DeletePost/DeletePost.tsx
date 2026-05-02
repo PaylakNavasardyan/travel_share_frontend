@@ -22,10 +22,8 @@ export default function DeletePost() {
       let response = await $api.delete(`/api/posts/${postId}`);
       
       if (response.status == 204) {
-        alert('Your post has been deleted');
-        navigate('/travel-share', { state: { refresh: true } });
+        navigate('/my-profile', { state: { refresh: true } });
       } else {
-        alert('Something went wrong');
         navigate('/my-profile')
       } 
     }catch(error)  {

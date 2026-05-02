@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { 
   GoChevronRight as GoChevronRightIcon,
   GoChevronLeft as GoChevronLeftIcon,
@@ -11,6 +11,7 @@ import PostComment from '../PostComments/PostComment';
 import PostContent from '../PostContent/PostContent';
 import { CommentType } from '../../../../types/comment';
 import { Post } from '../../../../types/post';
+import { useUser } from '../../../../context/UserContext';
 
 interface PostModalProps {
   post: Post;
@@ -21,6 +22,7 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [comments, setComments] = useState<CommentType[]>([]);
   const navigate = useNavigate();
+  const { user } = useUser();
   
   const GoChevronRight = GoChevronRightIcon as unknown as React.FC<{ className: string }>;
   const GoChevronLeft = GoChevronLeftIcon as unknown as React.FC<{ className: string }>;
@@ -35,6 +37,13 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
   };
 
   const safeIndex = currentIndex >= post.media.length ? 0 : currentIndex;
+
+  const navigateToUserProfile = () => {
+    if (post.user && post.user._id === user?._id)
+      navigate(`/my-profile`);
+    else
+      navigate(`/user/${post.user._id}`);
+  }
 
  return (
   <div className={classes.modalOverlay}>
@@ -116,16 +125,21 @@ export default function PostModal({post, apiUrl = ''}: PostModalProps) {
                 className={classes.profilePic}
                 src={`${apiUrl}/api/user/profile/${post.user.profilePicture}`}
                 alt="Profile-Picture"
+                onClick= {navigateToUserProfile}
               />
             ) : (
-              <div className={classes.letter}>
+              <div className={classes.letter}
+                onClick= {navigateToUserProfile}
+              >
                 <p className={classes.firstletter}>
                   {post.user.username[0].toUpperCase()}
                 </p>
               </div>
             )}
 
-            <span className={classes.username}>
+            <span className={classes.username}
+              onClick= {navigateToUserProfile}
+            >
               @{post.user.username}
             </span>
           </div>

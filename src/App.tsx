@@ -29,24 +29,25 @@ function App() {
         <Route path="/user-login" element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/user/:id" element={<AnotherUser />} />
-        
+        <Route path="/user/:id" element={<AnotherUser />}>
+          <Route path="post/:id" element={<UserProfile />} />
+        </Route>
+
         <Route path="/my-profile" element={
           <>
             <Navbar />
             <UserProfile />
           </>
-        } />
+        } >
+          <Route path="post/:id" element={<UserProfile />} />
+        </Route>
 
         <Route path="/travel-share" element={<TravelShareLayout />}>
-          <Route index element={<AllPosts />} />
-          <Route path="all-posts" element={<AllPosts />} />
           <Route path="post/:id" element={<AllPosts />} />
-          <Route path="post/:id" element={<UserProfile />} />
+          <Route index element={<AllPosts />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
           <Route path="friends-posts/post/:id" element={<FriendsPosts />} />
         </Route>
-        
         <Route path='*' element={<NotFound />} />
       </Routes>
 

@@ -75,13 +75,11 @@ export default function CreatePosts() {
       setPreviews([]);
       setCurrentIndex(0);
 
-      alert('Your post was created successfully.');
 
       navigate('/travel-share', { state: { refresh: true } });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error.response?.data?.message);
-        alert("Sorry, we couldn't publish your post right now.");
       }
     }
   };
