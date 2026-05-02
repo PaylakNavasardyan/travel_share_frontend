@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import classes from './ResetPassword.module.css'
 import { TbLockPassword } from "react-icons/tb";
 import { useNavigate, useParams } from 'react-router-dom';
+import $api from '../../http';
 
 export default function ResetPassword() {
   const LockPassword = TbLockPassword as unknown as React.FC<{ className: string }>;
@@ -12,6 +13,8 @@ export default function ResetPassword() {
 
   const [passwordError, setPasswordError] = useState<string>('');
   const [confirmPassError, setConfirmPassError] = useState<string>('');
+
+  const [response, setResponse] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -50,18 +53,27 @@ export default function ResetPassword() {
     return '';
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+  
+      const approvedPasswordError = validPassword(password);
+      const approvedConfirmPassError = validConfirmPass(confirmPass);
+  
+      setPasswordError(approvedPasswordError);
+      setConfirmPassError(approvedConfirmPassError);
+  
+      if (approvedPasswordError || approvedConfirmPassError) return;
 
-    const approvedPasswordError = validPassword(password);
-    const approvedConfirmPassError = validConfirmPass(confirmPass);
-
-    setPasswordError(approvedPasswordError);
-    setConfirmPassError(approvedConfirmPassError);
-
-    if (approvedPasswordError || approvedConfirmPassError) return;
+    try {
+      const res = await $api.post(`/api/user/reset-password/${token}`, {
+        password,
+        passwordConfirm: confirmPass
+      });
+      setResponse(res.data.data.message ?? 'Password has been reset successfully');
+    } catch(error) {
+      console.log(error)
+    }
     
-    navigate('/travel-share');
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -81,7 +93,9 @@ export default function ResetPassword() {
               <LockPassword className={classes.lockIcon}/>
               <p>FORGOT PASSWORD</p>
             </div>
-
+            <span className={classes.resStyle}>
+              {response}
+            </span> 
             <form>
               <div className={classes.inputDiv}>
                 {passwordError && <p className={classes.errorMessage}>{passwordError}</p>}
