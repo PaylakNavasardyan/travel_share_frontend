@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './ResetPassword.module.css'
 import { TbLockPassword } from "react-icons/tb";
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import $api from '../../http';
 
 export default function ResetPassword() {
@@ -15,6 +15,7 @@ export default function ResetPassword() {
   const [confirmPassError, setConfirmPassError] = useState<string>('');
 
   const [response, setResponse] = useState<string>('');
+  const [linkToLogin, setLinkToLogin] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -70,6 +71,7 @@ export default function ResetPassword() {
         passwordConfirm: confirmPass
       });
       setResponse(res.data.data.message ?? 'Password has been reset successfully');
+      setLinkToLogin('Go to Login');
     } catch(error) {
       console.log(error)
     }
@@ -95,6 +97,7 @@ export default function ResetPassword() {
             </div>
             <span className={classes.resStyle}>
               {response}
+              <Link className={classes.linkToLogin} to="/user-login">{linkToLogin}</Link>
             </span> 
             <form>
               <div className={classes.inputDiv}>

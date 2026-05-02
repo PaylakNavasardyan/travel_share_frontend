@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<Registration />} />
+        <Route path="/user-registration" element={<Registration />} />
         <Route path="/user-login" element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
@@ -44,7 +44,7 @@ function App() {
           <Route path="post/:id" element={<AllPosts />} />
           <Route path="post/:id" element={<UserProfile />} />
           <Route path="friends-posts" element={<FriendsPosts />} />
-          <Route path="frineds-posts/post/:id" element={<FriendsPosts />} />
+          <Route path="friends-posts/post/:id" element={<FriendsPosts />} />
         </Route>
         
         <Route path='*' element={<NotFound />} />
