@@ -60,4 +60,8 @@ export default class AuthService {
             confirmPassword: body.confirmNewPass
         });
     }
+
+    static async logout(): Promise<void> {
+        return $api.post('/api/user/logout');
+    }
 }
