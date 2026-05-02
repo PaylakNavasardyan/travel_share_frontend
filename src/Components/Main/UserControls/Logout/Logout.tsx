@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import classes from './Logout.module.css';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../../../../services/AuthService';
+import axios from 'axios';
 
 export default function Logout() {
     useEffect(() => {
@@ -13,9 +15,16 @@ export default function Logout() {
 
     const navigate = useNavigate();
 
-    const userLogout = (): void => {
-        localStorage.removeItem('token');
-        navigate('/user-login', {replace: true});
+    const userLogout = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+        e.preventDefault();
+
+        try {
+            let response = await AuthService.logout();
+
+            localStorage.removeItem('token');
+        } catch (error: unknown) {}
+
+        navigate("/")
     };
 
   return (
