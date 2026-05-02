@@ -3,6 +3,7 @@ import classes from './Forgot.module.css'
 import { BsExclamationCircle } from "react-icons/bs";
 import { GoChevronRight as GoChevronRightIcon, GoChevronLeft as GoChevronLeftIcon } from "react-icons/go";
 import { Link } from 'react-router-dom';
+import $api from '../../http';
 
 export default function Forgot() {
     const ExclamationCircle = BsExclamationCircle as unknown as React.FC<{ className: string }>
@@ -20,18 +21,25 @@ export default function Forgot() {
         return '';
     };
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        const approvedEmailError = validEmail(email);
-        
-        if (approvedEmailError) {
-            setEmailError(validEmail);
-            return;
-        } else {
-            setEmailError('Please check your email');
-            setEmail('');
-        };
+        try {
+            let res = await $api.post('/api/user/forgot-password/', email);
+            console.log(res.data);
+            
+            const approvedEmailError = validEmail(email);
+            
+            if (approvedEmailError) {
+                setEmailError(validEmail);
+                return;
+            } else {
+                setEmailError('Please check your email');
+                setEmail('');
+            };
+        } catch(error) {
+            console.log(error);
+        }
     };
 
   return (
