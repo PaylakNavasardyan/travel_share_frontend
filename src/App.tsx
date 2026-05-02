@@ -25,6 +25,7 @@ function App() {
   return (
     <div className="App">
       <Routes location={state?.backgroundLocation || location}>
+        <Route index element={<Login />} />
         <Route path="/user-registration" element={<Registration />} />
         <Route path="/user-login" element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />

@@ -91,7 +91,7 @@ export default function Login() {
                 <span>Maybe you <Link className={classes.linkToForgot} to={'/forgot-password'}>Forgot</Link> your password?</span>
                 <div className={classes.registrationGuide}>
                     <p>Don't have an account?</p>
-                    <Link className={classes.linkToRegistration} to="/">Registration</Link>
+                    <Link className={classes.linkToRegistration} to="/user-registration">Registration</Link>
                 </div>
             </div>
         </div>
