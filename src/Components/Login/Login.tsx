@@ -89,7 +89,15 @@ export default function Login() {
 
             <div className={classes.loginGuide}>
                 <span>Maybe you <Link className={classes.linkToForgot} to={'/forgot-password'}>Forgot</Link> your password?</span>
+                <div className={classes.registrationGuide}>
+                    <p>Don't have an account?</p>
+                    <Link className={classes.linkToRegistration} to="/">Registration</Link>
+                </div>
             </div>
+            {/* <div className={classes.registrationGuide}>
+                <p>Don't have an account?</p>
+                <Link className={classes.linkToForgot} to="/">Registration</Link>
+            </div> */}
         </div>
     </div>
   )

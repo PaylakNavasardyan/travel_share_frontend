@@ -93,20 +93,28 @@
       width: 100%;
       height: auto;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
       margin-top: auto;
       margin-bottom: 50px; 
-      span {
+      span,
+      p {
         color: var(--Black);
         font-family: "poppins-lightItalic";
         font-size: 15px;
       }
-      .linkToForgot {
+      .linkToForgot,
+      .linkToRegistration {
         color: var(--MainBlue);
         text-decoration: none;
         font-family: "poppins-semiBold";
+      }
+      .registrationGuide {
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
     }
   }
