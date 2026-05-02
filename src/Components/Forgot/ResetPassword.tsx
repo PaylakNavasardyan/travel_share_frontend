@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import classes from './ResetPassword.module.css'
 import { TbLockPassword } from "react-icons/tb";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ResetPassword() {
   const LockPassword = TbLockPassword as unknown as React.FC<{ className: string }>;
+  const { token } = useParams();
 
   const [password, setPassword] = useState<string>('');
   const [confirmPass, setComfirmPass] = useState<string>('');

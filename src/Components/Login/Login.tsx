@@ -94,10 +94,6 @@ export default function Login() {
                     <Link className={classes.linkToRegistration} to="/">Registration</Link>
                 </div>
             </div>
-            {/* <div className={classes.registrationGuide}>
-                <p>Don't have an account?</p>
-                <Link className={classes.linkToForgot} to="/">Registration</Link>
-            </div> */}
         </div>
     </div>
   )

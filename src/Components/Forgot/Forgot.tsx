@@ -25,16 +25,15 @@ export default function Forgot() {
         e.preventDefault();
 
         try {
-            let res = await $api.post('/api/user/forgot-password/', email);
-            console.log(res.data);
-            
             const approvedEmailError = validEmail(email);
             
+            const res = await $api.post('/api/user/forgot-password/', { email });
+            const message: string = res.data.data.message ?? "Please check your email";
             if (approvedEmailError) {
                 setEmailError(validEmail);
                 return;
             } else {
-                setEmailError('Please check your email');
+                setEmailError(message);
                 setEmail('');
             };
         } catch(error) {
