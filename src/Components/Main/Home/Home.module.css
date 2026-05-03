@@ -29,6 +29,9 @@
                     text-decoration: none;
                     color: var(--MainBlue);
                     font-family: 'poppins-semiBold';
+                    @media screen and (max-width: 500px) {
+                        font-size: 13px;
+                    }
                 }
                 .linkToAllPosts:hover {
                     color: var(--MainRed);
@@ -41,6 +44,10 @@
                     transform: scaleY(0);
                     transform-origin: left;
                     transition: transform 0.5s ease;
+                    @media screen and (max-width: 500px) {
+                        width: 120px;
+                        height: 2px;
+                    }
                 }
                 .activeLine {
                     transform: scaleY(1);

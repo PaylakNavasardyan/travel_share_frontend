@@ -13,6 +13,9 @@
         cursor: pointer;
         margin-bottom: 20px;
         gap: 5px;
+        @media screen and (max-width: 500px) {
+            margin-bottom: 10px;
+        }
         .reaction {
             font-size: 20px;
         }
@@ -38,6 +41,9 @@
         cursor: pointer;
         margin-bottom: 20px;
         gap: 5px;
+        @media screen and (max-width: 500px) {
+            margin-bottom: 10px;
+        }
         .reaction {
             font-size: 20px;
             color: var(--MainBlue);
@@ -66,6 +72,9 @@
         cursor: pointer;
         margin-bottom: 20px;
         gap: 5px;
+        @media screen and (max-width: 500px) {
+            margin-bottom: 10px;
+        }
         .reaction {
             font-size: 20px;
             color: var(--MainRed);

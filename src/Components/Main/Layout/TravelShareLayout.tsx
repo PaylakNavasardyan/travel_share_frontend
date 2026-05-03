@@ -10,7 +10,9 @@ export default function TravelShareLayout() {
       <Navbar />
 
       <div className={classes.main}>
-        <SideBar />
+        <div className={classes.sidebar}>
+          <SideBar />
+        </div>
 
         <div className={classes.content}>
           <Home />

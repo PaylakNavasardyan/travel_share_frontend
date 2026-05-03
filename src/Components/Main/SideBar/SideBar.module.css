@@ -8,6 +8,23 @@
     border-right: 3.5px solid var(--Gray);
     margin-top: 160px;
     position: fixed;
+    @media screen and (max-width: 580px) {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: unset;
+        margin-top: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        border-right: none;
+        border-top: 3.5px solid var(--Gray);
+        background-color: var(--White);
+        z-index: 999;
+        padding: 8px 0;
+    }
     .sideBarLink {
         width: 80%;
         height: auto;
@@ -17,6 +34,12 @@
         margin-top: 20px;
         cursor: pointer;
         text-decoration: none;
+
+        @media screen and (max-width: 580px) {
+            width: 100%;
+            justify-content: center;
+            cursor: default;
+        }
         .sideNav {
             width: 100%;
             height: auto; 
@@ -24,24 +47,73 @@
             align-items: center;
             gap: 10px;
             transition: background-color 0.3s ease;
+            @media screen and (max-width: 580px) {
+                width: 60%;
+                justify-content: space-between;
+                margin: 0 0 10px 50px;
+                cursor: pointer;
+            }
+            @media screen and (max-width: 515px) {
+                margin: 0 0 10px 40px;
+            }
+            @media screen and (max-width: 425px) {
+                margin: 0 0 10px 20px;
+            }
+        
             .icon { 
                 color: var(--MainRed);
                 margin-left: 30px;
                 font-size: 25px;
+                @media screen and (max-width: 1165px) {
+                    font-size: 20px;
+                }
+                @media screen and (max-width: 1086px) {
+                    font-size: 17px;
+                }
+                @media screen and (max-width: 980px) {
+                    font-size: 30px;
+                }
+                @media screen and (max-width: 780px) {
+                    font-size: 25px;
+                }
+                @media screen and (max-width: 580px) {
+                    margin-left: 14px;
+                }
+                @media screen and (max-width: 455px) {
+                    font-size: 20px;
+                }
             }
-            span {
+            
+            .sideBarData, span {
                 color: var(--MainRed);
                 font-family: 'poppins-light';
+                @media screen and (max-width: 1165px) {
+                    font-size: 15px;
+                }
+                @media screen and (max-width: 1086px) {
+                    font-size: 13px;
+                }
+                @media screen and (max-width: 980px) {
+                    display: none;
+                }
             }
         }
 
+        .sideNav:hover {
+            background-color: var(--MainBlue);
+            border-radius: 8px;
+            @media screen and (max-width: 580px) {
+                background-color: transparent;
+                border-radius: 0;
+            }
+        }
+        .sideNav:hover .icon {
+            @media screen and (max-width: 580px) {
+                color: var(--MainBlue);
+            }
+        }
     }
    
-    .sideNav:hover {
-        background-color: var(--MainBlue);
-        border-radius: 8px;
-    }
-
     .active {
         width: 60%;
         height: auto;
@@ -57,6 +129,11 @@
         opacity 0.25s ease,
         transform 0.35s ease;
 
+        @media screen and (max-width: 580px) {
+            transform: translateX(0);
+            max-height: none;
+        }
+
         .settingBarLink {
             width: 100%;
             height: auto;
@@ -68,15 +145,33 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             text-decoration: none;
-
             .icon {
                 margin-left: 35px;
                 font-size: 20px;
+                @media screen and (max-width: 1165px) {
+                    font-size: 20px;
+                }
+                @media screen and (max-width: 1086px) {
+                    font-size: 15px;
+                }
+                @media screen and (max-width: 510px) {
+                    font-size: 13px;
+                    margin-left: 2px;   
+                }
             }
 
-            span {
+            .sideBarData {
                 font-family: 'poppins-light';
                 font-size: 15px;
+                @media screen and (max-width: 1165px) {
+                    font-size: 15px;
+                }
+                @media screen and (max-width: 1086px) {
+                    font-size: 11px;
+                }
+                @media screen and (max-width: 980px) {
+                    display: none;
+                }
             }
         }
         .settingBarLink:hover {
@@ -100,6 +195,11 @@
             max-height 0.35s ease,
             opacity 0.25s ease,
             transform 0.35s ease;
+
+        @media screen and (max-width: 580px) {
+            transform: translateX(100%); 
+            max-height: auto;                    
+        }
 
         .settingBarLink {
             width: 100%;

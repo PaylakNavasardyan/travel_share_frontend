@@ -40,7 +40,7 @@ export default function SideBar() {
         
         <div className={`${classes.sideNav} ${classes.followersPart}`}>
           <RiUserSharedFill  className={classes.icon} />
-          <span>Followers {user?.followers}</span>
+          <span className={classes.sideBarData}>Followers {user?.followers}</span>
         </div>
       </Link>
 
@@ -51,7 +51,7 @@ export default function SideBar() {
         >
         <div className={`${classes.sideNav} ${classes.followingPart}`}>
           <RiUserReceived2Fill  className={classes.icon} />
-          <span>Following {user?.following}</span>
+          <span className={classes.sideBarData}>Following {user?.following}</span>
         </div>
       </Link>
 
@@ -62,7 +62,7 @@ export default function SideBar() {
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
           <ImProfile  className={classes.icon} />
-          <span>My Profile</span> 
+          <span className={classes.sideBarData}>My Profile</span> 
         </div>
       </Link>
 
@@ -74,7 +74,7 @@ export default function SideBar() {
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
           <FaPlus  className={classes.icon} />
-          <span>Create Posts</span>
+          <span className={classes.sideBarData}>Create Posts</span>
         </div>
       </Link>
 
@@ -85,7 +85,7 @@ export default function SideBar() {
 
         <div className={`${classes.sideNav} ${classes.settingsPart}`}>
           <IoMdSettings  className={classes.icon} />
-          <span>Settings</span>
+          <span className={classes.sideBarData}>Settings</span>
         </div>  
       </div>
 
@@ -96,7 +96,7 @@ export default function SideBar() {
           className={classes.settingBarLink}
         >
           <FaRegEdit className={classes.icon}/>
-          <span>Edit Profile</span>
+          <span className={classes.sideBarData}>Edit Profile</span>
         </Link>
 
         <Link
@@ -105,7 +105,7 @@ export default function SideBar() {
           className={classes.settingBarLink}
         >
           <RiLogoutBoxRLine className={classes.icon}/>
-          <span>Logout</span>
+          <span className={classes.sideBarData}>Logout</span>
         </Link>
       </div>
     </div>

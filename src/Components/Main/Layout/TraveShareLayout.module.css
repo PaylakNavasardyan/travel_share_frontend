@@ -12,3 +12,20 @@
   padding: 20px;
 }
 
+@media screen and (max-width: 580px) {
+  .main {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    order: 2; /* 🔥 սա է պակասում */
+  }
+
+  .content {
+    order: 1; /* 🔥 սա էլ */
+  }
+}
